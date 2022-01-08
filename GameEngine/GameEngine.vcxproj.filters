@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Source.cpp">
+    <ClCompile Include="src\glfw_setup.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
