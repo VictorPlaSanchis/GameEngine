@@ -13,7 +13,7 @@ int main(void)
         glfwTerminate();
         return -1;
     }
-
+        
     glfwMakeContextCurrent(window);
 
     while (!glfwWindowShouldClose(window))
