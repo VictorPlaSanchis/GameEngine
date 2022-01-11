@@ -3,6 +3,8 @@
 #include <Windows.h>
 #include <GLFW/glfw3.h>
 
+#define _DEBUG_ 1
+
 int main(void)
 {
     GameEngine gameEngine = GameEngine();
@@ -35,7 +37,7 @@ int main(void)
         /* Poll for and process events */
         glfwPollEvents();
 
-        gameEngine.Update();
+        gameEngine.update();
     }
 
     glfwTerminate();

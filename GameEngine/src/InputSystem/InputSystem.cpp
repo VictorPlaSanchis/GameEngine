@@ -1,5 +1,4 @@
 #include "InputSystem.h"
-#include <iostream>
 #include <Windows.h>
 
 InputSystem::InputSystem()

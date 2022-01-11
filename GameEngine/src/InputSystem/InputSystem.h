@@ -5,9 +5,6 @@
 class InputSystem
 {
 
-protected:
-
-
 private:
 
 	std::map<InputListener*, InputListener*> m_listener_collection;

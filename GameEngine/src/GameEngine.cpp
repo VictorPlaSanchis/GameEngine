@@ -3,17 +3,15 @@
 
 GameEngine::GameEngine()
 {
-
 	InputSystem::get()->addListener(this);
-	std::cout << "Listener added..." << std::endl;
-
 }
 
 GameEngine::~GameEngine()
 {
+	InputSystem::get()->removeListener(this);
 }
 
-void GameEngine::Update()
+void GameEngine::update()
 {
 
 	InputSystem::get()->update();
@@ -22,10 +20,8 @@ void GameEngine::Update()
 
 void GameEngine::onKeyDown(int keyCode)
 {
-	std::cout << keyCode << " [" << char(keyCode) << "] went down..." << std::endl;
 }
 
 void GameEngine::onKeyUp(int keyCode)
 {
-	std::cout << keyCode << " [" << char(keyCode) << "] went up..." << std::endl;
 }
