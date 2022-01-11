@@ -13,6 +13,7 @@ public:
 
 	virtual void onKeyDown(int keyCode) override;
 	virtual void onKeyUp(int keyCode) override;
+	virtual void onKeyPressed(int keyCode) override;
 
 };
 

@@ -28,6 +28,18 @@ void InputSystem::update()
 			// ON KEY DOWN
 			if (m_posible_keys[i] & 0x80) {
 
+				// ON KEY PRESSED
+				if (m_last_keys_state[i] != m_posible_keys[i]) {
+
+					std::map<InputListener*, InputListener*>::iterator it = m_listener_collection.begin();
+
+					while (it != m_listener_collection.end()) {
+						it->second->onKeyPressed(i);
+						++it;
+					}
+
+				}
+
 				std::map<InputListener*, InputListener*>::iterator it = m_listener_collection.begin();
 
 				while (it != m_listener_collection.end()) {
