@@ -4,16 +4,19 @@
 class GameEngine : public InputListener
 {
 
+private:
+
 public:
 
 	GameEngine();
 	~GameEngine();
 
-	void update();
+	GLFWwindow* windowGame;
 
-	virtual void onKeyDown(int keyCode) override;
-	virtual void onKeyUp(int keyCode) override;
-	virtual void onKeyPressed(int keyCode) override;
+	static GameEngine* get();
+
+	void InitializeGameEngine();
+	void update();
 
 };
 

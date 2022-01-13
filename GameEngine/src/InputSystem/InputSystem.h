@@ -1,16 +1,13 @@
 #pragma once
 #include "InputListener.h"
-#include <map>
+#include <vector>
 
 class InputSystem
 {
 
 private:
 
-	std::map<InputListener*, InputListener*> m_listener_collection;
-
-	unsigned char m_posible_keys[256] = {};
-	unsigned char m_last_keys_state[256] = {};
+	std::vector<InputListener*> listeners;
 
 public:
 

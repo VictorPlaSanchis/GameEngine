@@ -1,36 +1,54 @@
 #include "GameEngine.h"
 #include "InputSystem/InputSystem.h"
+#include "SceneSystem/SceneSystem.h"
 #include <iostream>
+
+
+#define DEBUG(x) std::cout << x << std::endl;
 
 GameEngine::GameEngine()
 {
-	InputSystem::get()->addListener(this);
-	InputSystem::get()->addListener(this);
+	if (!glfwInit()) glfwTerminate();
 }
 
 GameEngine::~GameEngine()
 {
-	InputSystem::get()->removeListener(this);
+}
+
+GameEngine* GameEngine::get()
+{
+	static GameEngine gameEngine;
+	return &gameEngine;
+}
+
+void GameEngine::InitializeGameEngine() 
+{
+	windowGame = glfwCreateWindow(640, 480, "Game Engine by Vitolo Paolo 12/01/2022 (R)", NULL, NULL);
+	SceneSystem::get()->addScene();
+	InputSystem::get()->addListener(this);
 }
 
 void GameEngine::update()
 {
 
-	InputSystem::get()->update();
+	InitializeGameEngine();
 
-}
+	while (!glfwWindowShouldClose(GameEngine::windowGame)) {
 
-void GameEngine::onKeyPressed(int keyCode) 
-{
-	std::cout << char(keyCode) << " pressed" << std::endl;
-}
+		InputSystem::get()->update();
+		SceneSystem::get()->currentScene->UpdateScene();
 
-void GameEngine::onKeyDown(int keyCode)
-{
-	//std::cout << char(keyCode) << " down" << std::endl;
-}
+		/* Render here */
+		glClear(GL_COLOR_BUFFER_BIT);
 
-void GameEngine::onKeyUp(int keyCode)
-{
-	//std::cout << char(keyCode) << " up" << std::endl;
+		/* Swap front and back buffers */
+		glfwSwapBuffers(GameEngine::windowGame);
+
+		/* Poll for and process events */
+		glfwWaitEventsTimeout(1.0);
+
+	}
+
+	glfwTerminate();
+
 }
