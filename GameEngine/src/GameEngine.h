@@ -1,18 +1,23 @@
 #pragma once
-#include "InputSystem/InputListener.h"
+#include "InputSystem/InputSystem.h"
+#include <GLFW/glfw3.h>
 
-class GameEngine : public InputListener
+class GameEngine
 {
+private:
+
+	GLFWwindow* windowGame;
 
 public:
 
 	GameEngine();
 	~GameEngine();
 
-	void update();
+	static GameEngine* get();
+	GLFWwindow* getWindowGame();
 
-	virtual void onKeyDown(int keyCode) override;
-	virtual void onKeyUp(int keyCode) override;
+	void InitializeGameEngine();
+	void update();
 
 };
 
