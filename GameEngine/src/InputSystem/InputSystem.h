@@ -1,13 +1,11 @@
 #pragma once
-#include "InputListener.h"
-#include <vector>
 
 class InputSystem
 {
 
 private:
 
-	std::vector<InputListener*> listeners;
+	unsigned char lastKeyState[256] = {};
 
 public:
 
@@ -16,9 +14,9 @@ public:
 
 	static InputSystem* get();
 
-	void update();
-	void addListener(InputListener* listener);
-	void removeListener(InputListener* listener);
+	bool isKeyPressed(int keyCode);
+	bool isKeyDown(int keyCode);
+	bool isKeyReleased(int keyCode);
 
 };
 

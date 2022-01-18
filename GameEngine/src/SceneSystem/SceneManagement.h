@@ -2,25 +2,25 @@
 #include <vector>
 #include "Scene.h"
 
-class SceneSystem
+class SceneManagement
 {
 
 private:
 
 	std::vector<Scene*> scenes;
+	Scene* currentScene;
 
 public:
 
-	Scene* currentScene;
-
-	static SceneSystem* get();
+	static SceneManagement* get();
 	
-	SceneSystem();
-	~SceneSystem();
+	SceneManagement();
+	~SceneManagement();
 
 	void addScene();
 	void removeScene(Scene* scene);
 	void setCurrentScene(int index);
+	Scene* getCurrentScene();
 
 };
 

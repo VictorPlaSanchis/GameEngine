@@ -1,10 +1,23 @@
 #include "GameEngine.h"
 #include "InputSystem/InputSystem.h"
-#include "SceneSystem/SceneSystem.h"
+#include "SceneSystem/SceneManagement.h"
 #include <iostream>
-
+#include "SourceScript.h"
+#include "Log.h"
 
 #define DEBUG(x) std::cout << x << std::endl;
+
+void GameEngine::InitializeGameEngine()
+{
+	Log::Init();
+	Log::debug(Log::getLogAuxiliar(), "Logs initialized.", spdlog::level::info);
+	Log::debug(Log::getLogApp(), "Game Engine initializing...", spdlog::level::warn);
+
+	windowGame = glfwCreateWindow(640, 420, "Game Engine by Vitolo Paolo 12/01/2022 (R)", NULL, NULL);
+	SceneManagement::get()->addScene();
+	Log::debug(Log::getLogApp(), "Main Scene created.", spdlog::level::info);
+	Log::debug(Log::getLogApp(), "Game Engine initialized.", spdlog::level::info);
+}
 
 GameEngine::GameEngine()
 {
@@ -21,11 +34,9 @@ GameEngine* GameEngine::get()
 	return &gameEngine;
 }
 
-void GameEngine::InitializeGameEngine() 
+GLFWwindow* GameEngine::getWindowGame() 
 {
-	windowGame = glfwCreateWindow(640, 480, "Game Engine by Vitolo Paolo 12/01/2022 (R)", NULL, NULL);
-	SceneSystem::get()->addScene();
-	InputSystem::get()->addListener(this);
+	return GameEngine::get()->windowGame;
 }
 
 void GameEngine::update()
@@ -33,19 +44,16 @@ void GameEngine::update()
 
 	InitializeGameEngine();
 
+	SourceScript someScript = SourceScript();
+
 	while (!glfwWindowShouldClose(GameEngine::windowGame)) {
 
-		InputSystem::get()->update();
-		SceneSystem::get()->currentScene->UpdateScene();
+		someScript.beheaviour();
+		SceneManagement::get()->getCurrentScene()->UpdateScene();
 
-		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		/* Swap front and back buffers */
 		glfwSwapBuffers(GameEngine::windowGame);
-
-		/* Poll for and process events */
-		glfwWaitEventsTimeout(1.0);
+		glfwPollEvents();
 
 	}
 

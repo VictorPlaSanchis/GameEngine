@@ -1,4 +1,7 @@
 #include "InputSystem.h"
+#include "../GameEngine.h"
+#include <GLFW/glfw3.h>
+#include <iostream>
 
 InputSystem::InputSystem()
 {
@@ -14,27 +17,28 @@ InputSystem* InputSystem::get()
 	return &inputSystem;
 }
 
-void InputSystem::update()
+bool InputSystem::isKeyPressed(int keyCode) 
 {
-	std::vector<InputListener*>::iterator it = listeners.begin();
-	while (it != listeners.end()) {
-		(*it)->refresh();
-		it++;
-	}
+	GLFWwindow* appWindow = GameEngine::get()->getWindowGame();
+	int state = glfwGetKey(appWindow, keyCode);
+	bool ret = state == GLFW_PRESS && lastKeyState[keyCode] == GLFW_RELEASE;
+	lastKeyState[keyCode] = state;
+	return ret;
 }
 
-void InputSystem::addListener(InputListener* listener)
+bool InputSystem::isKeyDown(int keyCode)
 {
-	listeners.push_back(listener);
+	GLFWwindow* appWindow = GameEngine::get()->getWindowGame();
+	int state = glfwGetKey(appWindow, keyCode);
+	lastKeyState[keyCode] = state;
+	return state == GLFW_PRESS || state == GLFW_REPEAT;
 }
 
-void InputSystem::removeListener(InputListener* listener)
+bool InputSystem::isKeyReleased(int keyCode)
 {
-	std::vector<InputListener*>::iterator it = listeners.begin();
-	while (it != listeners.end()) {
-		if (*it == listener) {
-			listeners.erase(it);
-			return;
-		}
-	}
+	GLFWwindow* appWindow = GameEngine::get()->getWindowGame();
+	int state = glfwGetKey(appWindow, keyCode);
+	bool ret = state == GLFW_RELEASE && (lastKeyState[keyCode] == GLFW_PRESS || lastKeyState[keyCode] == GLFW_REPEAT);
+	lastKeyState[keyCode] = state;
+	return ret;
 }

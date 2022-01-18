@@ -1,19 +1,20 @@
 #pragma once
-#include "InputSystem/InputListener.h"
+#include "InputSystem/InputSystem.h"
+#include <GLFW/glfw3.h>
 
-class GameEngine : public InputListener
+class GameEngine
 {
-
 private:
+
+	GLFWwindow* windowGame;
 
 public:
 
 	GameEngine();
 	~GameEngine();
 
-	GLFWwindow* windowGame;
-
 	static GameEngine* get();
+	GLFWwindow* getWindowGame();
 
 	void InitializeGameEngine();
 	void update();
