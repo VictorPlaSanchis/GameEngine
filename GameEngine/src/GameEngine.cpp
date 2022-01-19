@@ -10,12 +10,17 @@
 void GameEngine::InitializeGameEngine()
 {
 	Log::Init();
-	Log::debug(Log::getLogAuxiliar(), "Logs initialized.", spdlog::level::info);
+	Log::debug(Log::getLogApp(), "Logs initialized.", spdlog::level::info);
 	Log::debug(Log::getLogApp(), "Game Engine initializing...", spdlog::level::warn);
 
 	windowGame = glfwCreateWindow(640, 420, "Game Engine by Vitolo Paolo 12/01/2022 (R)", NULL, NULL);
 	SceneManagement::get()->addScene();
+
 	Log::debug(Log::getLogApp(), "Main Scene created.", spdlog::level::info);
+
+	const GLubyte* myGLVersion = glGetString(GL_VERSION);
+	//Log::debug(Log::getLogApp(), myGLVersion, spdlog::level::warn);
+
 	Log::debug(Log::getLogApp(), "Game Engine initialized.", spdlog::level::info);
 }
 
@@ -48,7 +53,7 @@ void GameEngine::update()
 
 	while (!glfwWindowShouldClose(GameEngine::windowGame)) {
 
-		someScript.beheaviour();
+		someScript.Update();
 		SceneManagement::get()->getCurrentScene()->UpdateScene();
 
 		glClear(GL_COLOR_BUFFER_BIT);

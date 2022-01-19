@@ -3,6 +3,7 @@
 
 std::shared_ptr<spdlog::logger> Log::logApp;
 std::shared_ptr<spdlog::logger> Log::logAuxiliar;
+std::shared_ptr<spdlog::logger> Log::logInputSystem;
 std::shared_ptr<spdlog::logger> Log::lastLogger;
 
 void Log::Init()
@@ -12,6 +13,8 @@ void Log::Init()
     logApp->set_level(spdlog::level::trace);
     logAuxiliar = spdlog::stderr_color_mt("AUX");
     logAuxiliar->set_level(spdlog::level::debug);
+    logInputSystem = spdlog::stderr_color_mt("ISL");
+    logInputSystem->set_level(spdlog::level::trace);
 }
 
 void Log::debug(std::shared_ptr<spdlog::logger> log, std::string mssg, spdlog::level::level_enum mode)

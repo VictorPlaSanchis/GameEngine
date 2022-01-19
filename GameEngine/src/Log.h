@@ -10,6 +10,7 @@ private:
 
 	static std::shared_ptr<spdlog::logger> logApp;
 	static std::shared_ptr<spdlog::logger> logAuxiliar;
+	static std::shared_ptr<spdlog::logger> logInputSystem;
 	static std::shared_ptr<spdlog::logger> lastLogger;
 
 public:
@@ -18,6 +19,7 @@ public:
 	
 	static std::shared_ptr<spdlog::logger>& getLogApp() { return logApp; };
 	static std::shared_ptr<spdlog::logger>& getLogAuxiliar() { return logAuxiliar; };
+	static std::shared_ptr<spdlog::logger>& getLogInputSystem() { return logInputSystem; };
 	static void debug(std::shared_ptr<spdlog::logger> log,std::string mssg, spdlog::level::level_enum mode);
 
 };

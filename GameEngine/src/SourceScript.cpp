@@ -1,6 +1,6 @@
 #include "SourceScript.h"
 #include "InputSystem/InputSystem.h"
-#include <iostream>
+#include "Log.h"
 
 SourceScript::SourceScript()
 {
@@ -10,9 +10,23 @@ SourceScript::~SourceScript()
 {
 }
 
-void SourceScript::beheaviour()
+void SourceScript::Update()
 {
+
 	if (InputSystem::get()->isKeyPressed('A')) {
-		std::cout << "HELLO WORLD!" << std::endl;
+		Log::debug(Log::getLogAuxiliar(), "Executing Source Code behaviour... [MOVING LEFT]", spdlog::level::info);
 	}
+
+	if (InputSystem::get()->isKeyPressed('S')) {
+		Log::debug(Log::getLogAuxiliar(), "Executing Source Code behaviour... [MOVING DOWN]", spdlog::level::info);
+	}	
+
+	if (InputSystem::get()->isKeyPressed('D')) {
+		Log::debug(Log::getLogAuxiliar(), "Executing Source Code behaviour... [MOVING RIGHT]", spdlog::level::info);
+	}
+
+	if (InputSystem::get()->isKeyPressed('W')) {
+		Log::debug(Log::getLogAuxiliar(), "Executing Source Code behaviour... [MOVING UP]", spdlog::level::info);
+	}	
+
 }

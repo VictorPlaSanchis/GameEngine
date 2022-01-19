@@ -1,5 +1,7 @@
 #pragma once
 
+#define _DEBUG_ true
+
 class InputSystem
 {
 
