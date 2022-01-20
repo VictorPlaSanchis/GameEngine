@@ -19,21 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Log.cpp" />
+    <ClCompile Include="src\Object\ExampleComponent.cpp" />
+    <ClCompile Include="src\Object\Component.cpp" />
+    <ClCompile Include="src\Object\Object.cpp" />
+    <ClCompile Include="src\Log\Log.cpp" />
     <ClCompile Include="src\SceneSystem\SceneManagement.cpp" />
     <ClCompile Include="src\SceneSystem\Scene.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />
     <ClCompile Include="src\InputSystem\InputSystem.cpp" />
     <ClCompile Include="src\program.cpp" />
-    <ClCompile Include="src\SourceScript.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Log.h" />
+    <ClInclude Include="src\Object\ExampleComponent.h" />
+    <ClInclude Include="src\Object\Component.h" />
+    <ClInclude Include="src\Object\Object.h" />
+    <ClInclude Include="src\Log\Log.h" />
     <ClInclude Include="src\SceneSystem\SceneManagement.h" />
     <ClInclude Include="src\SceneSystem\Scene.h" />
     <ClInclude Include="src\GameEngine.h" />
     <ClInclude Include="src\InputSystem\InputSystem.h" />
-    <ClInclude Include="src\SourceScript.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -16,8 +16,8 @@ public:
 	static GameEngine* get();
 	GLFWwindow* getWindowGame();
 
-	void InitializeGameEngine();
-	void update();
+	void Init();
+	void Run();
 
 };
 

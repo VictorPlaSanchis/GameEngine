@@ -1,6 +1,5 @@
 #include "SceneManagement.h"
-#include <iostream>
-#define DEBUG(x) std::cout << x << std::endl;
+#include "../Log/Log.h"
 
 SceneManagement* SceneManagement::get()
 {
@@ -10,7 +9,8 @@ SceneManagement* SceneManagement::get()
 
 SceneManagement::SceneManagement()
 {
-	SceneManagement::currentScene = nullptr;
+	currentScene = nullptr;
+	scenes = {};
 }
 
 SceneManagement::~SceneManagement()
@@ -19,8 +19,8 @@ SceneManagement::~SceneManagement()
 
 void SceneManagement::addScene()
 {
-	Scene newScene = Scene();
-	scenes.push_back(&newScene);
+	scenes.push_back(new Scene());
+	if (currentScene == nullptr) setCurrentScene(0);
 }
 
 void SceneManagement::removeScene(Scene* scene)
@@ -36,7 +36,8 @@ void SceneManagement::removeScene(Scene* scene)
 
 void SceneManagement::setCurrentScene(int index)
 {
-	this->currentScene = scenes[index];
+	DEBUG_AUX_INFO("Current scene is now index 0.");
+	currentScene = scenes[index];
 }
 
 Scene* SceneManagement::getCurrentScene()
