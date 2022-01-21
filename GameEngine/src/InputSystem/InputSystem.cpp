@@ -1,7 +1,7 @@
+#include <GLFW/glfw3.h>
 #include "InputSystem.h"
 #include "../GameEngine.h"
-#include <GLFW/glfw3.h>
-#include <iostream>
+#include "../Log/Log.h"
 
 InputSystem::InputSystem()
 {
@@ -17,28 +17,76 @@ InputSystem* InputSystem::get()
 	return &inputSystem;
 }
 
+void InputSystem::Init() 
+{
+}
+
+void InputSystem::Update() 
+{
+	memcpy(lastKeyState, keyState, sizeof(unsigned char) * 256);
+	memcpy(lastMouseState, mouseState, sizeof(unsigned char) * 5);
+}
+
 bool InputSystem::isKeyPressed(int keyCode) 
 {
-	GLFWwindow* appWindow = GameEngine::get()->getWindowGame();
-	int state = glfwGetKey(appWindow, keyCode);
-	bool ret = state == GLFW_PRESS && lastKeyState[keyCode] == GLFW_RELEASE;
-	lastKeyState[keyCode] = state;
+	int state = glfwGetKey(GameEngine::get()->getWindowGame(), keyCode);
+	bool ret = state == GLFW_PRESS  && lastKeyState[keyCode] == GLFW_RELEASE;
+	keyState[keyCode] = state;
 	return ret;
 }
 
 bool InputSystem::isKeyDown(int keyCode)
 {
-	GLFWwindow* appWindow = GameEngine::get()->getWindowGame();
-	int state = glfwGetKey(appWindow, keyCode);
-	lastKeyState[keyCode] = state;
-	return state == GLFW_PRESS || state == GLFW_REPEAT;
+	int state = glfwGetKey(GameEngine::get()->getWindowGame(), keyCode);
+	bool ret = state == GLFW_PRESS;
+	keyState[keyCode] = state;
+	return ret;
 }
 
 bool InputSystem::isKeyReleased(int keyCode)
 {
-	GLFWwindow* appWindow = GameEngine::get()->getWindowGame();
-	int state = glfwGetKey(appWindow, keyCode);
-	bool ret = state == GLFW_RELEASE && (lastKeyState[keyCode] == GLFW_PRESS || lastKeyState[keyCode] == GLFW_REPEAT);
-	lastKeyState[keyCode] = state;
+	int state = glfwGetKey(GameEngine::get()->getWindowGame(), keyCode);
+	bool ret = state == GLFW_RELEASE && lastKeyState[keyCode] == GLFW_PRESS;
+	keyState[keyCode] = state;
 	return ret;
 }
+
+bool InputSystem::isMouseDown(int keyCode)
+{
+	int state = glfwGetMouseButton(GameEngine::get()->getWindowGame(), keyCode);
+	bool ret = state == GLFW_PRESS;
+	mouseState[keyCode] = state;
+	return ret;
+}
+
+bool InputSystem::isMousePressed(int keyCode)
+{
+	int state = glfwGetMouseButton(GameEngine::get()->getWindowGame(), keyCode);
+	bool ret = state == GLFW_PRESS && lastMouseState[keyCode] == GLFW_RELEASE;
+	mouseState[keyCode] = state;
+	return ret;
+}
+
+bool InputSystem::isMouseReleased(int keyCode)
+{
+	int state = glfwGetMouseButton(GameEngine::get()->getWindowGame(), keyCode);
+	bool ret = state == GLFW_RELEASE && lastMouseState[keyCode] == GLFW_PRESS;
+	mouseState[keyCode] = state;
+	return ret;
+}
+
+
+int InputSystem::getMousePosX()
+{
+	double xPos;
+	glfwGetCursorPos(GameEngine::get()->getWindowGame(), &xPos, nullptr);
+	return xPos;
+}
+
+int InputSystem::getMousePosY()
+{
+	double yPos;
+	glfwGetCursorPos(GameEngine::get()->getWindowGame(), nullptr, &yPos);
+	return yPos;
+}
+
