@@ -1,5 +1,7 @@
 #pragma once
 
+namespace vge {
+
 #define GE_MOUSE_LEFT_BUTTON 0
 #define GE_MOUSE_RIGHT_BUTTON 1
 #define GE_MOUSE_WHEEL_BUTTON 2
@@ -7,34 +9,37 @@
 #define GE_MOUSE_FRONT_AUX_BUTTON 4
 
 
-class InputSystem
-{
+	class InputSystem
+	{
 
-private:
+	private:
 
-	unsigned char lastKeyState[256] = {};
-	unsigned char keyState[256] = {};
-	unsigned char lastMouseState[5] = {};
-	unsigned char mouseState[5] = {};
+		unsigned char lastKeyState[256] = {};
+		unsigned char keyState[256] = {};
+		unsigned char lastMouseState[5] = {};
+		unsigned char mouseState[5] = {};
 
-public:
+	public:
 
-	InputSystem();
-	~InputSystem();
+		InputSystem();
+		~InputSystem();
 
-	static InputSystem* get();
+		static InputSystem* get();
 
-	void Update();
-	void Init();
+		void Update();
+		void Init();
 
-	bool isKeyPressed(int keyCode);
-	bool isKeyDown(int keyCode);
-	bool isKeyReleased(int keyCode);
-	bool isMouseDown(int keyCode);
-	bool isMousePressed(int keyCode);
-	bool isMouseReleased(int keyCode);
-	int getMousePosX();
-	int getMousePosY();
+		bool isKeyPressed(int keyCode);
+		bool isKeyDown(int keyCode);
+		bool isKeyReleased(int keyCode);
+		bool isMouseDown(int keyCode);
+		bool isMousePressed(int keyCode);
+		bool isMouseReleased(int keyCode);
+		int getMousePosX();
+		int getMousePosY();
 
-};
+	};
 
+
+
+}

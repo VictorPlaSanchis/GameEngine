@@ -1,13 +1,17 @@
 #include "Component.h"
 
-Component::Component() 
-{
-}
+namespace vge {
 
-Component::~Component()
-{
-}
+	Component::Component()
+	{
+	}
 
-void Component::Behaviour()
-{
+	Component::~Component()
+	{
+	}
+
+	void Component::Behaviour()
+	{
+	}
+
 }

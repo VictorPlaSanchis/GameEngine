@@ -2,20 +2,24 @@
 #include "Component.h"
 #include <list>
 
-class Object {
+namespace vge {
 
-private:
+    class Object {
 
-    std::list<Component*> components;
+    private:
 
-public:
+        std::list<Component*> components;
 
-    Object();
-    ~Object();
+    public:
 
-    void addComponent(Component* component);
-    void removeComponent(Component* component);
-    void Update();
+        Object();
+        ~Object();
 
-};
+        void addComponent(Component* component);
+        void removeComponent(Component* component);
+        void Update();
+
+    };
+
+}
 

@@ -7,66 +7,71 @@
 #include "Object/ExampleComponent.h"
 // #########################################
 
-void GameEngine::Init()
-{
+namespace vge {
 
-	Log::get()->Init();
-	InputSystem::get()->Init();
+	void GameEngine::Init()
+	{
 
-	DEBUG_APP_INFO("Logs initialized.");
-	DEBUG_APP_WARNING("Game Engine initializing...");
+		Log::get()->Init();
+		InputSystem::get()->Init();
 
-	windowGame = glfwCreateWindow(640, 420, "Game Engine by Vitolo Paolo 12/01/2022 (R)", NULL, NULL);
-	SceneManagement::get()->addScene();
+		DEBUG_APP_INFO("Logs initialized.");
+		DEBUG_APP_WARNING("Game Engine initializing...");
 
-	DEBUG_APP_INFO("Main Scene created.");
+		windowGame = glfwCreateWindow(640, 420, "Game Engine by Vitolo Paolo 12/01/2022 (R)", NULL, NULL);
+		SceneManagement::get()->addScene();
 
-	DEBUG_ISL_WARNING("Input System initializing...");
-	DEBUG_APP_INFO("Game Engine initialized.");
-}
+		DEBUG_APP_INFO("Main Scene created.");
 
-void GameEngine::Run()
-{
-
-	DEBUG_APP_INFO("Game Engine is now running.");
-
-	// ##############################################################
-	// TESTING SCENE ADDING SOME OBJECTS AND EXECUTING HIS BEHAVIOUR
-	Object object = Object();
-	object.addComponent(new ExampleComponent());
-	SceneManagement::get()->getCurrentScene()->addObject(&object);
-	// ##############################################################
-
-	while (!glfwWindowShouldClose(GameEngine::windowGame)) {
-
-		SceneManagement::get()->getCurrentScene()->UpdateScene();
-		InputSystem::get()->Update();
-
-		glClear(GL_COLOR_BUFFER_BIT);
-		glfwSwapBuffers(GameEngine::windowGame);
-		glfwPollEvents();
+		DEBUG_ISL_WARNING("Input System initializing...");
+		DEBUG_APP_INFO("Game Engine initialized.");
 
 	}
 
-	glfwTerminate();
-}
+	void GameEngine::Run()
+	{
 
-GameEngine::GameEngine()
-{
-	if (!glfwInit()) glfwTerminate();
-}
+		DEBUG_APP_INFO("Game Engine is now running.");
 
-GameEngine::~GameEngine()
-{
-}
+		// ##############################################################
+		// TESTING SCENE ADDING SOME OBJECTS AND EXECUTING HIS BEHAVIOUR
+		Object object = Object();
+		object.addComponent(new ExampleComponent());
+		SceneManagement::get()->getCurrentScene()->addObject(&object);
+		// ##############################################################
 
-GameEngine* GameEngine::get()
-{
-	static GameEngine gameEngine;
-	return &gameEngine;
-}
+		while (!glfwWindowShouldClose(GameEngine::windowGame)) {
 
-GLFWwindow* GameEngine::getWindowGame() 
-{
-	return GameEngine::get()->windowGame;
+			SceneManagement::get()->getCurrentScene()->UpdateScene();
+			InputSystem::get()->Update();
+
+			glClear(GL_COLOR_BUFFER_BIT);
+			glfwSwapBuffers(GameEngine::windowGame);
+			glfwPollEvents();
+
+		}
+
+		glfwTerminate();
+	}
+
+	GameEngine::GameEngine()
+	{
+		if (!glfwInit()) glfwTerminate();
+	}
+
+	GameEngine::~GameEngine()
+	{
+	}
+
+	GameEngine* GameEngine::get()
+	{
+		static GameEngine gameEngine;
+		return &gameEngine;
+	}
+
+	GLFWwindow* GameEngine::getWindowGame()
+	{
+		return GameEngine::get()->windowGame;
+	}
+
 }

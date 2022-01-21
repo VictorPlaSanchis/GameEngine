@@ -1,23 +1,27 @@
 #pragma once
-#include "InputSystem/InputSystem.h"
 #include <GLFW/glfw3.h>
+#include "InputSystem/InputSystem.h"
 
-class GameEngine
-{
-private:
+namespace vge {
 
-	GLFWwindow* windowGame;
+	class GameEngine
+	{
+	private:
 
-public:
+		GLFWwindow* windowGame;
 
-	GameEngine();
-	~GameEngine();
+	public:
 
-	static GameEngine* get();
-	GLFWwindow* getWindowGame();
+		GameEngine();
+		~GameEngine();
 
-	void Init();
-	void Run();
+		static GameEngine* get();
+		GLFWwindow* getWindowGame();
 
-};
+		void Init();
+		void Run();
+
+	};
+
+}
 

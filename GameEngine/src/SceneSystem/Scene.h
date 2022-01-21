@@ -3,21 +3,24 @@
 #include <list>
 #include "../Object/Object.h"
 
-class Scene
-{
+namespace vge {
 
-private:
+	class Scene
+	{
 
-	std::list<Object*> objects;
+	private:
 
-public:
+		std::list<Object*> objects;
 
-	Scene();
-	~Scene();
+	public:
 
-	void addObject(Object* object);
-	void removeObject(Object* object);
-	void UpdateScene();
+		Scene();
+		~Scene();
 
-};
+		void addObject(Object* object);
+		void removeObject(Object* object);
+		void UpdateScene();
 
+	};
+
+}

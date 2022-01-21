@@ -1,15 +1,20 @@
 #include "ExampleComponent.h"
 #include "../Log/Log.h"
 
-ExampleComponent::ExampleComponent()
-{
-	value = 0;
-}
+namespace vge {
 
-ExampleComponent::~ExampleComponent()
-{
-}
+	ExampleComponent::ExampleComponent()
+	{
+		value = 0;
+	}
 
-void ExampleComponent::Behaviour()
-{
+	ExampleComponent::~ExampleComponent()
+	{
+	}
+
+	void ExampleComponent::Behaviour()
+	{
+
+	}
+
 }

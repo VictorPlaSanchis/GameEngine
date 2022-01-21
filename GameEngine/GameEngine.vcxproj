@@ -28,6 +28,7 @@
     <ClCompile Include="src\GameEngine.cpp" />
     <ClCompile Include="src\InputSystem\InputSystem.cpp" />
     <ClCompile Include="src\program.cpp" />
+    <ClCompile Include="src\Object\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Object\ExampleComponent.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="src\SceneSystem\Scene.h" />
     <ClInclude Include="src\GameEngine.h" />
     <ClInclude Include="src\InputSystem\InputSystem.h" />
+    <ClInclude Include="src\Object\Transform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

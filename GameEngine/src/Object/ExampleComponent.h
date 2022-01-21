@@ -1,19 +1,24 @@
 #pragma once
 #include "Component.h"
 
-class ExampleComponent : public Component
-{
+namespace vge {
 
-private:
+	class ExampleComponent : public Component
+	{
 
-	int value;
+	private:
 
-public:
+		int value;
 
-	ExampleComponent();
-	~ExampleComponent();
+	public:
 
-	virtual void Behaviour() override;
+		ExampleComponent();
+		~ExampleComponent();
 
-};
+		virtual void Behaviour() override;
 
+	};
+
+
+
+}
