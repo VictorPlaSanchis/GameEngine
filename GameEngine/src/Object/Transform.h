@@ -18,6 +18,8 @@ namespace vge {
 
 		void Behaviour() override;
 
+		void move(const Vector<double, 3>& direction);
+
 	};
 
 

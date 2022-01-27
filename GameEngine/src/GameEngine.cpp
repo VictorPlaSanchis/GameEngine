@@ -10,8 +10,6 @@
 #include "GraphicsEngine/GraphicsEngine.h"
 #include "GraphicsEngine/Shader.h"
 
-#include <iostream>
-
 namespace vge {
 
 	void GameEngine::Init()

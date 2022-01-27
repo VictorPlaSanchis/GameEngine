@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+//#include "Transform.h"
 #include <list>
 
 namespace vge {
@@ -10,6 +11,7 @@ namespace vge {
 
         std::list<Object*> childs;
         std::list<Component*> components;
+        //Transform* transform;
 
     public:
 

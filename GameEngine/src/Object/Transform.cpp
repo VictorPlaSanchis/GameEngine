@@ -15,5 +15,10 @@ namespace vge {
 	{
 	}
 
+	void Transform::move(const Vector<double, 3>& direction)
+	{
+		this->values += direction;
+	}
+
 
 }
