@@ -1,13 +1,18 @@
 #pragma once
-class Component
-{
 
-public:
+namespace vge {
 
-	Component();
-	~Component();
+	class Component
+	{
 
-	virtual void Behaviour() = 0;
+	public:
 
-};
+		Component();
+		~Component();
 
+		virtual void Behaviour() = 0;
+
+	};
+
+
+}

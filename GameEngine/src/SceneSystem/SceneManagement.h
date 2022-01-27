@@ -2,25 +2,30 @@
 #include <vector>
 #include "Scene.h"
 
-class SceneManagement
-{
+namespace vge {
 
-private:
 
-	std::vector<Scene*> scenes;
-	Scene* currentScene;
+	class SceneManagement
+	{
 
-public:
+	private:
 
-	static SceneManagement* get();
-	
-	SceneManagement();
-	~SceneManagement();
+		std::vector<Scene*> scenes;
+		Scene* currentScene;
 
-	void addScene();
-	void removeScene(Scene* scene);
-	void setCurrentScene(int index);
-	Scene* getCurrentScene();
+	public:
 
-};
+		static SceneManagement* get();
 
+		SceneManagement();
+		~SceneManagement();
+
+		void addScene();
+		void removeScene(Scene* scene);
+		void setCurrentScene(int index);
+		Scene* getCurrentScene();
+
+	};
+
+
+}
