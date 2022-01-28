@@ -2,7 +2,6 @@
 #include <Windows.h>	// avoid compilation redefinition of APIENTRY
 #endif
 #include "SceneManagement.h"
-#include "../Log/Log.h"
 
 namespace vge {
 

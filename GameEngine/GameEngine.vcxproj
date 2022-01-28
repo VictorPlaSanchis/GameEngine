@@ -21,13 +21,10 @@
   <ItemGroup>
     <ClCompile Include="src\GraphicsEngine\Shader.cpp" />
     <ClCompile Include="src\ResourcesManager\ResourceManager.cpp" />
-    <ClCompile Include="src\GraphicsEngine\Sprite.cpp" />
     <ClCompile Include="src\GraphicsEngine\SpriteRenderer.cpp" />
     <ClCompile Include="src\GraphicsEngine\GraphicsEngine.cpp" />
-    <ClCompile Include="src\Object\ExampleComponent.cpp" />
     <ClCompile Include="src\Object\Component.cpp" />
     <ClCompile Include="src\Object\Object.cpp" />
-    <ClCompile Include="src\Log\Log.cpp" />
     <ClCompile Include="src\SceneSystem\SceneManagement.cpp" />
     <ClCompile Include="src\SceneSystem\Scene.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />
@@ -38,13 +35,10 @@
   <ItemGroup>
     <ClInclude Include="src\GraphicsEngine\Shader.h" />
     <ClInclude Include="src\ResourcesManager\ResourceManager.h" />
-    <ClInclude Include="src\GraphicsEngine\Sprite.h" />
     <ClInclude Include="src\GraphicsEngine\SpriteRenderer.h" />
     <ClInclude Include="src\GraphicsEngine\GraphicsEngine.h" />
-    <ClInclude Include="src\Object\ExampleComponent.h" />
     <ClInclude Include="src\Object\Component.h" />
     <ClInclude Include="src\Object\Object.h" />
-    <ClInclude Include="src\Log\Log.h" />
     <ClInclude Include="src\SceneSystem\SceneManagement.h" />
     <ClInclude Include="src\SceneSystem\Scene.h" />
     <ClInclude Include="src\GameEngine.h" />
@@ -134,7 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies/GLEW/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies/GLEW/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,7 +145,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies/GLEW/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies/GLEW/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -168,7 +162,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies/GLEW/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies/GLEW/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -185,7 +179,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies/GLEW/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies/GLEW/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

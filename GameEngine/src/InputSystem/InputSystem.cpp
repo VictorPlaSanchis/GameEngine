@@ -3,7 +3,7 @@
 #endif
 #include "InputSystem.h"
 #include "../GameEngine.h"
-#include "../Log/Log.h"
+
 namespace vge {
 
 

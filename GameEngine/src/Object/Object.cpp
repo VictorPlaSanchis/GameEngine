@@ -7,7 +7,7 @@ namespace vge {
 	{
 		this->components = {};
 		this->childs = {};
-		//this->transform = new Transform();
+		this->transform = new Transform();
 	}
 
 	Object::~Object()

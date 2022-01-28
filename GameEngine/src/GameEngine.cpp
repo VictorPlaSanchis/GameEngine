@@ -6,7 +6,6 @@
 #include "GameEngine.h"
 #include "InputSystem/InputSystem.h"
 #include "SceneSystem/SceneManagement.h"
-#include "Log/Log.h"
 #include "GraphicsEngine/GraphicsEngine.h"
 #include "GraphicsEngine/Shader.h"
 
@@ -23,7 +22,6 @@ namespace vge {
 
 		// Needs window context
 		std::string versionGL = (const char*)glGetString(GL_VERSION);
-		DEBUG_APP_WARNING("Running OpenGL version " + versionGL);
 
 		// Initializing engines...
 		InputSystem::get()->Init();
@@ -35,8 +33,6 @@ namespace vge {
 
 	void GameEngine::Run()
 	{
-
-		DEBUG_APP_INFO("Game Engine is now running.");
 
 
 		// ##########################################
@@ -78,7 +74,6 @@ namespace vge {
 
 		glfwTerminate();
 		
-		DEBUG_APP_WARNING("Game Engine stopped running.");
 	}
 
 	GameEngine::GameEngine()

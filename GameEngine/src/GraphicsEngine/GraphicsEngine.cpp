@@ -1,7 +1,6 @@
 #include "GraphicsEngine.h"
 #include <GL/glew.h>
 #include "GLFW/glfw3.h"
-#include "../Log/Log.h"
 #include <fstream>
 
 namespace vge {
@@ -24,7 +23,6 @@ namespace vge {
 	{
 		InitShaders();
 		InitShaderProgram();
-		DEBUG_GEL_WARNING("Graphics Engine initialized.");
 	}
 
 	void GraphicsEngine::InitShaders()
@@ -55,7 +53,6 @@ namespace vge {
 		std::ifstream shaderFile;
 		shaderFile.open(pathShader, std::ios_base::binary);
 		if (!shaderFile) {
-			DEBUG_GEL_ERROR("File on " + pathShader + " was not found.");
 			return std::string("<SHADER NULL CONTENT>");
 		}
 		
