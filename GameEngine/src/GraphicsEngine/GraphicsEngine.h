@@ -28,6 +28,7 @@ namespace vge {
 		void Init();
 		void Bind();
 		void Unbind();
+		unsigned int programID() { return this->shaderProgram; }
 
 	};
 

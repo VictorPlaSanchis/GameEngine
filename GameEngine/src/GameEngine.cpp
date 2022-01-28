@@ -57,7 +57,17 @@ namespace vge {
 
 		// ##########################################
 
+		Object triangle = Object();
+		SceneManagement::get()->getCurrentScene()->addObject(&triangle);
+
 		while (!glfwWindowShouldClose(GameEngine::windowGame)) {
+
+			int transformLocation = glGetUniformLocation(GraphicsEngine::get()->programID(), "transform");
+			float transform[3];
+			for (int i = 0; i < 3; i++) {
+				transform[i] = (float)triangle.transform->getValues().get(i);
+			}
+			glProgramUniform3fv(GraphicsEngine::get()->programID(), transformLocation, 1, transform);
 
 			SceneManagement::get()->getCurrentScene()->UpdateScene();
 			InputSystem::get()->Update();

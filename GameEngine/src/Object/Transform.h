@@ -20,6 +20,8 @@ namespace vge {
 
 		void move(const Vector<double, 3>& direction);
 
+		Vector<double, 3> getValues() { return this->values; }
+
 	};
 
 

@@ -11,12 +11,13 @@ namespace vge {
 
         std::list<Object*> childs;
         std::list<Component*> components;
-        Transform* transform;
 
     public:
 
         Object();
         ~Object();
+
+        Transform* transform;
 
         void addComponent(Component* component);
         void removeComponent(Component* component);

@@ -36,6 +36,7 @@ namespace vge {
 
 	void Object::Update()
 	{
+		transform->Behaviour();
 		for (Component* component : components) {
 			component->Behaviour();
 		}

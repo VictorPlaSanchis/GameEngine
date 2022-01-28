@@ -90,15 +90,11 @@ namespace vge {
 			(*this) = (*this) * scalar;
 		}
 
-		T getX() { return values[0]; }
-		T getY() { return values[1]; }
-		T getZ() { return values[2]; }
-
 	};
 
 
-#define x getX()
-#define y getY()
-#define z getZ();
+#define x get(0)
+#define y get(1)
+#define z get(2)
 
 }

@@ -12,7 +12,7 @@ namespace vge {
 	    
 		int compileInfo = 0;
 		glGetShaderiv(this->shaderID, GL_INFO_LOG_LENGTH, &compileInfo);
-		
+
 		if (compileInfo == GL_FALSE) {
 			// Shader compile was unsuccesfull 
 			glDeleteShader(this->shaderID);
