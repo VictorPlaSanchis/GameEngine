@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Log\Console.cpp" />
     <ClCompile Include="src\GraphicsEngine\Shader.cpp" />
     <ClCompile Include="src\ResourcesManager\ResourceManager.cpp" />
     <ClCompile Include="src\GraphicsEngine\SpriteRenderer.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="src\Object\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Log\Console.h" />
     <ClInclude Include="src\GraphicsEngine\Shader.h" />
     <ClInclude Include="src\ResourcesManager\ResourceManager.h" />
     <ClInclude Include="src\GraphicsEngine\SpriteRenderer.h" />

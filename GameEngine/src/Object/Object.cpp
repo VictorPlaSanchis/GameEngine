@@ -36,7 +36,7 @@ namespace vge {
 
 	void Object::Update()
 	{
-		transform->Behaviour();
+		transform->Behaviour();	// ??? transform doesnt have any frame by frame behaviour
 		for (Component* component : components) {
 			component->Behaviour();
 		}

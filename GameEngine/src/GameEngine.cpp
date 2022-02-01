@@ -8,6 +8,7 @@
 #include "SceneSystem/SceneManagement.h"
 #include "GraphicsEngine/GraphicsEngine.h"
 #include "GraphicsEngine/Shader.h"
+#include "Log/Console.h"
 
 namespace vge {
 
@@ -33,7 +34,7 @@ namespace vge {
 
 	void GameEngine::Run()
 	{
-
+		glfwSetTime(0);
 
 		// ##########################################
 
@@ -57,17 +58,22 @@ namespace vge {
 
 		// ##########################################
 
-		Object triangle = Object();
-		SceneManagement::get()->getCurrentScene()->addObject(&triangle);
+		int index = Console::COLOR(0);
 
 		while (!glfwWindowShouldClose(GameEngine::windowGame)) {
 
+			/*
+			EXAMPLE OF PASSING UNIFORM DATA TO A SHADER
+			
 			int transformLocation = glGetUniformLocation(GraphicsEngine::get()->programID(), "transform");
 			float transform[3];
 			for (int i = 0; i < 3; i++) {
 				transform[i] = (float)triangle.transform->getValues().get(i);
 			}
-			glProgramUniform3fv(GraphicsEngine::get()->programID(), transformLocation, 1, transform);
+			glProgramUniform3fv(GraphicsEngine::get()->programID(), transformLocation, 1, transform);*/
+
+			Console::debug("GAME ENGINE is running...", Console::COLOR(index % 7), Console::APPLICATION);
+			index++;
 
 			SceneManagement::get()->getCurrentScene()->UpdateScene();
 			InputSystem::get()->Update();
