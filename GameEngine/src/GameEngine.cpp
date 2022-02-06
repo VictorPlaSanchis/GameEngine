@@ -9,6 +9,9 @@
 #include "GraphicsEngine/GraphicsEngine.h"
 #include "GraphicsEngine/Shader.h"
 #include "Log/Console.h"
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_glfw.h"
+#include "ImGui/imgui_impl_opengl3.h"
 
 namespace vge {
 
@@ -23,6 +26,7 @@ namespace vge {
 
 		// Needs window context
 		std::string versionGL = (const char*)glGetString(GL_VERSION);
+		Console::debug(versionGL, Console::YELLOW, Console::APPLICATION);
 
 		// Initializing engines...
 		InputSystem::get()->Init();
@@ -30,63 +34,64 @@ namespace vge {
 
 		SceneManagement::get()->addScene();
 
+		// Setup Dear ImGui context
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+		// Setup Platform/Renderer bindings
+		ImGui_ImplGlfw_InitForOpenGL(windowGame, true);
+
+		std::string glsl_version = "4.60.5";
+		ImGui_ImplOpenGL3_Init(glsl_version.c_str());
+
+		// Setup Dear ImGui style
+		ImGui::StyleColorsDark();
+
 	}
 
 	void GameEngine::Run()
 	{
+
 		glfwSetTime(0);
+		Console::debug("Game Engine is running...", Console::COLOR::GREEN, Console::SENDER::APPLICATION);
 
-		// ##########################################
 
-		float points[] = {
-		   0.0f,  0.5f,  0.0f,
-		   0.5f, -0.5f,  0.0f,
-		  -0.5f, -0.5f,  0.0f
-		};
 
-		GLuint vbo = 0;
-		glGenBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), points, GL_STATIC_DRAW);
-
-		GLuint vao = 0;
-		glGenVertexArrays(1, &vao);
-		glBindVertexArray(vao);
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-		// ##########################################
-
-		int index = Console::COLOR(0);
+		Console::debug("ImGui is initialized.", Console::COLOR::YELLOW, Console::SENDER::GUI);
 
 		while (!glfwWindowShouldClose(GameEngine::windowGame)) {
 
-			/*
-			EXAMPLE OF PASSING UNIFORM DATA TO A SHADER
-			
-			int transformLocation = glGetUniformLocation(GraphicsEngine::get()->programID(), "transform");
-			float transform[3];
-			for (int i = 0; i < 3; i++) {
-				transform[i] = (float)triangle.transform->getValues().get(i);
-			}
-			glProgramUniform3fv(GraphicsEngine::get()->programID(), transformLocation, 1, transform);*/
-
-			Console::debug("GAME ENGINE is running...", Console::COLOR(index % 7), Console::APPLICATION);
-			index++;
-
+			// Updating game engines
 			SceneManagement::get()->getCurrentScene()->UpdateScene();
 			InputSystem::get()->Update();
 
+
+			// clearing last screen frame
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			GraphicsEngine::get()->Bind();
-			glBindVertexArray(vao);
-			glDrawArrays(GL_TRIANGLES, 0, 3);
+			// ImGui events
+			// feed inputs to dear imgui, start new frame
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+			// render your GUI
+			ImGui::Begin("IM GUI EXAMPLE WINDOW");
+			ImGui::Text("OpenGL running:");
+			ImGui::Text((const char*)glGetString(GL_VERSION));
+			ImGui::End();
 
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
+			// Polling and swapping screen buffers
 			glfwPollEvents();
 			glfwSwapBuffers(GameEngine::windowGame);
 		}
+
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
 
 		glfwTerminate();
 		

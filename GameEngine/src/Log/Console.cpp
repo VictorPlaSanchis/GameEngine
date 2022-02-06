@@ -12,13 +12,14 @@ namespace vge {
 		{Console::GREEN, "\033[32m"},
 		{Console::WHITE, "\033[37m"},
 		{Console::CYAN, "\033[36m"},
-		{Console::YELLOW, "\033[33m"},
+		{Console::YELLOW, "\033[33m"}
 	};
 	std::map<Console::SENDER, std::string> Console::SENDER_VALUE = {
 		{Console::APPLICATION, "APP"},
 		{Console::GRAPHICS_ENGINE, "GEL"},
 		{Console::INPUT_SYSTEM, "ISL"},
 		{Console::AUXILIAR, "AUX"},
+		{Console::GUI, "GUI"}
 	};
 
 	Console::Console()

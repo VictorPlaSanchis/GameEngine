@@ -26,7 +26,8 @@ namespace vge {
 			APPLICATION,
 			GRAPHICS_ENGINE,
 			INPUT_SYSTEM,
-			AUXILIAR
+			AUXILIAR,
+			GUI
 		};
 
 		static std::map<Console::COLOR, std::string> COLOR_VALUE;

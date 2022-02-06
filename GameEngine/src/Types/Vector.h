@@ -92,9 +92,4 @@ namespace vge {
 
 	};
 
-
-#define x get(0)
-#define y get(1)
-#define z get(2)
-
 }
