@@ -42,7 +42,7 @@ namespace vge {
 		ImGui_ImplGlfw_InitForOpenGL(windowGame, true);
 
 		std::string glsl_version = "4.60.5";
-		ImGui_ImplOpenGL3_Init(glsl_version.c_str());
+		ImGui_ImplOpenGL3_Init(4.6);
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();

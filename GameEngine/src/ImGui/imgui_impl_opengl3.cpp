@@ -66,6 +66,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include <string>
+
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include <stdio.h>
@@ -138,7 +140,7 @@ static unsigned int g_VboHandle = 0, g_ElementsHandle = 0;
 
 
 // Functions
-bool    ImGui_ImplOpenGL3_Init(const char* glsl_version)
+bool    ImGui_ImplOpenGL3_Init(double openGlversion)
 {
     // Query for GL version
 #if !defined(IMGUI_IMPL_OPENGL_ES2)
@@ -158,21 +160,30 @@ bool    ImGui_ImplOpenGL3_Init(const char* glsl_version)
         io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;  // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
 #endif
 
-    // Store GLSL version string so we can refer to it later in case we recreate shaders. 
-    // Note: GLSL version is NOT the same as GL version. Leave this to NULL if unsure.
-#if defined(IMGUI_IMPL_OPENGL_ES2)
-    if (glsl_version == NULL)
-        glsl_version = "#version 100";
-#elif defined(IMGUI_IMPL_OPENGL_ES3)
-    if (glsl_version == NULL)
-        glsl_version = "#version 300 es";
-#else
-    if (glsl_version == NULL)
-        glsl_version = "#version 130";
-#endif
-    IM_ASSERT((int)strlen(glsl_version) + 2 < IM_ARRAYSIZE(g_GlslVersionString));
-    strcpy(g_GlslVersionString, glsl_version);
-    strcat(g_GlslVersionString, "\n");
+    // ---------------------------
+    // MADE BY VICTOR PLA SANCHIS 
+    // **************************
+    // ---------------------------
+
+    // Setup glslversion by openGl version:
+
+    if (openGlversion >= 3.3) {
+        std::string shaderVersion = "#version ";
+        shaderVersion += std::to_string(openGlversion * 100);
+        shaderVersion += "\n";
+        strcpy(g_GlslVersionString, shaderVersion.c_str());
+    }
+    else {
+        if(openGlversion == 2.0) strcpy(g_GlslVersionString, "#version 110\n");
+        else if (openGlversion == 2.0) strcpy(g_GlslVersionString, "#version 120\n");
+        else if (openGlversion == 2.0) strcpy(g_GlslVersionString, "#version 130\n");
+        else if (openGlversion == 2.0) strcpy(g_GlslVersionString, "#version 140\n");
+        else if (openGlversion == 2.0) strcpy(g_GlslVersionString, "#version 150\n");
+    }
+
+    // ---------------------------
+    // ***************************
+    // ---------------------------
 
     // Dummy construct to make it easily visible in the IDE and debugger which GL loader has been selected.
     // The code actually never uses the 'gl_loader' variable! It is only here so you can read it!
