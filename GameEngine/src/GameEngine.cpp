@@ -4,6 +4,7 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "GameEngine.h"
+#include <string>
 #include "InputSystem/InputSystem.h"
 #include "SceneSystem/SceneManagement.h"
 #include "GraphicsEngine/GraphicsEngine.h"
@@ -25,8 +26,13 @@ namespace vge {
 		glfwMakeContextCurrent(windowGame);
 
 		// Needs window context
-		std::string versionGL = (const char*)glGetString(GL_VERSION);
-		Console::debug(versionGL, Console::YELLOW, Console::APPLICATION);
+		std::string openGLversion = "";
+		const char* openGLversionPtr = (const char*)glGetString(GL_VERSION);
+		for (int i = 0; i < 3; i++) {
+			openGLversion += *openGLversionPtr;
+			openGLversionPtr++;
+		}
+		Console::debug("Running OpenGL version " + openGLversion + ".", Console::YELLOW, Console::APPLICATION);
 
 		// Initializing engines...
 		InputSystem::get()->Init();
@@ -40,9 +46,7 @@ namespace vge {
 		ImGuiIO& io = ImGui::GetIO();
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(windowGame, true);
-
-		std::string glsl_version = "4.60.5";
-		ImGui_ImplOpenGL3_Init(4.6);
+		ImGui_ImplOpenGL3_Init(std::stod(openGLversion));
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
