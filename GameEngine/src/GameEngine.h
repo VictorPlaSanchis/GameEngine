@@ -21,6 +21,8 @@ namespace vge {
 		void Init();
 		void Run();
 
+		const char* getOpenGLversion();
+
 	};
 
 }

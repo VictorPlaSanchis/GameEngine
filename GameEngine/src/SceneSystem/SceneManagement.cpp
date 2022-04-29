@@ -22,6 +22,11 @@ namespace vge {
 	{
 	}
 
+	void SceneManagement::Ini()
+	{
+		this->scenes = std::vector<Scene*>(0);
+	}
+
 	void SceneManagement::addScene()
 	{
 		scenes.push_back(new Scene());

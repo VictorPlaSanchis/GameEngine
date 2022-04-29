@@ -15,11 +15,12 @@ namespace vge {
 
 	public:
 
-		static SceneManagement* get();
-
 		SceneManagement();
 		~SceneManagement();
 
+		static SceneManagement* get();
+
+		void Ini();
 		void addScene();
 		void removeScene(Scene* scene);
 		void setCurrentScene(int index);

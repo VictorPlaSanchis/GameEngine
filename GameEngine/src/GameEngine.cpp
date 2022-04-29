@@ -10,9 +10,9 @@
 #include "GraphicsEngine/GraphicsEngine.h"
 #include "GraphicsEngine/Shader.h"
 #include "Log/Console.h"
-#include "ImGui/imgui.h"
-#include "ImGui/imgui_impl_glfw.h"
-#include "ImGui/imgui_impl_opengl3.h"
+#include "./ImGui/ImGuiController.h"
+
+#include "Instrumentor.h"
 
 namespace vge {
 
@@ -22,7 +22,7 @@ namespace vge {
 		if (!glfwInit()) glfwTerminate();
 
 		// Creating window context
-		windowGame = glfwCreateWindow(640, 420, "Game Engine by Vitolo Paolo 12/01/2022 (R)", NULL, NULL);
+		windowGame = glfwCreateWindow(1280, 800, "Game Engine by Vitolo Paolo 12/01/2022 (R)", NULL, NULL);
 		glfwMakeContextCurrent(windowGame);
 
 		// Needs window context
@@ -32,73 +32,72 @@ namespace vge {
 			openGLversion += *openGLversionPtr;
 			openGLversionPtr++;
 		}
-		Console::debug("Running OpenGL version " + openGLversion + ".", Console::YELLOW, Console::APPLICATION);
+		Console::debug("Running OpenGL version " + (std::string)getOpenGLversion() + ".", Console::YELLOW, Console::APPLICATION);
 
 		// Initializing engines...
 		InputSystem::get()->Init();
 		GraphicsEngine::get()->Init();
 
+		SceneManagement::get()->Ini();
 		SceneManagement::get()->addScene();
 
-		// Setup Dear ImGui context
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO();
-		// Setup Platform/Renderer bindings
-		ImGui_ImplGlfw_InitForOpenGL(windowGame, true);
-		ImGui_ImplOpenGL3_Init(std::stod(openGLversion));
-
-		// Setup Dear ImGui style
-		ImGui::StyleColorsDark();
+		ImGuiController::get()->Init();
 
 	}
 
 	void GameEngine::Run()
 	{
-
-		glfwSetTime(0);
-		Console::debug("Game Engine is running...", Console::COLOR::GREEN, Console::SENDER::APPLICATION);
-
-
-
-		Console::debug("ImGui is initialized.", Console::COLOR::YELLOW, Console::SENDER::GUI);
-
-		while (!glfwWindowShouldClose(GameEngine::windowGame)) {
-
-			// Updating game engines
-			SceneManagement::get()->getCurrentScene()->UpdateScene();
-			InputSystem::get()->Update();
-
-
-			// clearing last screen frame
-			glClear(GL_COLOR_BUFFER_BIT);
-
-			// ImGui events
-			// feed inputs to dear imgui, start new frame
-			ImGui_ImplOpenGL3_NewFrame();
-			ImGui_ImplGlfw_NewFrame();
-			ImGui::NewFrame();
-			// render your GUI
-			ImGui::Begin("IM GUI EXAMPLE WINDOW");
-			ImGui::Text("OpenGL running:");
-			ImGui::Text((const char*)glGetString(GL_VERSION));
-			ImGui::End();
-
-			ImGui::Render();
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-
-			// Polling and swapping screen buffers
-			glfwPollEvents();
-			glfwSwapBuffers(GameEngine::windowGame);
+		PROFILE_FUNCTION();
+		{
+			PROFILE_SCOPE("Initial debug warnings");
+			glfwSetTime(0);
+			Console::debug("Game Engine is running...", Console::COLOR::GREEN, Console::SENDER::APPLICATION);
+			Console::debug("ImGui is initialized.", Console::COLOR::YELLOW, Console::SENDER::GUI);
 		}
+		{
+			PROFILE_SCOPE("Executing GameEngine")
+				while (!glfwWindowShouldClose(GameEngine::windowGame)) {
+					{
+						PROFILE_SCOPE("FRAME TIME GameEngine")
+						//PROFILE_SCOPE("Update Scene");
+						// Updating game engines
+						SceneManagement::get()->getCurrentScene()->UpdateScene();
+						InputSystem::get()->Update();
 
-		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplGlfw_Shutdown();
-		ImGui::DestroyContext();
+						{
+							PROFILE_SCOPE("InputSystem isKeyPressed")
+								if (InputSystem::get()->isKeyPressed(65)) {
+									Console::debug("HELLO WORLD! :D", Console::COLOR::CYAN, Console::SENDER::AUXILIAR);
+								}
+						}
 
-		glfwTerminate();
+						// clearing last screen frame
+						glClear(GL_COLOR_BUFFER_BIT);
+
+						//PROFILE_SCOPE("ImGUI Run");
+						// ImGui
+						ImGuiController::get()->Run();
+
+						// Polling and swapping screen buffers
+						glfwPollEvents();
+						glfwSwapBuffers(GameEngine::windowGame);
+					}
+				}
+		}
+		{
+			PROFILE_SCOPE("Terminating GameEngine")
+			ImGui_ImplOpenGL3_Shutdown();
+			ImGui_ImplGlfw_Shutdown();
+			ImGui::DestroyContext();
+
+			glfwTerminate();
+		}
 		
+	}
+
+	const char* GameEngine::getOpenGLversion()
+	{
+		return (const char*)glGetString(GL_VERSION);
 	}
 
 	GameEngine::GameEngine()
