@@ -2,11 +2,17 @@
 
 namespace vge {
 
-	SpriteRenderer::SpriteRenderer()
+	SpriteRenderer::SpriteRenderer(const char* spriteFilePath)
 	{
+		this->spriteFilePath = spriteFilePath;
+
 	}
 
 	SpriteRenderer::~SpriteRenderer()
+	{
+	}
+
+	void SpriteRenderer::Behaviour()
 	{
 	}
 

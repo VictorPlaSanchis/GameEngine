@@ -2,8 +2,6 @@
 #include "../GameEngine.h"
 #include <string>
 
-#include "../Instrumentor.h"
-
 vge::ImGuiController::ImGuiController()
 {
 }
@@ -36,42 +34,36 @@ void vge::ImGuiController::Init()
 
 void vge::ImGuiController::VersionWindow() 
 {
-	PROFILE_FUNCTION()
-	{
-		PROFILE_SCOPE("ImGUI VersionWindow")
-		ImGui::Begin("Version window");
-		ImGui::Text("OpenGL version that is running:");
-		ImGui::Text((const char*)glGetString(GL_VERSION));
-		ImGui::End();
-	}
+
+	ImGui::Begin("Version window");
+	ImGui::Text("OpenGL version that is running:");
+	ImGui::Text((const char*)glGetString(GL_VERSION));
+	ImGui::End();
+
 }
 
 void vge::ImGuiController::ProjectDirectoryWindow()
 {
-	PROFILE_FUNCTION()
-	{
-		PROFILE_SCOPE("ImGUI ProjectDirectoryWindow")
-		ImGui::Begin("Project directory");
-		ImGui::Text("OpenGL running:");
-		ImGui::Text((const char*)glGetString(GL_VERSION));
-		ImGui::End();
-	}
+
+	ImGui::Begin("Project directory");
+	ImGui::Text("OpenGL running:");
+	ImGui::Text((const char*)glGetString(GL_VERSION));
+	ImGui::End();
+	
 }
 
 void vge::ImGuiController::Run()
 {
-	PROFILE_FUNCTION()
-	{
-		PROFILE_SCOPE("ImGUI RUN")
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
 
-		// Window render selector
-		if (IM_GUI_WINDOWS & 0b0000000000000001) VersionWindow();
-		if (IM_GUI_WINDOWS & 0b0000000000000010) ProjectDirectoryWindow();
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
 
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
+	// Window render selector
+	if (IM_GUI_WINDOWS & 0b0000000000000001) VersionWindow();
+	if (IM_GUI_WINDOWS & 0b0000000000000010) ProjectDirectoryWindow();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	
 }

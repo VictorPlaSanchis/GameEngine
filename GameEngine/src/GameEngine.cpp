@@ -12,7 +12,9 @@
 #include "Log/Console.h"
 #include "./ImGui/ImGuiController.h"
 
-#include "Instrumentor.h"
+#include "./Debug/Instrumentor.h"
+
+#include "./Debug/MyGameObject.h"
 
 namespace vge {
 
@@ -49,50 +51,40 @@ namespace vge {
 	{
 		PROFILE_FUNCTION();
 		{
-			PROFILE_SCOPE("Initial debug warnings");
+			PROFILE_SCOPE("Executing GameEngine")
 			glfwSetTime(0);
 			Console::debug("Game Engine is running...", Console::COLOR::GREEN, Console::SENDER::APPLICATION);
 			Console::debug("ImGui is initialized.", Console::COLOR::YELLOW, Console::SENDER::GUI);
-		}
-		{
-			PROFILE_SCOPE("Executing GameEngine")
-				while (!glfwWindowShouldClose(GameEngine::windowGame)) {
-					{
-						PROFILE_SCOPE("FRAME TIME GameEngine")
-						//PROFILE_SCOPE("Update Scene");
-						// Updating game engines
-						SceneManagement::get()->getCurrentScene()->UpdateScene();
-						InputSystem::get()->Update();
 
-						{
-							PROFILE_SCOPE("InputSystem isKeyPressed")
-								if (InputSystem::get()->isKeyPressed(65)) {
-									Console::debug("HELLO WORLD! :D", Console::COLOR::CYAN, Console::SENDER::AUXILIAR);
-								}
-						}
+			// Creating a game object for Debugging
+			MyGameObject myGame = MyGameObject();
 
-						// clearing last screen frame
-						glClear(GL_COLOR_BUFFER_BIT);
+			while (!glfwWindowShouldClose(GameEngine::windowGame)) 
+			{
+				PROFILE_SCOPE("FRAME TIME GameEngine")
 
-						//PROFILE_SCOPE("ImGUI Run");
-						// ImGui
-						ImGuiController::get()->Run();
+				SceneManagement::get()->getCurrentScene()->UpdateScene();
+				InputSystem::get()->Update();
 
-						// Polling and swapping screen buffers
-						glfwPollEvents();
-						glfwSwapBuffers(GameEngine::windowGame);
-					}
-				}
-		}
-		{
-			PROFILE_SCOPE("Terminating GameEngine")
+				// clearing last screen frame
+				glClear(GL_COLOR_BUFFER_BIT);
+
+				//PROFILE_SCOPE("ImGUI Run");
+				// ImGui
+				ImGuiController::get()->Run();
+
+				// Polling and swapping screen buffers
+				glfwPollEvents();
+				glfwSwapBuffers(GameEngine::windowGame);
+			}
+
 			ImGui_ImplOpenGL3_Shutdown();
 			ImGui_ImplGlfw_Shutdown();
 			ImGui::DestroyContext();
 
 			glfwTerminate();
+
 		}
-		
 	}
 
 	const char* GameEngine::getOpenGLversion()

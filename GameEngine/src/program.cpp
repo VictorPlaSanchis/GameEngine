@@ -4,7 +4,7 @@
 #include "GameEngine.h"
 #include "Types/Vector.h"
 
-#include "Instrumentor.h"
+#include "./Debug/Instrumentor.h"
 
 int main(int argc, char* argv[])
 {
