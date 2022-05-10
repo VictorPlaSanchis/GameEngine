@@ -2,8 +2,6 @@
 #include "GLFW/glfw3.h"
 #include <iostream>
 
-#include "../Instrumentor.h"
-
 namespace vge {
 
 	std::map<Console::COLOR, std::string> Console::COLOR_VALUE = {
@@ -32,14 +30,9 @@ namespace vge {
 	}
 
 	void Console::debug(std::string message, COLOR color, SENDER sender = Console::SENDER::AUXILIAR)
-	{
-		PROFILE_FUNCTION()
-
-		{
-			PROFILE_SCOPE("Debug Console writing")
-			double currentTime = glfwGetTime();
-			std::cout << COLOR_VALUE[color] << "[" + std::to_string(currentTime) + "s] " << SENDER_VALUE[sender] + ": " + message + COLOR_VALUE[Console::WHITE] << std::endl;
-		}
+	{	
+		double currentTime = glfwGetTime();
+		std::cout << COLOR_VALUE[color] << "[" + std::to_string(currentTime) + "s] " << SENDER_VALUE[sender] + ": " + message + COLOR_VALUE[Console::WHITE] << std::endl;
 	}
 
 

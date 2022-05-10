@@ -3,6 +3,8 @@
 #include "GLFW/glfw3.h"
 #include <fstream>
 
+#include "../Log/Console.h"
+
 namespace vge {
 
 	GraphicsEngine::GraphicsEngine()
@@ -72,6 +74,43 @@ namespace vge {
 	void GraphicsEngine::Unbind()
 	{
 		glUseProgram(0);
+	}
+
+	void GraphicsEngine::pushVAOData(std::vector<float>* data, int dimensionData)
+	{
+		unsigned int newVAO;
+		VAO_DATA VAOData;
+		VAOData.dataSize = data->size() / dimensionData;
+		VAOData.dimensionSize = dimensionData;
+		glGenBuffers(1, &newVAO);
+		VAOs.push_back(newVAO);
+		VAOsData.insert(std::pair<unsigned int, VAO_DATA>(newVAO, VAOData));
+		glBindBuffer(GL_ARRAY_BUFFER, newVAO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(*data), &(*data)[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void GraphicsEngine::resetVAOs() 
+	{
+		VAOs = std::vector<unsigned int>(0);
+	}
+
+	void GraphicsEngine::DrawData()
+	{
+
+		this->Bind();
+
+		for (int i = 0; i < VAOs.size(); i++) {
+			glEnableVertexAttribArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, VAOs[i]);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			glDrawArrays(GL_TRIANGLES, 0, 3);
+			glDisableVertexAttribArray(0);
+		}
+
+		resetVAOs();
+		this->Unbind();
+
 	}
 
 }
