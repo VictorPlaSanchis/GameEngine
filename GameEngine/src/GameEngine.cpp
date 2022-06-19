@@ -57,20 +57,27 @@ namespace vge {
 			Console::debug("ImGui is initialized.", Console::COLOR::YELLOW, Console::SENDER::GUI);
 
 			// Creating a game object for Debugging
-			MyGameObject myGame = MyGameObject();
-			
-			std::vector<float> g_vertex_buffer_data = {
 
-				0.5f,  -0.5f, 0.0f,
+			MyGameObject object = MyGameObject();
+			object.model = Model({
+				-0.5f, -0.5f, 0.0f, 
 				-0.5f,  0.5f, 0.0f,
-				0.5f, 0.5f, 0.0f,
+				 0.5f, -0.5f, 0.0f,
 
-				-0.5f, -0.5f, 0.0f,
-				0.5f,  -0.5f, 0.0f,
-				-0.5f,  0.5f, 0.0f
-
-				
-			};
+				-0.5f,  0.5f, 0.0f,
+				 0.5f,  0.5f, 0.0f,
+				 0.5f, -0.5f, 0.0f
+			});
+			object.model.assignVertexsTexCoord({
+				0.0f, 0.0f, 
+				0.0f, -1.0f,
+				-1.0f, 0.0f,
+				0.0f, -1.0f,
+				-1.0f, -1.0f,
+				-1.0f, 0.0f
+			});
+			object.model.assignTexture("./imgs/swellow.png");
+			GraphicsEngine::get()->pushModel(&object.model);
 
 			while (!glfwWindowShouldClose(GameEngine::windowGame)) 
 			{
@@ -78,11 +85,9 @@ namespace vge {
 
 				SceneManagement::get()->getCurrentScene()->UpdateScene();
 				InputSystem::get()->Update();
-				GraphicsEngine::get()->pushVAOData(&g_vertex_buffer_data, 3);
 
 				// clearing last screen frame
 				glClear(GL_COLOR_BUFFER_BIT);
-
 				GraphicsEngine::get()->DrawData();
 
 				//PROFILE_SCOPE("ImGUI Run");

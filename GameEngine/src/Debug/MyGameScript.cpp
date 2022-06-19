@@ -18,8 +18,6 @@ namespace vge {
 			Console::debug("Im alive...", Console::COLOR::CYAN, Console::SENDER::AUXILIAR);
 		}
 
-
-
 	}
 
 }

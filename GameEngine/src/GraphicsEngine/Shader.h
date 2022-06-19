@@ -12,7 +12,7 @@ namespace vge {
 		unsigned int shaderType;
 		unsigned int shaderID;
 
-		void Compile();
+		void Compile(const char* shaderName = "None");
 
 	public:
 
@@ -20,7 +20,7 @@ namespace vge {
 		Shader(unsigned int shaderType, const char* pathSource);
 		~Shader();
 
-		void Init();
+		void Init(const char* shaderName = "None");
 		unsigned int getID();
 	
 	};

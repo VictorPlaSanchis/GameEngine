@@ -1,9 +1,12 @@
 #pragma once
 #include "../Object/Component.h"
 #include "Shader.h"
+#include "Model.h"
 
 #include <vector>
 #include <unordered_map>
+
+#include "../Log/Console.h"
 
 namespace vge {
 
@@ -11,11 +14,6 @@ namespace vge {
 	{
 
 	private:
-
-		struct VAO_DATA {
-			unsigned int dataSize;
-			unsigned int dimensionSize;
-		};
 
 		unsigned int shaderProgram;
 		Shader* vertexShader;
@@ -25,9 +23,8 @@ namespace vge {
 		void InitShaderProgram();
 	    std::string getSourceShader(const std::string pathShader);
 
-		std::vector<unsigned int> VAOs;
-		std::unordered_map<unsigned int, VAO_DATA> VAOsData;
-		
+		std::unordered_map<unsigned int, Model*> models;
+		std::unordered_map<unsigned int, unsigned int> textures;
 
 	public:
 
@@ -43,8 +40,9 @@ namespace vge {
 
 		unsigned int a;
 
-		void pushVAOData(std::vector<float>* data, int dimensionData);
-		void resetVAOs();
+		void passUniform(unsigned int programShader, std::vector<float> data, const char uniformName[]);
+		void pushModel(Model* model);
+		void pushTexture(const char* filename, unsigned int VAO);
 		void DrawData();
 
 	};

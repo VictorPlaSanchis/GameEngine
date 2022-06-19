@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GraphicsEngine\Model.cpp" />
     <ClCompile Include="src\Debug\MyGameObject.cpp" />
     <ClCompile Include="src\Debug\MyGameScript.cpp" />
     <ClCompile Include="src\ImGui\ImGuiController.cpp" />
@@ -44,9 +45,11 @@
     <ClCompile Include="src\Object\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GraphicsEngine\Model.h" />
     <ClInclude Include="src\Debug\MyGameObject.h" />
     <ClInclude Include="src\Debug\MyGameScript.h" />
     <ClInclude Include="src\Debug\Instrumentor.h" />
+    <ClInclude Include="src\GraphicsEngine\stb_image.h" />
     <ClInclude Include="src\ImGui\ImGuiController.h" />
     <ClInclude Include="src\ImGui\imgui_impl_opengl3.h" />
     <ClInclude Include="src\ImGui\imgui_impl_glfw.h" />
@@ -184,7 +187,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
     </ClCompile>

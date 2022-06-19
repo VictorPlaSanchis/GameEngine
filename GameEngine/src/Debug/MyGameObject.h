@@ -4,21 +4,21 @@
 #include "MyGameScript.h"
 #include "../SceneSystem/SceneManagement.h"
 #include "../GraphicsEngine/SpriteRenderer.h"
+#include "../GraphicsEngine/Model.h"
 
 namespace vge {
 
 	class MyGameObject : public Object
 	{
 
-	private:
-
-		MyGameScript script;
-		SpriteRenderer sprite;
-
 	public:
 
 		MyGameObject();
 		~MyGameObject();
+
+		Model model;
+		MyGameScript script;
+		SpriteRenderer sprite;
 
 	};
 

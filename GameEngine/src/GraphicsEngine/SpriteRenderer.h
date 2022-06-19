@@ -8,12 +8,15 @@ namespace vge {
 
 	private:
 
-		const char* spriteFilePath;
+		const char* texturePath;
+		unsigned char* textureData;
+
+		int width, height;
 
 	public:
 
-		SpriteRenderer(const char* spriteFilePath = "");
-		~SpriteRenderer();
+		SpriteRenderer();
+		SpriteRenderer(const char* filename);
 
 		void Behaviour() override;
 

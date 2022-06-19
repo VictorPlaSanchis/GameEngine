@@ -1,21 +1,33 @@
 #include "Shader.h"
 #include "GL/glew.h"
 
+#include "../Log/Console.h"
+
 #include <iostream>
+#include <vector>
 
 namespace vge {
 
-	void Shader::Compile()
+	void Shader::Compile(const char* shaderName)
 	{
 
 		glCompileShader(this->shaderID);
 	    
 		int compileInfo = 0;
-		glGetShaderiv(this->shaderID, GL_INFO_LOG_LENGTH, &compileInfo);
+		glGetShaderiv(this->shaderID, GL_COMPILE_STATUS, &compileInfo);
 
 		if (compileInfo == GL_FALSE) {
-			// Shader compile was unsuccesfull 
+			int maxLength = 0;
+			glGetShaderiv(this->shaderID, GL_INFO_LOG_LENGTH, &maxLength);
+			char infoLog[1024];
+			glGetShaderInfoLog(this->shaderID, maxLength, &maxLength, infoLog);
 			glDeleteShader(this->shaderID);
+			Console::debug(infoLog, Console::COLOR::RED, Console::SENDER::GRAPHICS_ENGINE);
+			Console::debug("Error on compiling shader, ID: " + std::to_string(this->shaderID) + ", Shader name: " + shaderName + ", Compile log : " + std::to_string(compileInfo), Console::COLOR::RED, Console::SENDER::GRAPHICS_ENGINE);
+			glDeleteShader(this->shaderID);
+		}
+		else {
+			Console::debug("Shader compiled succesfully, ID: " + std::to_string(this->shaderID) + ", Shader name: " + shaderName + ", Compile log : " + std::to_string(compileInfo), Console::COLOR::GREEN, Console::SENDER::GRAPHICS_ENGINE);
 		}
 
 	}
@@ -36,13 +48,13 @@ namespace vge {
 	{
 	}
 
-	void Shader::Init()
+	void Shader::Init(const char* shaderName)
 	{
 		glewExperimental = GL_TRUE;
 		glewInit();
 		this->shaderID = glCreateShader(shaderType);
 		glShaderSource(this->shaderID, 1, &sourceCode, NULL);
-		this->Compile();
+		this->Compile(shaderName);
 	}
 
 	unsigned int Shader::getID()
