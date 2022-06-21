@@ -16,10 +16,6 @@ namespace vge {
 		MyGameObject();
 		~MyGameObject();
 
-		Model model;
-		MyGameScript script;
-		SpriteRenderer sprite;
-
 	};
 
 }

@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
+#include "../Object/Component.h"
 
 namespace vge {
 
-	class Model
+	class Model : public Component
 	{
 	
 	private:
@@ -30,6 +31,8 @@ namespace vge {
 		std::vector<float> getDataTexCoord();
 		const char* getTexturePath();
 		unsigned int getNumVertexs();
+
+		void Behaviour() override;
 
 	};
 

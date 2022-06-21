@@ -7,17 +7,14 @@ namespace vge {
 
     class Object {
 
-    private:
-
-        std::list<Object*> childs;
-        std::list<Component*> components;
-
     public:
 
         Object();
         ~Object();
 
         Transform* transform;
+        std::list<Object*> childs;
+        std::list<Component*> components;
 
         void addComponent(Component* component);
         void removeComponent(Component* component);
@@ -25,6 +22,8 @@ namespace vge {
         void removeChild(Object* child);
 
         void Update();
+
+
 
     };
 

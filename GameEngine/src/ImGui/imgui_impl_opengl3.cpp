@@ -498,7 +498,7 @@ bool    ImGui_ImplOpenGL3_CreateDeviceObjects()
 #endif
 
     const GLchar* vertex_shader_glsl_410_core =
-        "#version 460\n"
+        "#version 330\n"
         "in vec2 Position;\n"
         "in vec2 UV;\n"
         "in vec4 Color;\n"
@@ -513,7 +513,7 @@ bool    ImGui_ImplOpenGL3_CreateDeviceObjects()
         "}\n";
 
     const GLchar* fragment_shader_glsl_410_core =
-        "#version 460\n"
+        "#version 330\n"
         "in vec2 Frag_UV;\n"
         "in vec4 Frag_Color;\n"
         "uniform sampler2D Texture;\n"

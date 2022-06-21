@@ -1,28 +1,46 @@
 #include "MyGameObject.h"
 #include "../Log/Console.h"
+#include "../GraphicsEngine/GraphicsEngine.h"
 
 namespace vge {
 
 	MyGameObject::MyGameObject()
 	{
-		// Initialize Script component
-		this->script = MyGameScript();
+		this->components = {};
+		this->childs = {};
+		this->transform = new Transform();
 
-		// Initialize Sprite component
-		this->sprite = SpriteRenderer("./imgs/nya.bmp");
+		Model* model = new Model({
+			-0.5f, -0.5f, 0.0f,
+			-0.5f,  0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f,
 
-		// Adding components
-		this->addComponent(&script);
-		this->addComponent(&sprite);
+			-0.5f,  0.5f, 0.0f,
+			 0.5f,  0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f
+		});
+		model->assignVertexsTexCoord({
+			0.0f, 0.0f,
+			0.0f, -1.0f,
+			-1.0f, 0.0f,
+			0.0f, -1.0f,
+			-1.0f, -1.0f,
+			-1.0f, 0.0f
+		});
+		model->assignTexture("./imgs/swellow.png");
+		GraphicsEngine::get()->pushModel(model);
 
-		// Adding object into current scene of the game
-		SceneManagement::get()->getCurrentScene()->addObject(this);
+		MyGameScript* script = new MyGameScript();
+		SpriteRenderer* sprite = new SpriteRenderer("./imgs/nya.bmp");;
+		this->addComponent(script);
+		this->addComponent(sprite);
+		this->addComponent(model);
+
 	}
 
 	MyGameObject::~MyGameObject()
 	{
 	}
-
 }
 
 

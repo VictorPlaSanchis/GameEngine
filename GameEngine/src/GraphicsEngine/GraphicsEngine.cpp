@@ -127,10 +127,10 @@ namespace vge {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		// load and generate the texture
 		int width, height, nrChannels;
-		unsigned char* data = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb_alpha);
+		unsigned char* data = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb);
 		if (data)
 		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
 		else Console::debug("Failed to load texture.", Console::COLOR::RED, Console::SENDER::GRAPHICS_ENGINE);
@@ -143,7 +143,7 @@ namespace vge {
 	{
 		this->Bind();
 
-		glEnable(GL_BLEND);
+		//glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		std::unordered_map<unsigned int, Model*>::iterator it = this->models.begin();
@@ -156,7 +156,7 @@ namespace vge {
 			it++;
 		}
 		glBindVertexArray(0);
-		glDisable(GL_BLEND);
+		//glDisable(GL_BLEND);
 
 		this->Unbind();
 

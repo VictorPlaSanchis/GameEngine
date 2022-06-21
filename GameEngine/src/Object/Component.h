@@ -10,7 +10,7 @@ namespace vge {
 		Component();
 		~Component();
 
-		virtual void Behaviour() = 0;
+		virtual void Behaviour();
 
 	};
 

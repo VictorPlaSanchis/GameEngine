@@ -1,5 +1,7 @@
 #include "Model.h"
 
+#include "../Log/Console.h"
+
 namespace vge {
 
 	Model::Model()
@@ -8,7 +10,7 @@ namespace vge {
 	}
 
 	Model::Model(std::vector<float> model) :
-		data(model), numVertex(static_cast<unsigned int>(model.size())), dataColor({}), dataTexCoord({}), texturePath(nullptr)
+		data(model), numVertex(static_cast<unsigned int>(model.size()/3.0)), dataColor({}), dataTexCoord({}), texturePath(nullptr)
 	{
 	}
 
@@ -60,6 +62,10 @@ namespace vge {
 	unsigned int Model::getNumVertexs()
 	{
 		return this->numVertex;
+	}
+
+	void Model::Behaviour()
+	{
 	}
 
 };

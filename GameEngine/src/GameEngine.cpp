@@ -56,41 +56,27 @@ namespace vge {
 			Console::debug("Game Engine is running...", Console::COLOR::GREEN, Console::SENDER::APPLICATION);
 			Console::debug("ImGui is initialized.", Console::COLOR::YELLOW, Console::SENDER::GUI);
 
+			// --------------------------
+
 			// Creating a game object for Debugging
+			vge::MyGameObject object = vge::MyGameObject();
 
-			MyGameObject object = MyGameObject();
-			object.model = Model({
-				-0.5f, -0.5f, 0.0f, 
-				-0.5f,  0.5f, 0.0f,
-				 0.5f, -0.5f, 0.0f,
+			// Adding object into current scene of the game
+			vge::SceneManagement::get()->getCurrentScene()->addObject(&object);
 
-				-0.5f,  0.5f, 0.0f,
-				 0.5f,  0.5f, 0.0f,
-				 0.5f, -0.5f, 0.0f
-			});
-			object.model.assignVertexsTexCoord({
-				0.0f, 0.0f, 
-				0.0f, -1.0f,
-				-1.0f, 0.0f,
-				0.0f, -1.0f,
-				-1.0f, -1.0f,
-				-1.0f, 0.0f
-			});
-			object.model.assignTexture("./imgs/swellow.png");
-			GraphicsEngine::get()->pushModel(&object.model);
+			// --------------------------
 
 			while (!glfwWindowShouldClose(GameEngine::windowGame)) 
 			{
 				PROFILE_SCOPE("FRAME TIME GameEngine")
 
-				SceneManagement::get()->getCurrentScene()->UpdateScene();
 				InputSystem::get()->Update();
+				SceneManagement::get()->getCurrentScene()->UpdateScene();
 
 				// clearing last screen frame
 				glClear(GL_COLOR_BUFFER_BIT);
 				GraphicsEngine::get()->DrawData();
 
-				//PROFILE_SCOPE("ImGUI Run");
 				// ImGui
 				ImGuiController::get()->Run();
 

@@ -1,5 +1,7 @@
 #include "Object.h"
 
+#include "../Log/Console.h"
+
 namespace vge {
 
 
@@ -16,28 +18,28 @@ namespace vge {
 
 	void Object::addComponent(Component* component)
 	{
-		components.push_back(component);
+		this->components.push_back(component);
 	}
 
 	void Object::removeComponent(Component* component)
 	{
-		components.remove(component);
+		this->components.remove(component);
 	}
 
 	void Object::addChild(Object* child)
 	{
-		childs.push_back(child);
+		this->childs.push_back(child);
 	}
 
 	void Object::removeChild(Object* child)
 	{
-		childs.remove(child);
+		this->childs.remove(child);
 	}
 
 	void Object::Update()
 	{
-		transform->Behaviour();	// ??? transform doesnt have any frame by frame behaviour
-		for (Component* component : components) {
+		this->transform->Behaviour();	// ??? transform doesnt have any frame by frame behaviour
+		for (Component* component : this->components) {
 			component->Behaviour();
 		}
 	}
