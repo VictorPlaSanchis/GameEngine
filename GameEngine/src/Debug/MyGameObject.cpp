@@ -14,20 +14,20 @@ namespace vge {
 			-0.5f, -0.5f, 0.0f,
 			-0.5f,  0.5f, 0.0f,
 			 0.5f, -0.5f, 0.0f,
-
 			-0.5f,  0.5f, 0.0f,
 			 0.5f,  0.5f, 0.0f,
 			 0.5f, -0.5f, 0.0f
 		});
+
 		model->assignVertexsTexCoord({
 			0.0f, 0.0f,
 			0.0f, -1.0f,
-			-1.0f, 0.0f,
+			1.0f, 0.0f,
 			0.0f, -1.0f,
-			-1.0f, -1.0f,
-			-1.0f, 0.0f
+			1.0f, -1.0f,
+			1.0f, 0.0f
 		});
-		model->assignTexture("./imgs/swellow.png");
+		model->assignTexture("./imgs/tumblr.png");
 		GraphicsEngine::get()->pushModel(model);
 
 		MyGameScript* script = new MyGameScript();

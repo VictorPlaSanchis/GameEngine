@@ -9,9 +9,13 @@ namespace vge {
 		this->texturePath = nullptr;
 	}
 
-	Model::Model(std::vector<float> model) :
-		data(model), numVertex(static_cast<unsigned int>(model.size()/3.0)), dataColor({}), dataTexCoord({}), texturePath(nullptr)
+	Model::Model(std::vector<float> model)
 	{
+		this->data = model;
+		this->numVertex = static_cast<unsigned int>(model.size()/3.0);
+		this->dataColor = {};
+		this->dataTexCoord = {};
+		this->texturePath = nullptr;
 	}
 
 	Model::~Model()
@@ -21,7 +25,7 @@ namespace vge {
 	void Model::assignVertexs(std::vector<float> model)
 	{
 		this->data = model;
-		this->numVertex = static_cast<unsigned int>(model.size());
+		this->numVertex = static_cast<unsigned int>(model.size()/3.0);
 	}
 
 	void Model::assignVertexsColor(std::vector<float> color)

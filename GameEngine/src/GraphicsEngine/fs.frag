@@ -8,6 +8,6 @@ out vec4 fragColor;
 
 void main()
 {
-    fragColor = vColor;
-    //fragColor = vec4(texture(textureSample, vTexCoord).xyz, 1.0);
+    //fragColor = vColor;
+    fragColor = vec4(texture(textureSample, vTexCoord).xyz, 1.0);
 }
