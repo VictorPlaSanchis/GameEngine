@@ -77,6 +77,10 @@
     <Text Include="src\GraphicsEngine\fs.frag" />
     <Text Include="src\GraphicsEngine\vs.vert" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="src\GraphicsEngine\SpriteRendererFS.frag" />
+    <None Include="src\GraphicsEngine\SpriteRendererVS.vert" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

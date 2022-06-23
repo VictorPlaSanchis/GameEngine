@@ -21,10 +21,11 @@ namespace vge {
 
 		void InitShaders();
 		void InitShaderProgram();
-	    std::string getSourceShader(const std::string pathShader);
+	    std::string getSourceShader(const char* pathShader);
 
 		std::unordered_map<unsigned int, Model*> models;
 		std::unordered_map<unsigned int, unsigned int> textures;
+		std::unordered_map<unsigned int, unsigned int> shaders;
 
 	public:
 
@@ -34,16 +35,17 @@ namespace vge {
 		static GraphicsEngine* get();
 
 		void Init();
-		void Bind();
+		void Bind(unsigned int shaderProgram = -1);
 		void Unbind();
 		unsigned int programID() { return this->shaderProgram; }
 
-		unsigned int a;
-
+		Shader* InitShader(const char* filename);
+		unsigned int CreateProgram(std::vector<const char*> filenames);
 		void passUniform(unsigned int programShader, std::vector<float> data, const char uniformName[]);
-		void pushModel(Model* model);
+		unsigned int pushModel(Model* model, unsigned int programAssigned = -1);
 		void pushTexture(const char* filename, unsigned int VAO);
 		void DrawData();
+		void LinkShader(unsigned int VAO, unsigned int ShaderProgramID);
 
 	};
 

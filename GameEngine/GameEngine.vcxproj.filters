@@ -175,4 +175,8 @@
     <Text Include="src\GraphicsEngine\vs.vert" />
     <Text Include="src\GraphicsEngine\fs.frag" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="src\GraphicsEngine\SpriteRendererFS.frag" />
+    <None Include="src\GraphicsEngine\SpriteRendererVS.vert" />
+  </ItemGroup>
 </Project>

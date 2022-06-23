@@ -27,8 +27,12 @@ namespace vge {
 			1.0f, -1.0f,
 			1.0f, 0.0f
 		});
+
+		unsigned int programID = GraphicsEngine::get()->CreateProgram({ "./src/GraphicsEngine/SpriteRendererVS.vert", "./src/GraphicsEngine/SpriteRendererFS.frag" });
+		unsigned int VAOassigned = GraphicsEngine::get()->pushModel(model, programID);
+		GraphicsEngine::get()->LinkShader(VAOassigned, programID);
+
 		model->assignTexture("./imgs/tumblr.png");
-		GraphicsEngine::get()->pushModel(model);
 
 		MyGameScript* script = new MyGameScript();
 		SpriteRenderer* sprite = new SpriteRenderer("./imgs/nya.bmp");;

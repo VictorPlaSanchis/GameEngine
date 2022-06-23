@@ -24,7 +24,7 @@ namespace vge {
 		if (!glfwInit()) glfwTerminate();
 
 		// Creating window context
-		windowGame = glfwCreateWindow(1280, 800, "Game Engine by Vitolo Paolo 12/01/2022 (R)", NULL, NULL);
+		windowGame = glfwCreateWindow(1280, 720, "Game Engine by Vitolo Paolo 12/01/2022 (R)", NULL, NULL);
 		glfwMakeContextCurrent(windowGame);
 
 		// Needs window context

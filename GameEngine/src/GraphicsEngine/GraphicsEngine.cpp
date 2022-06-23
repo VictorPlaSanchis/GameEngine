@@ -28,6 +28,27 @@ namespace vge {
 		InitShaderProgram();
 	}
 
+	Shader* GraphicsEngine::InitShader(const char* filename) {
+		// Create a new Vertex shader from the source code and compile it
+		Console::debug("Loading new shader: " + static_cast<std::string>(filename), Console::COLOR::CYAN, Console::SENDER::GRAPHICS_ENGINE);
+		std::string sourceCodeVertex = getSourceShader(filename);
+		Shader* newShader = new Shader(GL_VERTEX_SHADER, sourceCodeVertex.c_str());
+		newShader->Init(filename);
+		return newShader;
+	}
+
+	unsigned int GraphicsEngine::CreateProgram(std::vector<const char*> filenames)
+	{
+		unsigned int newProgramID = glCreateProgram();
+		for (const char* shadername : filenames) {
+			Shader* newshader = GraphicsEngine::get()->InitShader(shadername);
+			glAttachShader(newProgramID, newshader->getID());
+			Console::debug("Attacing id: " + std::to_string(newshader->getID()) + " to program: " + std::to_string(newProgramID), Console::COLOR::CYAN, Console::SENDER::GRAPHICS_ENGINE);
+		}
+		glLinkProgram(newProgramID);
+		return newProgramID;
+	}
+
 	void GraphicsEngine::InitShaders()
 	{
 		// Create a new Vertex shader from the source code and compile it
@@ -51,7 +72,7 @@ namespace vge {
 		glLinkProgram(shaderProgram);
 	}
 
-	std::string GraphicsEngine::getSourceShader(const std::string pathShader)
+	std::string GraphicsEngine::getSourceShader(const char* pathShader)
 	{
 		// Opening shader file
 		std::string content, sourceCode;
@@ -69,9 +90,10 @@ namespace vge {
 		return sourceCode;
 	}
 
-	void GraphicsEngine::Bind()
+	void GraphicsEngine::Bind(unsigned int shaderProgram)
 	{
-		glUseProgram(this->shaderProgram);
+		if (shaderProgram < 0) glUseProgram(this->shaderProgram);
+		else glUseProgram(shaderProgram);
 	}
 
 	void GraphicsEngine::Unbind()
@@ -79,7 +101,7 @@ namespace vge {
 		glUseProgram(0);
 	}
 
-	void GraphicsEngine::pushModel(Model* model)
+	unsigned int GraphicsEngine::pushModel(Model* model, unsigned int programAssigned)
 	{
 		unsigned int VAO;
 		unsigned int VBO[3];
@@ -114,6 +136,7 @@ namespace vge {
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		this->models.insert(std::pair<unsigned int, Model*>(VAO, model));
+		return VAO;
 	}
 
 	void GraphicsEngine::pushTexture(const char* filename, unsigned int VAO)
@@ -141,7 +164,7 @@ namespace vge {
 
 	void GraphicsEngine::DrawData()
 	{
-		this->Bind();
+
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -151,15 +174,22 @@ namespace vge {
 			if (this->textures.find(it->first) != this->textures.end()) {
 				glBindTexture(GL_TEXTURE_2D, textures[it->first]);
 			}
+			if (this->shaders.find(it->first) != this->shaders.end()) {
+				this->Bind(this->shaders.find(it->first)->second);
+			} else this->Bind();
 			glBindVertexArray(it->first);
 			glDrawArrays(GL_TRIANGLES, 0, it->second->getNumVertexs());
 			it++;
+			this->Unbind();
 		}
 		glBindVertexArray(0);
 		glDisable(GL_BLEND);
 
-		this->Unbind();
+	}
 
+	void GraphicsEngine::LinkShader(unsigned int VAO, unsigned int ShaderProgramID)
+	{
+		this->shaders.insert(std::pair<unsigned int, unsigned int>(VAO, ShaderProgramID));
 	}
 
 	void GraphicsEngine::passUniform(unsigned int programShader, std::vector<float> data, const char uniformName[])

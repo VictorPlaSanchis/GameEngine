@@ -51,7 +51,7 @@ namespace vge {
 	void Shader::Init(const char* shaderName)
 	{
 		glewExperimental = GL_TRUE;
-		glewInit();
+		glewInit(); // !!! ??? TODO revisar
 		this->shaderID = glCreateShader(shaderType);
 		glShaderSource(this->shaderID, 1, &sourceCode, NULL);
 		this->Compile(shaderName);
