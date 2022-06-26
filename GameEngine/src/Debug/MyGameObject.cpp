@@ -1,6 +1,8 @@
 #include "MyGameObject.h"
 #include "../Log/Console.h"
 #include "../GraphicsEngine/GraphicsEngine.h"
+#include "../GraphicsEngine/SpriteRenderer.h"
+#include "../GraphicsEngine/Model.h"
 
 namespace vge {
 
@@ -10,16 +12,17 @@ namespace vge {
 		this->childs = {};
 		this->transform = new Transform();
 
-		Model* model = new Model({
+		std::vector<float> vertexs = {
 			-0.5f, -0.5f, 0.0f,
 			-0.5f,  0.5f, 0.0f,
 			 0.5f, -0.5f, 0.0f,
 			-0.5f,  0.5f, 0.0f,
 			 0.5f,  0.5f, 0.0f,
 			 0.5f, -0.5f, 0.0f
-		});
+		};
 
-		model->assignVertexsTexCoord({
+		Model* newModel = this->addComponent<Model>(vertexs);
+		newModel->assignVertexsTexCoord({
 			0.0f, 0.0f,
 			0.0f, -1.0f,
 			1.0f, 0.0f,
@@ -27,18 +30,11 @@ namespace vge {
 			1.0f, -1.0f,
 			1.0f, 0.0f
 		});
+		newModel->assignTexture("./imgs/tumblr.png");
+		GraphicsEngine::get()->pushModel(newModel);
 
-		unsigned int programID = GraphicsEngine::get()->CreateProgram({ "./src/GraphicsEngine/SpriteRendererVS.vert", "./src/GraphicsEngine/SpriteRendererFS.frag" });
-		unsigned int VAOassigned = GraphicsEngine::get()->pushModel(model, programID);
-		GraphicsEngine::get()->LinkShader(VAOassigned, programID);
-
-		model->assignTexture("./imgs/tumblr.png");
-
-		MyGameScript* script = new MyGameScript();
-		SpriteRenderer* sprite = new SpriteRenderer("./imgs/nya.bmp");;
-		this->addComponent(script);
-		this->addComponent(sprite);
-		this->addComponent(model);
+		//unsigned int programID = GraphicsEngine::get()->CreateProgram({ "./src/GraphicsEngine/SpriteRendererVS.vert", "./src/GraphicsEngine/SpriteRendererFS.frag" });
+		//GraphicsEngine::get()->LinkShader(VAOassigned, programID);
 
 	}
 

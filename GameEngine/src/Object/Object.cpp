@@ -1,7 +1,5 @@
 #include "Object.h"
 
-#include "../Log/Console.h"
-
 namespace vge {
 
 
@@ -14,11 +12,6 @@ namespace vge {
 
 	Object::~Object()
 	{
-	}
-
-	void Object::addComponent(Component* component)
-	{
-		this->components.push_back(component);
 	}
 
 	void Object::removeComponent(Component* component)

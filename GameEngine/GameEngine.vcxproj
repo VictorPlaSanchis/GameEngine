@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\GraphicsEngine\Model.cpp" />
     <ClCompile Include="src\Debug\MyGameObject.cpp" />
+    <ClCompile Include="src\GraphicsEngine\Model.cpp" />
     <ClCompile Include="src\Debug\MyGameScript.cpp" />
     <ClCompile Include="src\ImGui\ImGuiController.cpp" />
     <ClCompile Include="src\ImGui\imgui_impl_opengl3.cpp" />
@@ -45,8 +45,8 @@
     <ClCompile Include="src\Object\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\GraphicsEngine\Model.h" />
     <ClInclude Include="src\Debug\MyGameObject.h" />
+    <ClInclude Include="src\GraphicsEngine\Model.h" />
     <ClInclude Include="src\Debug\MyGameScript.h" />
     <ClInclude Include="src\Debug\Instrumentor.h" />
     <ClInclude Include="src\GraphicsEngine\stb_image.h" />
