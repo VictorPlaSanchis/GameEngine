@@ -1,4 +1,5 @@
 #include <array>
+#include <math.h>
 
 namespace vge {
 
@@ -85,9 +86,34 @@ namespace vge {
 			return result;
 		}
 
+		Vector<T, D> operator/(T divisor)
+		{
+			Vector<T, D> result;
+			for (int i = 0; i < D; i++)
+			{
+				result[i] = this->get(i) / divisor;
+			}
+			return result;
+		}
+
 		void operator*=(T scalar)
 		{
 			(*this) = (*this) * scalar;
+		}
+
+		static Vector<T, D> normalize(Vector<T, D> vector) 
+		{
+			const Vector<T, D> auxiliar = vector;
+			T modul = T();
+			for (int i = 0; i < D; i++) {
+				T powNi = static_cast<T>(pow(static_cast<double>(vector[i]), D));
+				modul += powNi;
+			}
+			Vector<T, D> result = vector / static_cast<T>(pow(static_cast<double>(modul), 1.0f / D));
+			for (int i = 0; i < D; i++) {
+				if (isnan(static_cast<double>(result[i]))) return auxiliar;
+			}
+			return result;
 		}
 
 	};

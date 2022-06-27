@@ -1,7 +1,7 @@
 #pragma once
 #include "../Object/Component.h"
 #include "Shader.h"
-#include "Model.h"
+#include "../Object/Components/Model.h"
 
 #include <vector>
 #include <unordered_map>

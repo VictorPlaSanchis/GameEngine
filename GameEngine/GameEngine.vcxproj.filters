@@ -42,7 +42,7 @@
     <ClCompile Include="src\GraphicsEngine\GraphicsEngine.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\GraphicsEngine\SpriteRenderer.cpp">
+    <ClCompile Include="src\Object\Components\SpriteRenderer.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\ResourcesManager\ResourceManager.cpp">
@@ -81,7 +81,7 @@
     <ClCompile Include="src\Debug\MyGameScript.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\GraphicsEngine\Model.cpp">
+    <ClCompile Include="src\Object\Components\Model.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\Debug\MyGameObject.cpp">
@@ -116,7 +116,7 @@
     <ClInclude Include="src\GraphicsEngine\GraphicsEngine.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\GraphicsEngine\SpriteRenderer.h">
+    <ClInclude Include="src\Object\Components\SpriteRenderer.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourcesManager\ResourceManager.h">
@@ -164,7 +164,7 @@
     <ClInclude Include="src\GraphicsEngine\stb_image.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\GraphicsEngine\Model.h">
+    <ClInclude Include="src\Object\Components\Model.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\Debug\MyGameObject.h">
@@ -176,7 +176,7 @@
     <Text Include="src\GraphicsEngine\fs.frag" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\GraphicsEngine\SpriteRendererFS.frag" />
-    <None Include="src\GraphicsEngine\SpriteRendererVS.vert" />
+    <None Include="src\Object\Components\SpriteRendererFS.frag" />
+    <None Include="src\Object\Components\SpriteRendererVS.vert" />
   </ItemGroup>
 </Project>

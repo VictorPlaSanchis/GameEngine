@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Debug\MyGameObject.cpp" />
-    <ClCompile Include="src\GraphicsEngine\Model.cpp" />
+    <ClCompile Include="src\Object\Components\Model.cpp" />
     <ClCompile Include="src\Debug\MyGameScript.cpp" />
     <ClCompile Include="src\ImGui\ImGuiController.cpp" />
     <ClCompile Include="src\ImGui\imgui_impl_opengl3.cpp" />
@@ -33,7 +33,7 @@
     <ClCompile Include="src\Log\Console.cpp" />
     <ClCompile Include="src\GraphicsEngine\Shader.cpp" />
     <ClCompile Include="src\ResourcesManager\ResourceManager.cpp" />
-    <ClCompile Include="src\GraphicsEngine\SpriteRenderer.cpp" />
+    <ClCompile Include="src\Object\Components\SpriteRenderer.cpp" />
     <ClCompile Include="src\GraphicsEngine\GraphicsEngine.cpp" />
     <ClCompile Include="src\Object\Component.cpp" />
     <ClCompile Include="src\Object\Object.cpp" />
@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Debug\MyGameObject.h" />
-    <ClInclude Include="src\GraphicsEngine\Model.h" />
+    <ClInclude Include="src\Object\Components\Model.h" />
     <ClInclude Include="src\Debug\MyGameScript.h" />
     <ClInclude Include="src\Debug\Instrumentor.h" />
     <ClInclude Include="src\GraphicsEngine\stb_image.h" />
@@ -62,7 +62,7 @@
     <ClInclude Include="src\Log\Console.h" />
     <ClInclude Include="src\GraphicsEngine\Shader.h" />
     <ClInclude Include="src\ResourcesManager\ResourceManager.h" />
-    <ClInclude Include="src\GraphicsEngine\SpriteRenderer.h" />
+    <ClInclude Include="src\Object\Components\SpriteRenderer.h" />
     <ClInclude Include="src\GraphicsEngine\GraphicsEngine.h" />
     <ClInclude Include="src\Object\Component.h" />
     <ClInclude Include="src\Object\Object.h" />
@@ -78,8 +78,8 @@
     <Text Include="src\GraphicsEngine\vs.vert" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\GraphicsEngine\SpriteRendererFS.frag" />
-    <None Include="src\GraphicsEngine\SpriteRendererVS.vert" />
+    <None Include="src\Object\Components\SpriteRendererFS.frag" />
+    <None Include="src\Object\Components\SpriteRendererVS.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

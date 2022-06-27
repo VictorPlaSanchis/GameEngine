@@ -40,9 +40,13 @@ namespace vge {
         void addChild(Object* child);
         void removeChild(Object* child);
 
-        void Update();
+        virtual void Update() = 0;
 
     };
 
 }
 
+#define LEFT Vector<float, 3> ({ -1.0f,  0.0f, 0.0f })
+#define RIGHT Vector<float, 3>({  1.0f,  0.0f, 0.0f })
+#define UP Vector<float, 3>   ({  0.0f,  1.0f, 0.0f })
+#define DOWN Vector<float, 3> ({  0.0f, -1.0f, 0.0f })
