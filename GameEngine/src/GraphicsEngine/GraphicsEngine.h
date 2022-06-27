@@ -35,7 +35,7 @@ namespace vge {
 		static GraphicsEngine* get();
 
 		void Init();
-		void Bind(unsigned int shaderProgram = -1);
+		void Bind(unsigned int shaderProgram = 0);
 		void Unbind();
 		unsigned int programID() { return this->shaderProgram; }
 

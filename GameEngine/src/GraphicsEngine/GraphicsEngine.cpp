@@ -92,8 +92,8 @@ namespace vge {
 
 	void GraphicsEngine::Bind(unsigned int shaderProgram)
 	{
-		if (shaderProgram < 0) glUseProgram(this->shaderProgram);
-		else glUseProgram(shaderProgram);
+		if (shaderProgram > 0) glUseProgram(shaderProgram);
+		else glUseProgram(this->shaderProgram);
 	}
 
 	void GraphicsEngine::Unbind()
@@ -164,19 +164,17 @@ namespace vge {
 
 	void GraphicsEngine::DrawData()
 	{
-
-
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		std::unordered_map<unsigned int, Model*>::iterator it = this->models.begin();
 		while (it != this->models.end()) {
-			if (this->textures.find(it->first) != this->textures.end()) {
-				glBindTexture(GL_TEXTURE_2D, textures[it->first]);
-			}
 			if (this->shaders.find(it->first) != this->shaders.end()) {
 				this->Bind(this->shaders.find(it->first)->second);
 			} else this->Bind();
+			if (this->textures.find(it->first) != this->textures.end()) {
+				glBindTexture(GL_TEXTURE_2D, textures[it->first]);
+			}
 			glBindVertexArray(it->first);
 			glDrawArrays(GL_TRIANGLES, 0, it->second->getNumVertexs());
 			it++;
