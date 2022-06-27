@@ -1,5 +1,6 @@
 #pragma once
 #include "../Object/Component.h"
+#include "Model.h"
 
 namespace vge {
 
@@ -8,10 +9,9 @@ namespace vge {
 
 	private:
 
-		const char* texturePath;
-		unsigned char* textureData;
-
-		int width, height;
+		Model* spriteModel;
+		unsigned int VAOassigned;
+		unsigned int ShaderProgramLinked;
 
 	public:
 
@@ -19,6 +19,8 @@ namespace vge {
 		SpriteRenderer(const char* filename);
 
 		void Behaviour() override;
+		unsigned int getVAOassigned() { return this->VAOassigned; }
+		unsigned int getShaderProgramLinked() { return this->ShaderProgramLinked; }
 
 	};
 

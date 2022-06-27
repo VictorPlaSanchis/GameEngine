@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "../Types/Vector.h"
+#include <vector>
 
 namespace vge {
 
@@ -9,7 +10,7 @@ namespace vge {
 
 	private:
 
-		Vector<double, 3> values;
+		Vector<float, 3> values;
 
 	public:
 
@@ -18,9 +19,9 @@ namespace vge {
 
 		void Behaviour() override;
 
-		void move(const Vector<double, 3>& direction);
+		void move(const Vector<float, 3>& direction);
 
-		Vector<double, 3> getValues() { return this->values; }
+		std::vector<float> getValues() { return {values[0], values[1], values[2]}; }
 
 	};
 

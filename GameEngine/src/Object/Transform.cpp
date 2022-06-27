@@ -6,7 +6,7 @@
 namespace vge {
 
 	Transform::Transform()
-		: values({ (double)0,(double)0,(double)0 })
+		: values({ (float)0,(float)0,(float)0 })
 	{
 	}
 
@@ -18,7 +18,7 @@ namespace vge {
 	{
 	}
 
-	void Transform::move(const Vector<double, 3>& direction)
+	void Transform::move(const Vector<float, 3>& direction)
 	{
 		this->values += direction;
 	}

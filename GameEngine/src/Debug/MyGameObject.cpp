@@ -8,34 +8,8 @@ namespace vge {
 
 	MyGameObject::MyGameObject()
 	{
-		this->components = {};
-		this->childs = {};
-		this->transform = new Transform();
-
-		std::vector<float> vertexs = {
-			-0.5f, -0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f
-		};
-
-		Model* newModel = this->addComponent<Model>(vertexs);
-		newModel->assignVertexsTexCoord({
-			0.0f, 0.0f,
-			0.0f, -1.0f,
-			1.0f, 0.0f,
-			0.0f, -1.0f,
-			1.0f, -1.0f,
-			1.0f, 0.0f
-		});
-		newModel->assignTexture("./imgs/tumblr.png");
-		GraphicsEngine::get()->pushModel(newModel);
-
-		//unsigned int programID = GraphicsEngine::get()->CreateProgram({ "./src/GraphicsEngine/SpriteRendererVS.vert", "./src/GraphicsEngine/SpriteRendererFS.frag" });
-		//GraphicsEngine::get()->LinkShader(VAOassigned, programID);
-
+		SpriteRenderer* sprite = this->addComponent<SpriteRenderer>("./imgs/tumblr.png");
+		//GraphicsEngine::get()->passUniform(sprite->getShaderProgramLinked(), this->transform->getValues(), "transform");
 	}
 
 	MyGameObject::~MyGameObject()

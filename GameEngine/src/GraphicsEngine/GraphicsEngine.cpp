@@ -24,17 +24,9 @@ namespace vge {
 
 	void GraphicsEngine::Init()
 	{
+		glewInit();
 		InitShaders();
 		InitShaderProgram();
-	}
-
-	Shader* GraphicsEngine::InitShader(const char* filename) {
-		// Create a new Vertex shader from the source code and compile it
-		Console::debug("Loading new shader: " + static_cast<std::string>(filename), Console::COLOR::CYAN, Console::SENDER::GRAPHICS_ENGINE);
-		std::string sourceCodeVertex = getSourceShader(filename);
-		Shader* newShader = new Shader(GL_VERTEX_SHADER, sourceCodeVertex.c_str());
-		newShader->Init(filename);
-		return newShader;
 	}
 
 	unsigned int GraphicsEngine::CreateProgram(std::vector<const char*> filenames)
@@ -47,6 +39,19 @@ namespace vge {
 		}
 		glLinkProgram(newProgramID);
 		return newProgramID;
+	}
+
+	Shader* GraphicsEngine::InitShader(const char* filename) {
+		// Create a new shader from the source code of filename and compile it
+		Console::debug("Loading new shader: " + static_cast<std::string>(filename), Console::COLOR::CYAN, Console::SENDER::GRAPHICS_ENGINE);
+		std::string sourceCode = getSourceShader(filename);
+		int sizeName = static_cast<std::string>(filename).size();
+		std::string shaderType = static_cast<std::string>(filename).substr(sizeName-4, sizeName-1);
+		Shader* newShader = new Shader();
+		if (shaderType == "vert") newShader = new Shader(GL_VERTEX_SHADER, sourceCode.c_str());
+		else if (shaderType == "frag") newShader = new Shader(GL_FRAGMENT_SHADER, sourceCode.c_str());
+		newShader->Init(filename);
+		return newShader;
 	}
 
 	void GraphicsEngine::InitShaders()
@@ -190,24 +195,25 @@ namespace vge {
 		this->shaders.insert(std::pair<unsigned int, unsigned int>(VAO, ShaderProgramID));
 	}
 
-	void GraphicsEngine::passUniform(unsigned int programShader, std::vector<float> data, const char uniformName[])
+	void GraphicsEngine::passUniform(unsigned int programShader, std::vector<float> data, const char* uniformName)
 	{
-		int uniformLocation = glGetUniformLocation(programShader, uniformName);
+		this->Bind(programShader);
+		GLuint loc = glGetUniformLocation(programShader, uniformName);
 		switch (data.size()) {
 			case 1:
-				glProgramUniform1f(programShader, uniformLocation, data[0]);
+				glProgramUniform1f(programShader, loc, data[0]);
 				return;
 			case 2:
-				glProgramUniform2f(programShader, uniformLocation, data[0], data[1]);
+				glProgramUniform2f(programShader, loc, data[0], data[1]);
 				return;
 			case 3:
-				glProgramUniform3f(programShader, uniformLocation, data[0], data[1], data[2]);
+				glProgramUniform3f(programShader, loc, data[0], data[1], data[2]);
 				return;
 			case 4:
-				glProgramUniform4f(programShader, uniformLocation, data[0], data[1], data[2], data[3]);
+				glProgramUniform4f(programShader, loc, data[0], data[1], data[2], data[3]);
 				return;
 		}
-
+		this->Unbind();
 	}
 
 }

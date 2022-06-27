@@ -12,7 +12,32 @@ namespace vge {
 
     SpriteRenderer::SpriteRenderer(const char* filename)
 	{
-		this->texturePath = filename;
+		std::vector<float> vertexs = {
+			-0.5f, -0.5f, 0.0f,
+			-0.5f,  0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f,
+			-0.5f,  0.5f, 0.0f,
+			 0.5f,  0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f
+		};
+
+		spriteModel = new Model(vertexs);
+		spriteModel->assignVertexsTexCoord({
+			0.0f, 0.0f,
+			0.0f, -1.0f,
+			1.0f, 0.0f,
+			0.0f, -1.0f,
+			1.0f, -1.0f,
+			1.0f, 0.0f
+		});
+		spriteModel->assignTexture(filename);
+		this->ShaderProgramLinked = GraphicsEngine::get()->CreateProgram({
+			"./src/GraphicsEngine/SpriteRendererVS.vert",
+			"./src/GraphicsEngine/SpriteRendererFS.frag"
+		});
+		this->VAOassigned = GraphicsEngine::get()->pushModel(spriteModel, this->ShaderProgramLinked);
+		GraphicsEngine::get()->LinkShader(this->VAOassigned, this->ShaderProgramLinked);
+	
 	}
 
 	void SpriteRenderer::Behaviour()

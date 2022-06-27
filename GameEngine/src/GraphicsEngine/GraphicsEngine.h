@@ -41,7 +41,7 @@ namespace vge {
 
 		Shader* InitShader(const char* filename);
 		unsigned int CreateProgram(std::vector<const char*> filenames);
-		void passUniform(unsigned int programShader, std::vector<float> data, const char uniformName[]);
+		void passUniform(unsigned int programShader, std::vector<float> data, const char* uniformName);
 		unsigned int pushModel(Model* model, unsigned int programAssigned = -1);
 		void pushTexture(const char* filename, unsigned int VAO);
 		void DrawData();

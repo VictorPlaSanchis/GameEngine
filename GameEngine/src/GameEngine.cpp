@@ -47,6 +47,17 @@ namespace vge {
 
 	}
 
+	void InitializeDebugGame() {
+
+		// Creating a game object for Debugging
+		MyGameObject* object = new MyGameObject();
+
+		// Adding object into current scene of the game
+		SceneManagement::get()->getCurrentScene()->addObject(object);
+		return;
+
+	}
+
 	void GameEngine::Run()
 	{
 		PROFILE_FUNCTION();
@@ -58,11 +69,7 @@ namespace vge {
 
 			// --------------------------
 
-			// Creating a game object for Debugging
-			vge::MyGameObject object = vge::MyGameObject();
-
-			// Adding object into current scene of the game
-			vge::SceneManagement::get()->getCurrentScene()->addObject(&object);
+			InitializeDebugGame();
 
 			// --------------------------
 
