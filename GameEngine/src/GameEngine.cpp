@@ -15,6 +15,7 @@
 #include "./Debug/Instrumentor.h"
 
 #include "./Debug/MyGameObject.h"
+#include "./Object/Camera.h"
 
 namespace vge {
 
@@ -51,9 +52,11 @@ namespace vge {
 
 		// Creating a game object for Debugging
 		MyGameObject* object = new MyGameObject();
+		Camera* cameraScene = new Camera();
 
 		// Adding object into current scene of the game
 		SceneManagement::get()->getCurrentScene()->addObject(object);
+		SceneManagement::get()->getCurrentScene()->addObject(cameraScene);
 		return;
 
 	}

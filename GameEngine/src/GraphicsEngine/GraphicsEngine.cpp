@@ -3,6 +3,11 @@
 #include "GLFW/glfw3.h"
 #include <fstream>
 
+#include "../SceneSystem/SceneManagement.h"
+
+#include "../GLM/glm/gtc/matrix_transform.hpp"
+#include "../GLM/glm/gtc/type_ptr.hpp"
+
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
@@ -213,6 +218,22 @@ namespace vge {
 				glProgramUniform4f(programShader, loc, data[0], data[1], data[2], data[3]);
 				return;
 		}
+		this->Unbind();
+	}
+
+	void GraphicsEngine::passUniform(unsigned int programShader, glm::vec4 data, const char* uniformName)
+	{
+		this->Bind(programShader);
+		GLuint loc = glGetUniformLocation(programShader, uniformName);
+		glProgramUniform4f(programShader, loc, data[0], data[1], data[2], data[3]);
+		this->Unbind();
+	}
+
+	void GraphicsEngine::passUniformMat4(unsigned int programShader, std::vector<std::vector<float> > mat, const char* uniformName)
+	{
+		this->Bind(programShader);
+		GLuint loc = glGetUniformLocation(programShader, uniformName);
+		glProgramUniformMatrix4fv(programShader, loc, 1, GL_FALSE, &mat[0][0]);
 		this->Unbind();
 	}
 

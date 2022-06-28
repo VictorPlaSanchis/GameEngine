@@ -5,6 +5,7 @@ namespace vge {
 	Scene::Scene()
 	{
 		objects = {};
+		sceneCamera = new Camera();
 	}
 
 	Scene::~Scene()

@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Transform.h"
+#include <typeinfo>
 #include <list>
 
 #include "../Log/Console.h"
@@ -35,6 +36,27 @@ namespace vge {
                 return newComponent;
             }
             else Console::debug("Cant add this component...", Console::COLOR::RED, Console::SENDER::APPLICATION);
+        }
+        template <class C>
+        C* getComponent() {
+            for (Component* component : this->components) {
+                if (typeid(C) == typeid(*component)) {
+                    // static_cast used to avoid compilation type error, it is safe for the programmer but not for the compiler, needed
+                    return static_cast<C*>(component);
+                }
+            }
+            return nullptr;
+        }
+        template <class C>
+        std::vector<C*> getComponents() {
+            std::vector<C*> components;
+            for (Component* component : this->components) {
+                if (typeid(C) == typeid(*component)) {
+                    // static_cast used to avoid compilation type error, it is safe for the programmer but not for the compiler, needed
+                    components.push_back(static_cast<C*>(component));
+                }
+            }
+            return components;
         }
         void removeComponent(Component* component);
         void addChild(Object* child);

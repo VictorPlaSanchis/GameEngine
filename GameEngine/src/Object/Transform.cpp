@@ -18,7 +18,7 @@ namespace vge {
 	{
 	}
 
-	void Transform::move(const Vector<float, 3>& direction)
+	void Transform::move(const Vector3F& direction)
 	{
 		this->values += direction;
 	}

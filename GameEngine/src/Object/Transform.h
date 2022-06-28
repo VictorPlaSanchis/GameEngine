@@ -10,7 +10,7 @@ namespace vge {
 
 	private:
 
-		Vector<float, 3> values;
+		Vector3F values;
 
 	public:
 
@@ -19,7 +19,7 @@ namespace vge {
 
 		void Behaviour() override;
 
-		void move(const Vector<float, 3>& direction);
+		void move(const Vector3F& direction);
 
 		std::vector<float> getValues() { return {values[0], values[1], values[2]}; }
 

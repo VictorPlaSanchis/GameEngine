@@ -2,6 +2,7 @@
 
 #include "../Object/Object.h"
 #include "../Object/Components/SpriteRenderer.h"
+#include "../Object/Components/Model.h"
 
 namespace vge {
 
@@ -11,6 +12,8 @@ namespace vge {
 	private:
 
 		SpriteRenderer* sprite;
+		Model* model;
+		unsigned int ShaderProgramLinked;
 
 	public:
 

@@ -118,4 +118,13 @@ namespace vge {
 
 	};
 
+#define Vector3F Vector<float, 3>
+#define Vector2F Vector<float, 2>
+#define Vector3D Vector<double, 3>
+#define Vector2D Vector<double, 2>
+#define Vector3I Vector<int, 3>
+#define Vector2I Vector<int, 2>
+#define Vector3UI Vector<unsigned int, 3>
+#define Vector2UI Vector<unsigned int, 2>
+
 }
