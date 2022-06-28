@@ -15,6 +15,8 @@ namespace vge {
 		Model* model;
 		unsigned int ShaderProgramLinked;
 
+		float altura = 0.0f;
+
 	public:
 
 		MyGameObject();

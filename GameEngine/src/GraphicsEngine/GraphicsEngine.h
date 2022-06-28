@@ -45,6 +45,7 @@ namespace vge {
 		void passUniform(unsigned int programShader, std::vector<float> data, const char* uniformName);
 		void passUniform(unsigned int programShader, glm::vec4 data, const char* uniformName);
 		void passUniformMat4(unsigned int programShader, std::vector<std::vector<float> > mat, const char* uniformName);
+		void passUniformMat4(unsigned int programShader, glm::mat4 mat, const char* uniformName);
 		unsigned int pushModel(Model* model, unsigned int programAssigned = -1);
 		void pushTexture(const char* filename, unsigned int VAO);
 		void DrawData();

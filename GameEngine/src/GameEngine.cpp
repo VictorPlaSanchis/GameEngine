@@ -84,7 +84,7 @@ namespace vge {
 				SceneManagement::get()->getCurrentScene()->UpdateScene();
 
 				// clearing last screen frame
-				glClear(GL_COLOR_BUFFER_BIT);
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				GraphicsEngine::get()->DrawData();
 
 				// ImGui

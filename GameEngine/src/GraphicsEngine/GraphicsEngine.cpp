@@ -237,4 +237,12 @@ namespace vge {
 		this->Unbind();
 	}
 
+	void GraphicsEngine::passUniformMat4(unsigned int programShader, glm::mat4 mat, const char* uniformName)
+	{
+		this->Bind(programShader);
+		GLuint loc = glGetUniformLocation(programShader, uniformName);
+		glProgramUniformMatrix4fv(programShader, loc, 1, GL_FALSE, &mat[0][0]);
+		this->Unbind();
+	}
+
 }
