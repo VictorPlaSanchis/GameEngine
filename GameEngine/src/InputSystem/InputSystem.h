@@ -40,6 +40,6 @@ namespace vge {
 
 	};
 
-
+#define InputSystemVGE (*(InputSystem::get()))
 
 }

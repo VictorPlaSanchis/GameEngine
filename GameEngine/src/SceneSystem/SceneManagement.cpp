@@ -27,10 +27,12 @@ namespace vge {
 		this->scenes = std::vector<Scene*>(0);
 	}
 
-	void SceneManagement::addScene()
+	Scene* SceneManagement::createScene()
 	{
-		scenes.push_back(new Scene());
+		Scene* newScene = new Scene();
+		scenes.push_back(newScene);
 		if (currentScene == nullptr) setCurrentScene(0);
+		return newScene;
 	}
 
 	void SceneManagement::removeScene(Scene* scene)
@@ -47,6 +49,16 @@ namespace vge {
 	void SceneManagement::setCurrentScene(int index)
 	{
 		currentScene = scenes[index];
+	}
+
+	void SceneManagement::setCurrentScene(Scene* sceneToSet)
+	{
+		for (Scene* scene : scenes) {
+			if (scene == sceneToSet) {
+				currentScene = scene;
+				return;
+			}
+		}
 	}
 
 	Scene* SceneManagement::getCurrentScene()

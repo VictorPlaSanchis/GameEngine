@@ -1,13 +1,13 @@
 #include "MyGameObject.h"
-#include "../Log/Console.h"
-#include "../GraphicsEngine/GraphicsEngine.h"
-#include "../InputSystem/InputSystem.h"
-
 #include <GL/glew.h>
+#include "../GraphicsEngine/GraphicsEngine.h"
+
 #include "GLFW/glfw3.h"
 #include "../GLM/glm/glm.hpp"
 #include "../GLM/glm/gtc/matrix_transform.hpp"
 #include "../GLM/glm/gtc/type_ptr.hpp"
+#include "../InputSystem/InputSystem.h"
+#include "../SceneSystem/SceneManagement.h"
 
 #define PI 3.141592f
 
@@ -17,42 +17,42 @@ namespace vge {
     {
         this->model = this->addComponent<Model>();
         this->model->assignVertexs({
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, 1.0f,
-            -1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, -1.0f,
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-            1.0f, -1.0f, 1.0f,
-            -1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, 1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f, -1.0f,
-            1.0f, -1.0f, 1.0f,
-            -1.0f, -1.0f, 1.0f,
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, 1.0f, 1.0f,
-            -1.0f, -1.0f, 1.0f,
-            1.0f, -1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, 1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, -1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-            1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f, 1.0f,
-            1.0f, -1.0f, 1.0f
+            -0.5f, -0.5f, -0.5f,
+             0.5f, -0.5f, -0.5f,
+             0.5f,  0.5f, -0.5f,
+             0.5f,  0.5f, -0.5f,
+            -0.5f,  0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+            -0.5f, -0.5f,  0.5f,
+             0.5f, -0.5f,  0.5f,
+             0.5f,  0.5f,  0.5f,
+             0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+            -0.5f, -0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+            -0.5f, -0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+             0.5f,  0.5f,  0.5f,
+             0.5f,  0.5f, -0.5f,
+             0.5f, -0.5f, -0.5f,
+             0.5f, -0.5f, -0.5f,
+             0.5f, -0.5f,  0.5f,
+             0.5f,  0.5f,  0.5f,
+            -0.5f, -0.5f, -0.5f,
+             0.5f, -0.5f, -0.5f,
+             0.5f, -0.5f,  0.5f,
+             0.5f, -0.5f,  0.5f,
+            -0.5f, -0.5f,  0.5f,
+            -0.5f, -0.5f, -0.5f,
+            -0.5f,  0.5f, -0.5f,
+             0.5f,  0.5f, -0.5f,
+             0.5f,  0.5f,  0.5f,
+             0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f, -0.5f
         });
         this->model->assignVertexsColor({
             0.583f,  0.771f,  0.014f,
@@ -93,12 +93,12 @@ namespace vge {
             0.982f,  0.099f,  0.879f
         });
 
-        this->ShaderProgramLinked = GraphicsEngine::get()->CreateProgram({
+        this->ShaderProgramLinked = GraphicsEngineVGE.CreateProgram({
             "./src/Object/Components/SpriteRendererVS.vert",
             "./src/Object/Components/SpriteRendererFS.frag"
         });
-        unsigned int VAOassigned = GraphicsEngine::get()->pushModel(model, this->ShaderProgramLinked);
-        GraphicsEngine::get()->LinkShader(VAOassigned, this->ShaderProgramLinked);
+        unsigned int VAOassigned = GraphicsEngineVGE.pushModel(model, this->ShaderProgramLinked);
+        GraphicsEngineVGE.LinkShader(VAOassigned, this->ShaderProgramLinked);
 	}
 
 	MyGameObject::~MyGameObject()
@@ -107,21 +107,48 @@ namespace vge {
 
 	void MyGameObject::Update()
 	{
-		float reductor = 1.0f / 150.0f;
-		if (InputSystem::get()->isKeyDown(int('W'))) {
-            altura += 1.0f * reductor;
-		}
-        if (InputSystem::get()->isKeyDown(int('S'))) {
-            altura += -1.0f * reductor;
+
+        this->model->Behaviour();
+
+        if (InputSystemVGE.isKeyPressed(int('1'))) {
+            ConsoleLogS("Set scene number 1", AUXILIAR);
+            SceneManagementVGE.setCurrentScene(0);
+        }
+        if (InputSystemVGE.isKeyPressed(int('2'))) {
+            ConsoleLogS("Set scene number 2", AUXILIAR);
+            SceneManagementVGE.setCurrentScene(1);
         }
 
-		GraphicsEngine::get()->passUniform(this->ShaderProgramLinked, this->transform->getValues(), "transform");
+		float reductor = 1.0f / 300.0f;
+		if (InputSystemVGE.isKeyDown(int('W'))) {
+            altura += -1.0f * reductor;
+		}
+        if (InputSystemVGE.isKeyDown(int('S'))) {
+            altura += 1.0f * reductor;
+        }
+        if (InputSystemVGE.isKeyDown(int('A'))) {
+            desplas += 1.0f * reductor;
+        }
+        if (InputSystemVGE.isKeyDown(int('D'))) {
+            desplas += -1.0f * reductor;
+        }
 
-        glm::mat4 view = glm::lookAt(glm::vec3(0.0f, altura, 5.0f), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
-        glm::mat4 projectionMatrix = glm::perspective<float>(glm::radians(90 * PI), (float)1280 / (float)720, 0.0f, 10.0f);
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(
+            this->transform->getValues()[0],
+            this->transform->getValues()[1],
+            this->transform->getValues()[2]
+        ));
+        float actualTime = static_cast<float>(glfwGetTime());
+        model = glm::rotate(model, actualTime, glm::vec3(0.0f, 1.0f, 0.0f));
 
-        GraphicsEngine::get()->passUniformMat4(this->ShaderProgramLinked, view, "modelViewMat");
-        GraphicsEngine::get()->passUniformMat4(this->ShaderProgramLinked, projectionMatrix, "projectionMatrix");
+        glm::mat4 view = glm::lookAt(glm::vec3(desplas, altura, 3.0f), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+        float FOV = visionAngle * (PI / 180.0f);
+        glm::mat4 projectionMatrix = glm::perspective(FOV, (float)1280 / (float)720, 0.0f, 100.0f);
+
+        GraphicsEngineVGE.passUniformMat4(this->ShaderProgramLinked, model, "model");
+        GraphicsEngineVGE.passUniformMat4(this->ShaderProgramLinked, view, "view");
+        GraphicsEngineVGE.passUniformMat4(this->ShaderProgramLinked, projectionMatrix, "projection");
 
 
 	}	

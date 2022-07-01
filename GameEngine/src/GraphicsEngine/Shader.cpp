@@ -22,12 +22,12 @@ namespace vge {
 			char infoLog[1024];
 			glGetShaderInfoLog(this->shaderID, maxLength, &maxLength, infoLog);
 			glDeleteShader(this->shaderID);
-			Console::debug(infoLog, Console::COLOR::RED, Console::SENDER::GRAPHICS_ENGINE);
-			Console::debug("Error on compiling shader, ID: " + std::to_string(this->shaderID) + ", Shader name: " + shaderName + ", Compile log : " + std::to_string(compileInfo), Console::COLOR::RED, Console::SENDER::GRAPHICS_ENGINE);
+			ConsoleErrorS(infoLog, GRAPHICS_ENGINE);
+			ConsoleErrorS("Error on compiling shader, ID: " + std::to_string(this->shaderID) + ", Shader name: " + shaderName + ", Compile log : " + std::to_string(compileInfo), GRAPHICS_ENGINE);
 			glDeleteShader(this->shaderID);
 		}
 		else {
-			Console::debug("Shader compiled succesfully, ID: " + std::to_string(this->shaderID) + ", Shader name: " + shaderName + ", Compile log : " + std::to_string(compileInfo), Console::COLOR::GREEN, Console::SENDER::GRAPHICS_ENGINE);
+			ConsoleDebugS((std::string)shaderName + " compiled succesfully!", GREEN, GRAPHICS_ENGINE);
 		}
 
 	}

@@ -45,9 +45,6 @@
     <ClCompile Include="src\Object\Components\SpriteRenderer.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\ResourcesManager\ResourceManager.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\GraphicsEngine\Shader.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -117,9 +114,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\Object\Components\SpriteRenderer.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ResourcesManager\ResourceManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\GraphicsEngine\Shader.h">

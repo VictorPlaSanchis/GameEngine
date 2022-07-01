@@ -26,5 +26,6 @@ namespace vge {
 
 	};
 
-}
+#define ImGuiControllerVGE (*(ImGuiController::get()))
 
+}

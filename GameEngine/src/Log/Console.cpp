@@ -29,12 +29,36 @@ namespace vge {
 	{
 	}
 
+	void Console::testConsole() 
+	{
+		ConsoleDebug("ConsoleDebug",WHITE);
+		ConsoleDebugS("ConsoleDebugS",WHITE,AUXILIAR);
+		ConsoleLog("ConsoleLog");
+		ConsoleLogS("ConsoleLogS",AUXILIAR);
+		ConsoleWarning("ConsoleWarning");
+		ConsoleWarningS("ConsoleWarningS", AUXILIAR);
+		ConsoleError("ConsoleError");
+		ConsoleErrorS("ConsoleErrorS", AUXILIAR);
+		ConsoleDebug("ConsoleDebugWhite", WHITE);
+		ConsoleDebugS("ConsoleDebugSWhite", WHITE, AUXILIAR);
+		ConsoleDebug("ConsoleDebugYellow", YELLOW);
+		ConsoleDebugS("ConsoleDebugSYellow", YELLOW, AUXILIAR);
+		ConsoleDebug("ConsoleDebugBlue", BLUE);
+		ConsoleDebugS("ConsoleDebugSBlue", BLUE, AUXILIAR);
+		ConsoleDebug("ConsoleDebugCyan", CYAN);
+		ConsoleDebugS("ConsoleDebugSCyan", CYAN, AUXILIAR);
+		ConsoleDebug("ConsoleDebugGreen", GREEN);
+		ConsoleDebugS("ConsoleDebugSGreen", GREEN, AUXILIAR);
+		ConsoleDebug("ConsoleDebugMagenta", MAGENTA);
+		ConsoleDebugS("ConsoleDebugSMagenta", MAGENTA, AUXILIAR);
+		ConsoleDebug("ConsoleDebugRed", RED);
+		ConsoleDebugS("ConsoleDebugSRed", RED, AUXILIAR);
+	}
+
 	void Console::debug(std::string message, COLOR color, SENDER sender = Console::SENDER::AUXILIAR)
 	{	
 		double currentTime = glfwGetTime();
 		std::cout << COLOR_VALUE[color] << "[" + std::to_string(currentTime) + "s] " << SENDER_VALUE[sender] + ": " + message + COLOR_VALUE[Console::WHITE] << std::endl;
 	}
-
-
 
 }

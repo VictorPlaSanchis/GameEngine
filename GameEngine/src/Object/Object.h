@@ -26,7 +26,7 @@ namespace vge {
                 this->components.push_back(newComponent);
                 return newComponent;
             }
-            else Console::debug("Cant add this component...", Console::COLOR::RED, Console::SENDER::APPLICATION);
+            else ConsoleError("Cant add this component...");
         }
         template <class C>
         C* addComponent() {

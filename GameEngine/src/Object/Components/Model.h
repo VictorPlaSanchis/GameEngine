@@ -9,12 +9,12 @@ namespace vge {
 	
 	private:
 
+		const char* texturePath;
 		std::vector<float> data;
 		std::vector<float> dataColor;
 		std::vector<float> dataTexCoord;
 		unsigned int numVertex;
-
-		const char* texturePath;
+		unsigned int VAOassigned;
 
 	public:
 
@@ -26,6 +26,8 @@ namespace vge {
 		void assignVertexsColor(std::vector<float> color);
 		void assignVertexsTexCoord(std::vector<float> texCoord);
 		void assignTexture(const char* filename);
+		void setVAOassigned(unsigned int VAO);
+
 		std::vector<float> getData();
 		std::vector<float> getDataColor();
 		std::vector<float> getDataTexCoord();

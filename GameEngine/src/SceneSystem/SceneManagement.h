@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Scene.h"
+#include "./Scene.h"
 
 namespace vge {
 
@@ -21,12 +21,14 @@ namespace vge {
 		static SceneManagement* get();
 
 		void Ini();
-		void addScene();
+		Scene* createScene();
 		void removeScene(Scene* scene);
 		void setCurrentScene(int index);
+		void setCurrentScene(Scene* scene);
 		Scene* getCurrentScene();
 
 	};
 
+#define SceneManagementVGE (*(vge::SceneManagement::get()))
 
 }

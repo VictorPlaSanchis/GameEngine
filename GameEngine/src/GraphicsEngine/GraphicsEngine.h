@@ -2,12 +2,13 @@
 #include "../Object/Component.h"
 #include "Shader.h"
 #include "../Object/Components/Model.h"
+#include "../SceneSystem/Scene.h"
 
 #include <vector>
 #include <unordered_map>
 
-#include "../Log/Console.h"
 #include "../GLM/glm/glm.hpp"
+#include <set>
 
 namespace vge {
 
@@ -27,6 +28,8 @@ namespace vge {
 		std::unordered_map<unsigned int, Model*> models;
 		std::unordered_map<unsigned int, unsigned int> textures;
 		std::unordered_map<unsigned int, unsigned int> shaders;
+
+		std::set<unsigned int> VAOsToDraw;
 
 	public:
 
@@ -49,9 +52,13 @@ namespace vge {
 		unsigned int pushModel(Model* model, unsigned int programAssigned = -1);
 		void pushTexture(const char* filename, unsigned int VAO);
 		void DrawData();
+		void CleanData();
+		void setDrawableObject(unsigned int VAO);
 		void LinkShader(unsigned int VAO, unsigned int ShaderProgramID);
 
 	};
+
+#define GraphicsEngineVGE (*(GraphicsEngine::get()))
 
 }
 

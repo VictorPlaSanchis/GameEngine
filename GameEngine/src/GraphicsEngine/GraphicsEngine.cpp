@@ -1,5 +1,5 @@
-﻿#include "GraphicsEngine.h"
-#include <GL/glew.h>
+﻿#include <GL/glew.h>
+#include "GraphicsEngine.h"
 #include "GLFW/glfw3.h"
 #include <fstream>
 
@@ -40,7 +40,6 @@ namespace vge {
 		for (const char* shadername : filenames) {
 			Shader* newshader = GraphicsEngine::get()->InitShader(shadername);
 			glAttachShader(newProgramID, newshader->getID());
-			Console::debug("Attacing id: " + std::to_string(newshader->getID()) + " to program: " + std::to_string(newProgramID), Console::COLOR::CYAN, Console::SENDER::GRAPHICS_ENGINE);
 		}
 		glLinkProgram(newProgramID);
 		return newProgramID;
@@ -48,9 +47,9 @@ namespace vge {
 
 	Shader* GraphicsEngine::InitShader(const char* filename) {
 		// Create a new shader from the source code of filename and compile it
-		Console::debug("Loading new shader: " + static_cast<std::string>(filename), Console::COLOR::CYAN, Console::SENDER::GRAPHICS_ENGINE);
+		ConsoleDebugS("Loading new shader: " + static_cast<std::string>(filename), CYAN, GRAPHICS_ENGINE);
 		std::string sourceCode = getSourceShader(filename);
-		int sizeName = static_cast<std::string>(filename).size();
+		size_t sizeName = static_cast<std::string>(filename).size();
 		std::string shaderType = static_cast<std::string>(filename).substr(sizeName-4, sizeName-1);
 		Shader* newShader = new Shader();
 		if (shaderType == "vert") newShader = new Shader(GL_VERTEX_SHADER, sourceCode.c_str());
@@ -146,6 +145,7 @@ namespace vge {
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		this->models.insert(std::pair<unsigned int, Model*>(VAO, model));
+		model->setVAOassigned(VAO);
 		return VAO;
 	}
 
@@ -162,7 +162,7 @@ namespace vge {
 		unsigned char* data = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb_alpha);
 		
 		if (!data) {
-			Console::debug("Failed to load texture.", Console::COLOR::RED, Console::SENDER::GRAPHICS_ENGINE);
+			ConsoleErrorS("Failed to load texture.", GRAPHICS_ENGINE);
 			return;
 		}
 
@@ -174,25 +174,37 @@ namespace vge {
 
 	void GraphicsEngine::DrawData()
 	{
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		std::unordered_map<unsigned int, Model*>::iterator it = this->models.begin();
-		while (it != this->models.end()) {
-			if (this->shaders.find(it->first) != this->shaders.end()) {
-				this->Bind(this->shaders.find(it->first)->second);
+		std::set<unsigned int>::iterator it = this->VAOsToDraw.begin();
+		while (it != this->VAOsToDraw.end()) {
+
+			unsigned int currentVAO = *it;
+
+			if (this->shaders.find(currentVAO) != this->shaders.end()) {
+				this->Bind(this->shaders.find(currentVAO)->second);
 			} else this->Bind();
-			if (this->textures.find(it->first) != this->textures.end()) {
-				glBindTexture(GL_TEXTURE_2D, textures[it->first]);
+			if (this->textures.find(currentVAO) != this->textures.end()) {
+				glBindTexture(GL_TEXTURE_2D, textures[currentVAO]);
 			}
-			glBindVertexArray(it->first);
-			glDrawArrays(GL_TRIANGLES, 0, it->second->getNumVertexs());
+			glBindVertexArray(currentVAO);
+			Model* modelToDraw = (this->models.find(currentVAO))->second;
+			glDrawArrays(GL_TRIANGLES, 0, modelToDraw->getNumVertexs());
 			it++;
 			this->Unbind();
+
 		}
 		glBindVertexArray(0);
-		glDisable(GL_BLEND);
 
+	}
+
+	void GraphicsEngine::CleanData()
+	{
+		this->VAOsToDraw = std::set<unsigned int>();
+	}
+
+	void GraphicsEngine::setDrawableObject(unsigned int VAO)
+	{
+		this->VAOsToDraw.insert(VAO);
 	}
 
 	void GraphicsEngine::LinkShader(unsigned int VAO, unsigned int ShaderProgramID)

@@ -1,7 +1,4 @@
 #include "Transform.h"
-#include "../InputSystem/InputSystem.h"
-
-#include <iostream>
 
 namespace vge {
 

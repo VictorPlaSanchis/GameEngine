@@ -16,6 +16,8 @@ namespace vge {
 		unsigned int ShaderProgramLinked;
 
 		float altura = 0.0f;
+		float desplas = 0.0f;
+		float visionAngle = 90.0f;
 
 	public:
 

@@ -1,5 +1,4 @@
 #include "ResourceManager.h"
-#include "GLFW/glfw3.h"
 
 namespace vge {
 

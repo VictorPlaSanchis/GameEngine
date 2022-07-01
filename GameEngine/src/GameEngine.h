@@ -9,6 +9,7 @@ namespace vge {
 	private:
 
 		GLFWwindow* windowGame;
+		unsigned int width, heigth;
 
 	public:
 
@@ -17,13 +18,16 @@ namespace vge {
 
 		static GameEngine* get();
 		GLFWwindow* getWindowGame();
+		const char* getOpenGLversion();
+		float getAspect() { return (float)this->width / (float)this->heigth; }
+		unsigned int getWidth() { return this->width; }
+		unsigned int getHeigth() { return this->heigth; }
 
 		void Init();
 		void Run();
 
-		const char* getOpenGLversion();
-
 	};
 
-}
+#define GameEngineVGE (*vge::GameEngine::get())
 
+}

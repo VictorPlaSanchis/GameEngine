@@ -1,6 +1,5 @@
 #include "Model.h"
-
-#include "../../Log/Console.h"
+#include "../../GraphicsEngine/GraphicsEngine.h"
 
 namespace vge {
 
@@ -68,8 +67,14 @@ namespace vge {
 		return this->numVertex;
 	}
 
+	void Model::setVAOassigned(unsigned int VAO) 
+	{
+		this->VAOassigned = VAO;
+	}
+
 	void Model::Behaviour()
 	{
+		GraphicsEngine::get()->setDrawableObject(this->VAOassigned);
 	}
 
 };

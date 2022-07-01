@@ -2,7 +2,7 @@
 
 #include "../../GraphicsEngine/GraphicsEngine.h"
 
-#include <GL/glew.h>
+
 
 namespace vge {
 
@@ -42,6 +42,7 @@ namespace vge {
 
 	void SpriteRenderer::Behaviour()
 	{
+		this->spriteModel->Behaviour();
 	}
 
 }

@@ -32,7 +32,6 @@
     <ClCompile Include="src\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="src\Log\Console.cpp" />
     <ClCompile Include="src\GraphicsEngine\Shader.cpp" />
-    <ClCompile Include="src\ResourcesManager\ResourceManager.cpp" />
     <ClCompile Include="src\Object\Components\SpriteRenderer.cpp" />
     <ClCompile Include="src\GraphicsEngine\GraphicsEngine.cpp" />
     <ClCompile Include="src\Object\Component.cpp" />
@@ -61,7 +60,6 @@
     <ClInclude Include="src\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\Log\Console.h" />
     <ClInclude Include="src\GraphicsEngine\Shader.h" />
-    <ClInclude Include="src\ResourcesManager\ResourceManager.h" />
     <ClInclude Include="src\Object\Components\SpriteRenderer.h" />
     <ClInclude Include="src\GraphicsEngine\GraphicsEngine.h" />
     <ClInclude Include="src\Object\Component.h" />
