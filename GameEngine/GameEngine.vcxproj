@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GraphicsEngine\ObjLoader.cpp" />
     <ClCompile Include="src\Object\Camera.cpp" />
     <ClCompile Include="src\Debug\MyGameObject.cpp" />
     <ClCompile Include="src\Object\Components\Model.cpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="src\Object\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GraphicsEngine\ObjLoader.h" />
     <ClInclude Include="src\Object\Camera.h" />
     <ClInclude Include="src\Debug\MyGameObject.h" />
     <ClInclude Include="src\Object\Components\Model.h" />

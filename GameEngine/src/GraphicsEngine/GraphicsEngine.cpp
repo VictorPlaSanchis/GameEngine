@@ -113,7 +113,7 @@ namespace vge {
 	unsigned int GraphicsEngine::pushModel(Model* model, unsigned int programAssigned)
 	{
 		unsigned int VAO;
-		unsigned int VBO[3];
+		unsigned int VBO[4];
 
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, VBO);
@@ -125,7 +125,7 @@ namespace vge {
 		glBufferData(GL_ARRAY_BUFFER, (sizeof(float) * 3) * model->getNumVertexs(), &model->getData()[0], GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(0);
-
+		
 		// Vertex colors
 		if (model->getDataColor().size() > 0) {
 			glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
@@ -142,10 +142,14 @@ namespace vge {
 			glEnableVertexAttribArray(2);
 			this->pushTexture(model->getTexturePath(), VAO);
 		}
+		
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VBO[3]);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->getDataIndexs().size() * sizeof(unsigned int), &model->getDataIndexs()[0], GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		this->models.insert(std::pair<unsigned int, Model*>(VAO, model));
 		model->setVAOassigned(VAO);
+		model->setBuffer(VBO[3]);
 		return VAO;
 	}
 
@@ -186,9 +190,9 @@ namespace vge {
 			if (this->textures.find(currentVAO) != this->textures.end()) {
 				glBindTexture(GL_TEXTURE_2D, textures[currentVAO]);
 			}
-			glBindVertexArray(currentVAO);
 			Model* modelToDraw = (this->models.find(currentVAO))->second;
-			glDrawArrays(GL_TRIANGLES, 0, modelToDraw->getNumVertexs());
+			glBindVertexArray(currentVAO);
+			glDrawElements(GL_TRIANGLES, modelToDraw->getDataIndexs().size(), GL_UNSIGNED_INT, (void*)0);
 			it++;
 			this->Unbind();
 

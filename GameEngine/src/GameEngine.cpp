@@ -92,7 +92,7 @@ namespace vge {
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 			glEnable(GL_DEPTH_TEST);
-			glDepthFunc(GL_EQUAL);
+			glDepthFunc(GL_LESS);
 
 			while (!glfwWindowShouldClose(GameEngine::windowGame)) 
 			{

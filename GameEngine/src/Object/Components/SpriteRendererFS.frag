@@ -9,6 +9,5 @@ out vec4 fragColor;
 
 void main()
 {
-    float colorZ = vVertex.z - 4.0f;
-    fragColor = vec4(colorZ, 0.0f, 0.0f, 1.0f);
+    fragColor = vec4(texture(textureSample, vTexCoord).xyz, 1.0);
 }
