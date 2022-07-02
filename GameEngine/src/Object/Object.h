@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Transform.h"
+#include "./Components/Model.h"
 #include <typeinfo>
 #include <list>
 
@@ -33,7 +34,11 @@ namespace vge {
             if (std::is_base_of<Component, C>::value) {
                 C* newComponent = new C();
                 this->components.push_back(newComponent);
-                return newComponent;
+                if (std::is_base_of<Model, C>::value) {
+                    Model* newModel = newComponent;
+                    newModel->setTransform(this->transform);
+                    return newModel;
+                } else return newComponent;
             }
             else Console::debug("Cant add this component...", Console::COLOR::RED, Console::SENDER::APPLICATION);
         }

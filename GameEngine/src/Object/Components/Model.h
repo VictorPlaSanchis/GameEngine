@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "../Component.h"
+#include "../Transform.h"
 
 namespace vge {
 
@@ -9,9 +10,9 @@ namespace vge {
 	
 	private:
 
-		unsigned int buffer;
-
 		const char* texturePath;
+		Transform* modelTransform;
+		
 		std::vector<float> data;
 		std::vector<float> dataColor;
 		std::vector<float> dataTexCoord;
@@ -20,6 +21,7 @@ namespace vge {
 		std::vector<unsigned int> dataColorIndexs;
 		std::vector<unsigned int> dataTexCoordIndexs;
 		std::vector<unsigned int> dataNormalsIndexs; 
+
 		unsigned int numVertex;
 		unsigned int VAOassigned;
 
@@ -40,9 +42,6 @@ namespace vge {
 		void assignTexture(const char* filename);
 		void setVAOassigned(unsigned int VAO);
 
-		void setBuffer(unsigned int buffer);
-		unsigned int getBuffer();
-
 		std::vector<float> getData();
 		std::vector<float> getDataColor();
 		std::vector<float> getDataTexCoord();
@@ -53,6 +52,9 @@ namespace vge {
 		std::vector<unsigned int> getDataNormalsIndexs(); 
 		const char* getTexturePath();
 		unsigned int getNumVertexs();
+
+		void load(Model* modelToLoad);
+		void setTransform(Transform* modelTransform);
 
 		void Behaviour() override;
 

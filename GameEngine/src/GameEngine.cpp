@@ -52,24 +52,19 @@ namespace vge {
 		Scene* scene1 = SceneManagementVGE.createScene();
 		Scene* scene2 = SceneManagementVGE.createScene();
 
-		// Creating a game object for Debugging
+		// Creating gameobjects for debugging
 		MyGameObject* object = new MyGameObject();
 		MyGameObject* object2 = new MyGameObject();
 		object2->transform->move({1.0f, 0.0f, -1.0f});
 		object->transform->move({-1.0f, 0.0f, -3.0f });
-		Camera* cameraScene = new Camera();
-		Camera* cameraScene2 = new Camera();
 
-		// Adding object into current scene of the game
+		// Adding object into scene 1 of the game
 		scene1->addObject(object);
 		scene1->addObject(object2);
-		scene1->addObject(cameraScene);
 
-		// Adding object into current scene of the game
+		// Adding object into scene 2 of the game
 		scene2->addObject(object2);
-		scene2->addObject(cameraScene2);
-
-		return;
+		scene2->getCameraScene()->transform->move({-2.0f, 4.0f, 1.0f});
 
 	}
 
@@ -94,6 +89,12 @@ namespace vge {
 			glEnable(GL_DEPTH_TEST);
 			glDepthFunc(GL_LESS);
 
+			unsigned int frames = 0;
+			float second = 1.0f;
+			float acc = 0.0f;
+			float lastAcc = 0.0f;
+			std::vector<unsigned int> framesPerSecond = std::vector<unsigned int>(0);
+
 			while (!glfwWindowShouldClose(GameEngine::windowGame)) 
 			{
 				PROFILE_SCOPE("FRAME TIME GameEngine")
@@ -111,6 +112,17 @@ namespace vge {
 				// Polling and swapping screen buffers
 				glfwPollEvents();
 				glfwSwapBuffers(GameEngine::windowGame);
+				
+				frames++;
+				acc += glfwGetTime() - lastAcc;
+				lastAcc = glfwGetTime();
+
+				if (acc > second) {
+					framesPerSecond.push_back(frames);
+					ConsoleWarningS("fps: " + std::to_string(frames), APPLICATION);
+					frames = 0;
+					acc = 0.0f;
+				}
 			}
 
 			glDisable(GL_BLEND);

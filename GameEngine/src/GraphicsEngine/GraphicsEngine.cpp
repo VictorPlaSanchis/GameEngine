@@ -149,8 +149,14 @@ namespace vge {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		this->models.insert(std::pair<unsigned int, Model*>(VAO, model));
 		model->setVAOassigned(VAO);
-		model->setBuffer(VBO[3]);
 		return VAO;
+	}
+
+	unsigned int GraphicsEngine::getShaderLinked(unsigned int VAO)
+	{
+		std::unordered_map<unsigned int, unsigned int>::iterator it = this->shaders.find(VAO);
+		if (it != this->shaders.end()) return it->second;
+		return 0;
 	}
 
 	void GraphicsEngine::pushTexture(const char* filename, unsigned int VAO)
@@ -178,21 +184,29 @@ namespace vge {
 
 	void GraphicsEngine::DrawData()
 	{
+		Camera* currentCamera = SceneManagementVGE.getCurrentScene()->getCameraScene();
 
 		std::set<unsigned int>::iterator it = this->VAOsToDraw.begin();
 		while (it != this->VAOsToDraw.end()) {
 
 			unsigned int currentVAO = *it;
+			unsigned int shader = this->programID();
 
-			if (this->shaders.find(currentVAO) != this->shaders.end()) {
-				this->Bind(this->shaders.find(currentVAO)->second);
-			} else this->Bind();
-			if (this->textures.find(currentVAO) != this->textures.end()) {
-				glBindTexture(GL_TEXTURE_2D, textures[currentVAO]);
-			}
+			if (this->shaders.find(currentVAO) != this->shaders.end()) shader = this->shaders.find(currentVAO)->second;
+			
+			// ---------------------
+
+			GraphicsEngineVGE.passUniformMat4(shader, SceneManagementVGE.getCurrentScene()->getCameraScene()->getViewMatrix(), "view");
+			GraphicsEngineVGE.passUniformMat4(shader, SceneManagementVGE.getCurrentScene()->getCameraScene()->getProjectionMatrix(), "projection");
+
+			// ---------------------
+			
+			this->Bind(shader);
+			if (this->textures.find(currentVAO) != this->textures.end()) glBindTexture(GL_TEXTURE_2D, textures[currentVAO]);
+
 			Model* modelToDraw = (this->models.find(currentVAO))->second;
 			glBindVertexArray(currentVAO);
-			glDrawElements(GL_TRIANGLES, modelToDraw->getDataIndexs().size(), GL_UNSIGNED_INT, (void*)0);
+			glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(modelToDraw->getDataIndexs().size()), GL_UNSIGNED_INT, (void*)0);
 			it++;
 			this->Unbind();
 

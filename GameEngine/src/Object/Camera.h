@@ -22,6 +22,8 @@ namespace vge {
 		glm::mat4 projectionMatrix;
 
 		float zNear, zFar, projectionAngle;
+		glm::vec3 eyeTarget;
+		glm::vec3 upVector;
 
 	public:
 
@@ -42,6 +44,7 @@ namespace vge {
 		Vector3F getInitialPosition() { return this->initialPosition; }
 
 		glm::mat4 getProjectionMatrix();
+		glm::mat4 getViewMatrix();
 
 	};
 

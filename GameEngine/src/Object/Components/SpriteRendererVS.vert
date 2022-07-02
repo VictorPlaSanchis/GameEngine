@@ -18,8 +18,6 @@ out vec2 vTexCoord;
 void main()
 {
     vTexCoord = texCoord;
-    vec4 positionProjected = projection * view * model * vec4(position, 1.0);
     vColor = color;
-    vVertex = positionProjected;
-    gl_Position = positionProjected;
+    gl_Position = projection * view * model * vec4(position, 1.0);
 }

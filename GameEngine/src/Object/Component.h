@@ -5,12 +5,14 @@ namespace vge {
 	class Component
 	{
 
+	private:
+
 	public:
 
 		Component();
 		~Component();
 
-		virtual void Behaviour();
+		virtual void Behaviour() = 0;
 
 	};
 

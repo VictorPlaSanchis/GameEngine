@@ -10,8 +10,4 @@ namespace vge {
 	{
 	}
 
-	void Component::Behaviour()
-	{
-	}
-
 }

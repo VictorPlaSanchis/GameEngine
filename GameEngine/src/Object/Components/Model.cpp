@@ -1,5 +1,6 @@
 #include "Model.h"
 #include "../../GraphicsEngine/GraphicsEngine.h"
+#include "../../SceneSystem/SceneManagement.h"
 
 namespace vge {
 
@@ -117,23 +118,38 @@ namespace vge {
 		return this->numVertex;
 	}
 
+	void Model::load(Model* modelToLoad)
+	{
+		this->data = modelToLoad->data;
+		this->dataIndexs = modelToLoad->dataIndexs;
+		this->dataColor = modelToLoad->dataColor;
+		this->dataColorIndexs = modelToLoad->dataColorIndexs;
+		this->dataNormals = modelToLoad->dataNormals;
+		this->dataNormalsIndexs = modelToLoad->dataNormalsIndexs;
+		this->dataTexCoord = modelToLoad->dataTexCoord;
+		this->dataTexCoordIndexs = modelToLoad->dataTexCoordIndexs;
+		this->numVertex = this->data.size() / 3.0f;	
+	}
+
+	void Model::setTransform(Transform* modelTransform)
+	{
+		this->modelTransform = modelTransform;
+	}
+
 	void Model::setVAOassigned(unsigned int VAO) 
 	{
 		this->VAOassigned = VAO;
 	}
 
-	void Model::setBuffer(unsigned int buffer)
-	{
-		this->buffer = buffer;
-	}
-
-	unsigned int Model::getBuffer()
-	{
-		return this->buffer;
-	}
-
 	void Model::Behaviour()
 	{
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(this->modelTransform->positionGLM()));
+		float actualTime = static_cast<float>(glfwGetTime());
+		model = glm::scale(model, this->modelTransform->scaleGLM());
+		model = glm::rotate(model, actualTime, glm::vec3(1.0f, 1.0f, 0.0f));
+		GraphicsEngineVGE.passUniformMat4(GraphicsEngineVGE.getShaderLinked(this->VAOassigned), model, "model");
+
 		GraphicsEngine::get()->setDrawableObject(this->VAOassigned);
 	}
 
