@@ -10,7 +10,7 @@ uniform mat4 model;
 uniform mat4 projection;
 uniform mat4 view;
 
-out vec4 vVertex;
+out vec3 vVertex;
 
 out vec3 vColor;
 out vec2 vTexCoord;
@@ -19,5 +19,6 @@ void main()
 {
     vTexCoord = texCoord;
     vColor = color;
+    vVertex = (projection * view * model * vec4(position, 1.0)).xyz;
     gl_Position = projection * view * model * vec4(position, 1.0);
 }

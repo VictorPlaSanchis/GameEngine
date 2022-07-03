@@ -25,6 +25,7 @@ namespace vge {
 	void Scene::UpdateScene()
 	{
 		for (Object* object : objects) {
+			object->UpdateComponents();
 			object->Update();
 		}
 	}

@@ -17,10 +17,11 @@ namespace vge {
     MyGameObject::MyGameObject()
     {
  
-        Model* cube = ObjLoader::loadObj("./src/cube.obj");
+        Model* cube = ObjLoader::loadObj("./src/knight.obj");
 
         this->model = this->addComponent<Model>();
         this->model->load(cube);
+        this->model->assignTexture("./imgs/knight.png");
 
         this->ShaderProgramLinked = GraphicsEngineVGE.CreateProgram({
             "./src/Object/Components/SpriteRendererVS.vert",
@@ -29,6 +30,7 @@ namespace vge {
 
         unsigned int VAOassigned = GraphicsEngineVGE.pushModel(model, this->ShaderProgramLinked);
         GraphicsEngineVGE.LinkShader(VAOassigned, this->ShaderProgramLinked);
+
 	}
 
 	MyGameObject::~MyGameObject()
@@ -37,8 +39,6 @@ namespace vge {
 
 	void MyGameObject::Update()
 	{
-
-        this->model->Behaviour();
 
         if (InputSystemVGE.isKeyPressed(int('1'))) {
             SceneManagementVGE.setCurrentScene(0);

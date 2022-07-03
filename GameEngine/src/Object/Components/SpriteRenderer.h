@@ -10,17 +10,17 @@ namespace vge {
 	private:
 
 		Model* spriteModel;
-		unsigned int VAOassigned;
-		unsigned int ShaderProgramLinked;
 
 	public:
 
 		SpriteRenderer();
 		SpriteRenderer(const char* filename);
 
-		void Behaviour() override;
-		unsigned int getVAOassigned() { return this->VAOassigned; }
-		unsigned int getShaderProgramLinked() { return this->ShaderProgramLinked; }
+		void setSprite(const char* filename);
+		Model* getSpriteModel() { return this->spriteModel; }
+
+		virtual void Behaviour();
+
 
 	};
 

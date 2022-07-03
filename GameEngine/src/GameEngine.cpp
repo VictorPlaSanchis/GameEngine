@@ -90,9 +90,7 @@ namespace vge {
 			glDepthFunc(GL_LESS);
 
 			unsigned int frames = 0;
-			float second = 1.0f;
-			float acc = 0.0f;
-			float lastAcc = 0.0f;
+			double second = 1.0, acc = 0.0, lastAcc = 0.0;
 			std::vector<unsigned int> framesPerSecond = std::vector<unsigned int>(0);
 
 			while (!glfwWindowShouldClose(GameEngine::windowGame)) 

@@ -1,6 +1,7 @@
 #include "SpriteRenderer.h"
 
 #include "../../GraphicsEngine/GraphicsEngine.h"
+#include "../../GraphicsEngine/ObjLoader.h"
 
 
 
@@ -8,36 +9,43 @@ namespace vge {
 
     SpriteRenderer::SpriteRenderer()
     {
+		this->spriteModel = new Model();
     }
 
     SpriteRenderer::SpriteRenderer(const char* filename)
 	{
-		std::vector<float> vertexs = {
-			-0.5f, -0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f
-		};
+		Model* plane = ObjLoader::loadObj("./src/plane.obj");
+		this->spriteModel = new Model();
+		this->spriteModel->load(plane);
+		this->spriteModel->assignTexture(filename);
+		unsigned int shaderIDassigned = GraphicsEngine::get()->CreateProgram({
+			"./src/Object/Components/SpriteRendererVS.vert",
+			"./src/Object/Components/SpriteRendererFS.frag"
+		});
+		this->spriteModel->setVAOassigned(GraphicsEngine::get()->pushModel(this->spriteModel, shaderIDassigned));
+		GraphicsEngine::get()->LinkShader(this->spriteModel->VAOassigned, shaderIDassigned);
+	
+	}
 
-		spriteModel = new Model(vertexs);
-		spriteModel->assignVertexsTexCoord({
+	void SpriteRenderer::setSprite(const char* filename)
+	{
+		Model* plane = ObjLoader::loadObj("./src/plane.obj");
+		this->spriteModel->load(plane);
+		this->spriteModel->assignVertexsTexCoord({
 			0.0f, 0.0f,
 			0.0f, -1.0f,
 			1.0f, 0.0f,
 			0.0f, -1.0f,
 			1.0f, -1.0f,
 			1.0f, 0.0f
-		});
-		spriteModel->assignTexture(filename);
-		this->ShaderProgramLinked = GraphicsEngine::get()->CreateProgram({
+			});
+		this->spriteModel->assignTexture(filename);
+		unsigned int shaderIDassigned = GraphicsEngine::get()->CreateProgram({
 			"./src/Object/Components/SpriteRendererVS.vert",
 			"./src/Object/Components/SpriteRendererFS.frag"
-		});
-		this->VAOassigned = GraphicsEngine::get()->pushModel(spriteModel, this->ShaderProgramLinked);
-		GraphicsEngine::get()->LinkShader(this->VAOassigned, this->ShaderProgramLinked);
-	
+			});
+		this->spriteModel->setVAOassigned(GraphicsEngine::get()->pushModel(this->spriteModel, shaderIDassigned));
+		GraphicsEngine::get()->LinkShader(this->spriteModel->VAOassigned, shaderIDassigned);
 	}
 
 	void SpriteRenderer::Behaviour()

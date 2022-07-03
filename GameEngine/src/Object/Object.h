@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "Transform.h"
 #include "./Components/Model.h"
+#include "./Components/SpriteRenderer.h"
 #include <typeinfo>
 #include <list>
 
@@ -25,6 +26,14 @@ namespace vge {
             if (std::is_base_of<Component, C>::value) {
                 C* newComponent = new C(args);
                 this->components.push_back(newComponent);
+                if(std::is_base_of<SpriteRenderer, C>::value)
+                {
+                    ((SpriteRenderer*)newComponent)->getSpriteModel()->setTransform(this->transform);
+                }
+                else if (std::is_base_of<Model, C>::value)
+                {
+                    ((Model*)newComponent)->setTransform(this->transform);
+                }
                 return newComponent;
             }
             else ConsoleError("Cant add this component...");
@@ -34,11 +43,13 @@ namespace vge {
             if (std::is_base_of<Component, C>::value) {
                 C* newComponent = new C();
                 this->components.push_back(newComponent);
-                if (std::is_base_of<Model, C>::value) {
-                    Model* newModel = newComponent;
-                    newModel->setTransform(this->transform);
-                    return newModel;
-                } else return newComponent;
+                if (std::is_base_of<SpriteRenderer, C>::value) {
+                    ((SpriteRenderer*)newComponent)->getSpriteModel()->setTransform(this->transform);
+                }
+                else if (std::is_base_of<Model, C>::value) {
+                    ((Model*)newComponent)->setTransform(this->transform);
+                }
+                return newComponent;
             }
             else Console::debug("Cant add this component...", Console::COLOR::RED, Console::SENDER::APPLICATION);
         }
@@ -67,8 +78,8 @@ namespace vge {
         void addChild(Object* child);
         void removeChild(Object* child);
 
+        void UpdateComponents();
         virtual void Update() = 0;
-
     };
 
 }

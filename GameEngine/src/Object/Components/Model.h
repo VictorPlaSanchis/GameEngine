@@ -11,7 +11,6 @@ namespace vge {
 	private:
 
 		const char* texturePath;
-		Transform* modelTransform;
 		
 		std::vector<float> data;
 		std::vector<float> dataColor;
@@ -23,7 +22,6 @@ namespace vge {
 		std::vector<unsigned int> dataNormalsIndexs; 
 
 		unsigned int numVertex;
-		unsigned int VAOassigned;
 
 	public:
 
@@ -52,6 +50,9 @@ namespace vge {
 		std::vector<unsigned int> getDataNormalsIndexs(); 
 		const char* getTexturePath();
 		unsigned int getNumVertexs();
+
+		unsigned int VAOassigned;
+		Transform* modelTransform;
 
 		void load(Model* modelToLoad);
 		void setTransform(Transform* modelTransform);

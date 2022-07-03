@@ -29,7 +29,7 @@ namespace vge {
 		this->childs.remove(child);
 	}
 
-	void Object::Update()
+	void Object::UpdateComponents()
 	{
 		this->transform->Behaviour();	// ??? transform doesnt have any frame by frame behaviour
 		for (Component* component : this->components) {

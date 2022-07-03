@@ -3,6 +3,8 @@
 #include "../Log/Console.h"
 #include "../GLM/glm/ext/vector_float3.hpp"
 
+#include <set>
+
 namespace vge {
 	ObjLoader::ObjLoader()
 	{
@@ -70,14 +72,47 @@ namespace vge {
 			res = fscanf(file, "%s", lineHeader);
 		}
 
-		modelToLoad->assignVertexs(data);
-		modelToLoad->assignVertexsColor(dataColor);
-		modelToLoad->assignVertexsTexCoord(dataTexCoord);
-		modelToLoad->assignVertexsNormals(dataNormals);
-		modelToLoad->assignVertexsIndexs(dataIndexs);
-		modelToLoad->assignVertexsColorIndexs(dataColorIndexs);
-		modelToLoad->assignVertexsTexCoordIndexs(dataTexCoordsIndexs);
-		modelToLoad->assignVertexsNormalsIndexs(dataNormalsIndexs);
+		// Parse MultiIndex .obj format to UniIndex draw opengl format
+
+		std::vector<float> vertexs, texCoords;
+		std::vector<unsigned int> vertexsIndexs;
+
+		std::set<std::string> indexsVisited = std::set<std::string>();
+
+		int numIndexs = dataIndexs.size();
+		for (int i = 0; i < numIndexs; i++) 
+		{
+			int vI = dataIndexs[i];
+			int tI = dataTexCoordsIndexs[i];
+			int nI = dataNormalsIndexs[i];
+			std::string id = std::to_string(vI) + '/' + std::to_string(tI) + '/' + std::to_string(nI);
+			
+			std::set<std::string>::iterator it = indexsVisited.find(id);
+			if (it == indexsVisited.end()) 
+			{
+				// Afegir vertex/texcoord/normal
+				vertexs.push_back(data[(vI * 3)]);
+				vertexs.push_back(data[(vI * 3) + 1]);
+				vertexs.push_back(data[(vI * 3) + 2]);
+				texCoords.push_back(dataTexCoord[(tI * 2)]);
+				texCoords.push_back(dataTexCoord[(tI * 2) + 1]);
+				vertexsIndexs.push_back(i);
+			}
+			else
+			{
+				vertexsIndexs.push_back(i);
+			}
+			
+		}
+
+		modelToLoad->assignVertexs(vertexs);
+		modelToLoad->assignVertexsColor({});
+		modelToLoad->assignVertexsTexCoord(texCoords);
+		modelToLoad->assignVertexsNormals({});
+		modelToLoad->assignVertexsIndexs(vertexsIndexs);
+		modelToLoad->assignVertexsColorIndexs({});
+		modelToLoad->assignVertexsTexCoordIndexs({});
+		modelToLoad->assignVertexsNormalsIndexs({});
 
 		return modelToLoad;
 	}
