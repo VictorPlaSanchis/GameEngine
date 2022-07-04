@@ -71,6 +71,7 @@
     <ClInclude Include="src\GameEngine.h" />
     <ClInclude Include="src\InputSystem\InputSystem.h" />
     <ClInclude Include="src\Object\Transform.h" />
+    <ClInclude Include="src\Types\Quaternion.h" />
     <ClInclude Include="src\Types\Vector.h" />
   </ItemGroup>
   <ItemGroup>

@@ -79,7 +79,7 @@ namespace vge {
 
 		std::set<std::string> indexsVisited = std::set<std::string>();
 
-		int numIndexs = dataIndexs.size();
+		size_t numIndexs = dataIndexs.size();
 		for (int i = 0; i < numIndexs; i++) 
 		{
 			int vI = dataIndexs[i];

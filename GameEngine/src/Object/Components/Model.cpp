@@ -128,7 +128,7 @@ namespace vge {
 		this->dataNormalsIndexs = modelToLoad->dataNormalsIndexs;
 		this->dataTexCoord = modelToLoad->dataTexCoord;
 		this->dataTexCoordIndexs = modelToLoad->dataTexCoordIndexs;
-		this->numVertex = this->data.size() / 3.0f;	
+		this->numVertex = static_cast<unsigned int>(this->data.size() / 3.0f);	
 	}
 
 	void Model::setTransform(Transform* modelTransform)
