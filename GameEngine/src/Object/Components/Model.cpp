@@ -147,7 +147,12 @@ namespace vge {
 		model = glm::translate(model, glm::vec3(this->modelTransform->positionGLM()));
 		float actualTime = static_cast<float>(glfwGetTime());
 		model = glm::scale(model, this->modelTransform->scaleGLM());
-		model = glm::rotate(model, actualTime, glm::vec3(1.0f, 1.0f, 0.0f));
+
+		float anglesToRotate = this->modelTransform->rotation().angleOnEulerDegrees(this->modelTransform->lookingTo());
+		Vector3F axisRotation = this->modelTransform->rotation().cross(this->modelTransform->lookingTo()).normalize();
+		if (anglesToRotate != 0.0f) model = glm::rotate(model, anglesToRotate, (axisRotation).ToGLM());
+
+		//model = glm::rotate(model, actualTime, glm::vec3(1.0f, 1.0f, 0.0f));
 		GraphicsEngineVGE.passUniformMat4(GraphicsEngineVGE.getShaderLinked(this->VAOassigned), model, "model");
 
 		GraphicsEngine::get()->setDrawableObject(this->VAOassigned);

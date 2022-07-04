@@ -31,10 +31,11 @@ namespace vge {
 
 	void Object::UpdateComponents()
 	{
-		this->transform->Behaviour();	// ??? transform doesnt have any frame by frame behaviour
+
 		for (Component* component : this->components) {
 			component->Behaviour();
 		}
+		this->transform->Behaviour();	// ??? transform doesnt have any frame by frame behaviour
 	}
 
 

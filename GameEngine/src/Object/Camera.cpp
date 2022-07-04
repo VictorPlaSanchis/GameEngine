@@ -3,7 +3,9 @@
 
 namespace vge {
 
-#define PI 3.141592f
+#ifndef PI
+#define PI 3.14159265359
+#endif
 	
 	Camera::Camera()
 	{
@@ -15,7 +17,7 @@ namespace vge {
 		this->initialPosition = Vector3F({0.0f, 0.0f, 3.0f});
 		this->transform->move(initialPosition);
 		this->projectionMatrix = glm::perspective( 
-			this->projectionAngle * (PI / 180.0f), 
+			this->projectionAngle * ((float)PI / 180.0f), 
 			GameEngineVGE.getAspect(),
 			this->zNear, 
 			this->zFar
@@ -32,7 +34,7 @@ namespace vge {
 		this->initialPosition = initialPosition;
 		this->transform->move(initialPosition);
 		this->projectionMatrix = glm::perspective(
-			this->projectionAngle * (PI / 180.0f),
+			this->projectionAngle * ((float)PI / 180.0f),
 			GameEngineVGE.getAspect(),
 			this->zNear,
 			this->zFar
@@ -50,7 +52,7 @@ namespace vge {
 	glm::mat4 Camera::getProjectionMatrix()
 	{
 		this->projectionMatrix = glm::perspective(
-			this->projectionAngle * (PI / 180.0f),
+			this->projectionAngle * ((float)PI / 180.0f),
 			GameEngineVGE.getAspect(),
 			this->zNear,
 			this->zFar

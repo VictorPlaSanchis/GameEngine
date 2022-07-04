@@ -10,14 +10,16 @@
 #include "../SceneSystem/SceneManagement.h"
 #include "../GraphicsEngine/ObjLoader.h"
 
+#ifndef PI
 #define PI 3.141592f
+#endif
 
 namespace vge {
 
     MyGameObject::MyGameObject()
     {
  
-        Model* cube = ObjLoader::loadObj("./src/knight.obj");
+        Model* cube = ObjLoader::loadObj("./src/cube.obj");
 
         this->model = this->addComponent<Model>();
         this->model->load(cube);
@@ -53,6 +55,11 @@ namespace vge {
         if (InputSystemVGE.isKeyDown(int('S'))) this->transform->move({ 0.0f, -1.0f * 0.001f, 0.0f });
         if (InputSystemVGE.isKeyDown(int('Q'))) this->transform->move({ 0.0f, 0.0f, 1.0f * 0.001f});
         if (InputSystemVGE.isKeyDown(int('E'))) this->transform->move({ 0.0f, 0.0f, -1.0f * 0.001f});
+
+        if (InputSystemVGE.isKeyDown(int('I'))) this->transform->rotate( 1.0f * 0.001f, { 0.0f, 1.0f, 0.0f});
+        if (InputSystemVGE.isKeyDown(int('J'))) this->transform->rotate( 1.0f * 0.001f, { 0.0f, 0.0f, 1.0f });
+        if (InputSystemVGE.isKeyDown(int('K'))) this->transform->rotate(-1.0f * 0.001f, { 0.0f, 1.0f, 0.0f });
+        if (InputSystemVGE.isKeyDown(int('L'))) this->transform->rotate(-1.0f * 0.001f, { 0.0f, 0.0f, 1.0f });
 
 	}	
 
