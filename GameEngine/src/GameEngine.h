@@ -1,6 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include "InputSystem/InputSystem.h"
+#include <vector>
 
 namespace vge {
 
@@ -25,6 +26,9 @@ namespace vge {
 
 		void Init();
 		void Run();
+
+		std::vector<std::vector<char> > preBuffer;
+		const int sizePreBuffer = 10;
 
 	};
 

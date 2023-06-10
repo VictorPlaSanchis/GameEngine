@@ -73,6 +73,7 @@
     <ClInclude Include="src\Object\Transform.h" />
     <ClInclude Include="src\Types\Quaternion.h" />
     <ClInclude Include="src\Types\Vector.h" />
+    <ClInclude Include="src\stb_image_write.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\GraphicsEngine\fs.frag" />

@@ -173,6 +173,9 @@
     <ClInclude Include="src\Types\Quaternion.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\stb_image_write.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\GraphicsEngine\vs.vert" />

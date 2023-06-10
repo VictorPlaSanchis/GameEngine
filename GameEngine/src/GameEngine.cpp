@@ -3,6 +3,8 @@
 #endif
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
 #include "GameEngine.h"
 #include <string>
 #include "InputSystem/InputSystem.h"
@@ -15,6 +17,7 @@
 #include "./Debug/MyGameObject.h"
 #include "./Object/Camera.h"
 #include "Debug/Instrumentor.h"
+#include <iostream>
 
 namespace vge {
 
@@ -68,6 +71,41 @@ namespace vge {
 
 	}
 
+	void saveImage(char* filepath, GLFWwindow* w) {
+		int width, height;
+		glfwGetFramebufferSize(w, &width, &height);
+		GLsizei nrChannels = 3;
+		GLsizei stride = nrChannels * width;
+		stride += (stride % 4) ? (4 - stride % 4) : 0;
+		GLsizei bufferSize = stride * height;
+		std::vector<char> buffer(bufferSize);
+		glPixelStorei(GL_PACK_ALIGNMENT, 4);
+		glReadBuffer(GL_FRONT);
+		glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, buffer.data());
+		//GameEngine::get()->preBuffer.push_back(buffer);
+		//if (GameEngine::get()->preBuffer.size() > GameEngine::get()->sizePreBuffer) {
+		//	for(std::vector<char> bufferX : GameEngine::get()->preBuffer)
+				stbi_write_png(filepath, width, height, nrChannels, buffer.data(), stride);
+		//	GameEngine::get()->preBuffer.clear();
+		//}
+		//stbi_flip_vertically_on_write(true);
+	}
+
+	std::string getNumber(int k, int maxNum) {
+		std::string num = "";
+		int i = 0;
+		while (k > 0) {
+			int a = k % 10;
+			num =  std::to_string(a) + num;
+			i++;
+			k = k / 10;
+		}
+		std::string pre = "";
+		for (int b = i; b < maxNum; b++) pre += "0";
+		
+		return pre + num;
+	}
+
 	void GameEngine::Run()
 	{
 		PROFILE_FUNCTION();
@@ -93,6 +131,7 @@ namespace vge {
 			double second = 1.0, acc = 0.0, lastAcc = 0.0;
 			std::vector<unsigned int> framesPerSecond = std::vector<unsigned int>(0);
 
+			int i = 0, k = 0;
 			while (!glfwWindowShouldClose(GameEngine::windowGame)) 
 			{
 				PROFILE_SCOPE("FRAME TIME GameEngine")
@@ -104,6 +143,18 @@ namespace vge {
 				glClearColor(0.0f, 0.1f, 0.2f, 0.0f);
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				GraphicsEngineVGE.DrawData();
+
+
+
+				// ------------------------------
+
+					std::string filepath = "./videoOutput/img" + getNumber(i,10) + ".png";
+					saveImage(&filepath[0], this->getWindowGame());
+					ConsoleLog("FRAME SAVED");
+					
+
+				// ------------------------------
+
 				// ImGui
 				ImGuiControllerVGE.Run();
 
@@ -121,6 +172,7 @@ namespace vge {
 					frames = 0;
 					acc = 0.0f;
 				}
+				i++;
 			}
 
 			glDisable(GL_BLEND);
