@@ -4,7 +4,7 @@ namespace vge {
 
 	Transform::Transform()
 		: l_position({ 0.0f, 0.0f, 0.0f }),
-		  l_rotation({ 0.0f, 0.0f, 1.0f }),
+		  l_rotation({ 0.0f, 0.0f, 0.0f }),
 		  l_scale(   { 1.0f, 1.0f, 1.0f }),
 		  l_lookingTo({ 0.0f, 0.0f, 1.0f })
 	{
@@ -32,7 +32,7 @@ namespace vge {
 
 	void Transform::scale(const Vector3F& scalar)
 	{
-		this->l_scale += scalar;
+		this->l_scale = scalar;
 	}
 
 

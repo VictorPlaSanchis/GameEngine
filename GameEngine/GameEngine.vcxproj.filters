@@ -87,6 +87,15 @@
     <ClCompile Include="src\GraphicsEngine\ObjLoader.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="src\Debug\whiteSquare.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug\blackSquare.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug\ChessBoard.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\InputSystem\InputSystem.h">
@@ -173,13 +182,22 @@
     <ClInclude Include="src\Types\Quaternion.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\Debug\whiteSquare.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Debug\blackSquare.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Debug\ChessBoard.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\GraphicsEngine\vs.vert" />
-    <Text Include="src\GraphicsEngine\fs.frag" />
+    <Text Include="src\GraphicsEngine\Shaders\vs.vert" />
+    <Text Include="src\GraphicsEngine\Shaders\fs.frag" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Object\Components\SpriteRendererFS.frag" />
-    <None Include="src\Object\Components\SpriteRendererVS.vert" />
+    <None Include="src\GraphicsEngine\Shaders\SpriteRendererFS.frag" />
+    <None Include="src\GraphicsEngine\Shaders\SpriteRendererVS.vert" />
   </ItemGroup>
 </Project>

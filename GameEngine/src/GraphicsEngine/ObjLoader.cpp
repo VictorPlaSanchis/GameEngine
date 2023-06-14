@@ -74,7 +74,7 @@ namespace vge {
 
 		// Parse MultiIndex .obj format to UniIndex draw opengl format
 
-		std::vector<float> vertexs, texCoords;
+		std::vector<float> vertexs, texCoords, normals;
 		std::vector<unsigned int> vertexsIndexs;
 
 		std::set<std::string> indexsVisited = std::set<std::string>();
@@ -96,6 +96,9 @@ namespace vge {
 				vertexs.push_back(data[(vI * 3) + 2]);
 				texCoords.push_back(dataTexCoord[(tI * 2)]);
 				texCoords.push_back(dataTexCoord[(tI * 2) + 1]);
+				normals.push_back(dataNormals[(nI * 3)]);
+				normals.push_back(dataNormals[(nI * 3) + 1]);
+				normals.push_back(dataNormals[(nI * 3) + 2]);
 				vertexsIndexs.push_back(i);
 			}
 			else
@@ -108,7 +111,7 @@ namespace vge {
 		modelToLoad->assignVertexs(vertexs);
 		modelToLoad->assignVertexsColor({});
 		modelToLoad->assignVertexsTexCoord(texCoords);
-		modelToLoad->assignVertexsNormals({});
+		modelToLoad->assignVertexsNormals(normals);
 		modelToLoad->assignVertexsIndexs(vertexsIndexs);
 		modelToLoad->assignVertexsColorIndexs({});
 		modelToLoad->assignVertexsTexCoordIndexs({});

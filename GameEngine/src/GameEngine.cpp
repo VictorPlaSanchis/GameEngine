@@ -15,6 +15,9 @@
 #include "./Debug/MyGameObject.h"
 #include "./Object/Camera.h"
 #include "Debug/Instrumentor.h"
+#include "Debug/whiteSquare.h"
+#include "Debug/blackSquare.h"
+#include "Debug/ChessBoard.h"
 
 namespace vge {
 
@@ -48,24 +51,19 @@ namespace vge {
 	}
 
 	void InitializeDebugGame() {
+		
+		PROFILE_FUNCTION();
+		{
+			PROFILE_SCOPE("Initializing scene")
 
-		Scene* scene1 = SceneManagementVGE.createScene();
-		Scene* scene2 = SceneManagementVGE.createScene();
+			Scene* scene1 = SceneManagementVGE.createScene();
 
-		// Creating gameobjects for debugging
-		MyGameObject* object = new MyGameObject();
-		MyGameObject* object2 = new MyGameObject();
-		object2->transform->move({1.0f, 0.0f, -1.0f});
-		object->transform->move({-1.0f, 0.0f, -3.0f });
+			ChessBoard* chessBoard = new ChessBoard();
+			chessBoard->transform->move(Vector3F(1.0f, 1.0f, 0.0f));
 
-		// Adding object into scene 1 of the game
-		scene1->addObject(object);
-		scene1->addObject(object2);
+			scene1->addObject(chessBoard);
 
-		// Adding object into scene 2 of the game
-		scene2->addObject(object2);
-		scene2->getCameraScene()->transform->move({-2.0f, 4.0f, 1.0f});
-
+		}
 	}
 
 	void GameEngine::Run()

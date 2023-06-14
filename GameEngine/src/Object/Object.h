@@ -19,6 +19,7 @@ namespace vge {
 
         Transform* transform;
         std::list<Object*> childs;
+        Object* parent = nullptr;
         std::list<Component*> components;
 
         template <class C, typename Args>

@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Debug\ChessBoard.cpp" />
+    <ClCompile Include="src\Debug\blackSquare.cpp" />
+    <ClCompile Include="src\Debug\whiteSquare.cpp" />
     <ClCompile Include="src\GraphicsEngine\ObjLoader.cpp" />
     <ClCompile Include="src\Object\Camera.cpp" />
     <ClCompile Include="src\Debug\MyGameObject.cpp" />
@@ -45,6 +48,9 @@
     <ClCompile Include="src\Object\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Debug\ChessBoard.h" />
+    <ClInclude Include="src\Debug\blackSquare.h" />
+    <ClInclude Include="src\Debug\whiteSquare.h" />
     <ClInclude Include="src\GraphicsEngine\ObjLoader.h" />
     <ClInclude Include="src\Object\Camera.h" />
     <ClInclude Include="src\Debug\MyGameObject.h" />
@@ -75,12 +81,12 @@
     <ClInclude Include="src\Types\Vector.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\GraphicsEngine\fs.frag" />
-    <Text Include="src\GraphicsEngine\vs.vert" />
+    <Text Include="src\GraphicsEngine\Shaders\fs.frag" />
+    <Text Include="src\GraphicsEngine\Shaders\vs.vert" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Object\Components\SpriteRendererFS.frag" />
-    <None Include="src\Object\Components\SpriteRendererVS.vert" />
+    <None Include="src\GraphicsEngine\Shaders\SpriteRendererFS.frag" />
+    <None Include="src\GraphicsEngine\Shaders\SpriteRendererVS.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

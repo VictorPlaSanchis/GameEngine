@@ -61,12 +61,12 @@ namespace vge {
 	void GraphicsEngine::InitShaders()
 	{
 		// Create a new Vertex shader from the source code and compile it
-		std::string sourceCodeVertex = getSourceShader("./src/GraphicsEngine/vs.vert");
+		std::string sourceCodeVertex = getSourceShader("./src/GraphicsEngine/Shaders/vs.vert");
 		this->vertexShader = new Shader(GL_VERTEX_SHADER, sourceCodeVertex.c_str());
 		this->vertexShader->Init("VS, Vertex Shader");
 
 		// Create a new Fragment shader from the source code and compile it
-		std::string sourceCodeFragment = getSourceShader("./src/GraphicsEngine/fs.frag");
+		std::string sourceCodeFragment = getSourceShader("./src/GraphicsEngine/Shaders/fs.frag");
 		this->fragmentShader = new Shader(GL_FRAGMENT_SHADER, sourceCodeFragment.c_str());
 		this->fragmentShader->Init("FS, Fragment Shader");
 
@@ -145,6 +145,17 @@ namespace vge {
 			glEnableVertexAttribArray(2);
 			this->pushTexture(model->getTexturePath(), VAO);
 		}
+
+		// Vertex normals
+		if (model->getDataNormals().size() > 0) {
+			unsigned int normalsVBO;
+			glGenBuffers(1, &normalsVBO);
+			glBindBuffer(GL_ARRAY_BUFFER, normalsVBO);
+			glBufferData(GL_ARRAY_BUFFER, (sizeof(float) * 3) * model->getNumVertexs(), &model->getDataNormals()[0], GL_STATIC_DRAW);
+			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+			glEnableVertexAttribArray(3);
+		}
+
 		unsigned int indexsVBO;
 		glGenBuffers(1, &indexsVBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexsVBO);

@@ -22,20 +22,28 @@ namespace vge {
 	void Object::addChild(Object* child)
 	{
 		this->childs.push_back(child);
+		child->parent = this;
 	}
 
 	void Object::removeChild(Object* child)
 	{
 		this->childs.remove(child);
+		child->parent = nullptr;
 	}
 
 	void Object::UpdateComponents()
 	{
-
 		for (Component* component : this->components) {
 			component->Behaviour();
 		}
 		this->transform->Behaviour();	// ??? transform doesnt have any frame by frame behaviour
+
+		// child updates
+		for (Object* child : this->childs) {
+			child->UpdateComponents();
+			child->Update();
+		}
+
 	}
 
 

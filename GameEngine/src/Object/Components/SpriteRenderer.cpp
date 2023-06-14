@@ -19,8 +19,8 @@ namespace vge {
 		this->spriteModel->load(plane);
 		this->spriteModel->assignTexture(filename);
 		unsigned int shaderIDassigned = GraphicsEngine::get()->CreateProgram({
-			"./src/Object/Components/SpriteRendererVS.vert",
-			"./src/Object/Components/SpriteRendererFS.frag"
+			"./src/GraphicsEngine/Shaders/SpriteRendererVS.vert",
+			"./src/GraphicsEngine/Shaders/SpriteRendererFS.frag"
 		});
 		this->spriteModel->setVAOassigned(GraphicsEngine::get()->pushModel(this->spriteModel, shaderIDassigned));
 		GraphicsEngine::get()->LinkShader(this->spriteModel->VAOassigned, shaderIDassigned);
