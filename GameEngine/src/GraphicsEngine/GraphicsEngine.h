@@ -27,7 +27,8 @@ namespace vge {
 
 		std::unordered_map<unsigned int, Model*> models;
 		std::unordered_map<unsigned int, unsigned int> textures;
-		std::unordered_map<unsigned int, unsigned int> shaders;
+		std::unordered_map<unsigned int, std::string> shaders;
+		std::unordered_map<std::string, unsigned int> programs;
 
 		std::set<unsigned int> VAOsToDraw;
 
@@ -44,7 +45,7 @@ namespace vge {
 		unsigned int programID() { return this->shaderProgram; }
 
 		Shader* InitShader(const char* filename);
-		unsigned int CreateProgram(std::vector<const char*> filenames);
+		unsigned int CreateProgram(std::string programName, std::vector<const char*> filenames);
 		void passUniform(unsigned int programShader, std::vector<float> data, const char* uniformName);
 		void passUniform(unsigned int programShader, glm::vec4 data, const char* uniformName);
 		void passUniformMat4(unsigned int programShader, std::vector<std::vector<float> > mat, const char* uniformName);
@@ -55,7 +56,7 @@ namespace vge {
 		void DrawData();
 		void CleanData();
 		void setDrawableObject(unsigned int VAO);
-		void LinkShader(unsigned int VAO, unsigned int ShaderProgramID);
+		void LinkShader(unsigned int VAO, std::string programName);
 
 	};
 

@@ -18,12 +18,14 @@ namespace vge {
 		this->spriteModel = new Model();
 		this->spriteModel->load(plane);
 		this->spriteModel->assignTexture(filename);
-		unsigned int shaderIDassigned = GraphicsEngine::get()->CreateProgram({
+		unsigned int shaderIDassigned = GraphicsEngine::get()->CreateProgram(
+		"spriteRendererProgram",
+		{
 			"./src/GraphicsEngine/Shaders/SpriteRendererVS.vert",
 			"./src/GraphicsEngine/Shaders/SpriteRendererFS.frag"
 		});
 		this->spriteModel->setVAOassigned(GraphicsEngine::get()->pushModel(this->spriteModel, shaderIDassigned));
-		GraphicsEngine::get()->LinkShader(this->spriteModel->VAOassigned, shaderIDassigned);
+		GraphicsEngine::get()->LinkShader(this->spriteModel->VAOassigned, "spriteRendererProgram");
 	
 	}
 
@@ -40,12 +42,14 @@ namespace vge {
 			1.0f, 0.0f
 			});
 		this->spriteModel->assignTexture(filename);
-		unsigned int shaderIDassigned = GraphicsEngine::get()->CreateProgram({
-			"./src/Object/Components/SpriteRendererVS.vert",
-			"./src/Object/Components/SpriteRendererFS.frag"
+		unsigned int shaderIDassigned = GraphicsEngine::get()->CreateProgram(
+			"spriteRendererProgram", 
+			{
+				"./src/GraphicsEngine/Shaders/SpriteRendererVS.vert",
+				"./src/GraphicsEngine/Shaders/SpriteRendererFS.frag"
 			});
 		this->spriteModel->setVAOassigned(GraphicsEngine::get()->pushModel(this->spriteModel, shaderIDassigned));
-		GraphicsEngine::get()->LinkShader(this->spriteModel->VAOassigned, shaderIDassigned);
+		GraphicsEngine::get()->LinkShader(this->spriteModel->VAOassigned, "spriteRendererProgram");
 	}
 
 	void SpriteRenderer::Behaviour()

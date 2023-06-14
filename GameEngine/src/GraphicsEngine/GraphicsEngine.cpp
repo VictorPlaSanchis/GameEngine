@@ -34,15 +34,20 @@ namespace vge {
 		InitShaderProgram();
 	}
 
-	unsigned int GraphicsEngine::CreateProgram(std::vector<const char*> filenames)
+	unsigned int GraphicsEngine::CreateProgram(std::string programName, std::vector<const char*> filenames)
 	{
-		unsigned int newProgramID = glCreateProgram();
-		for (const char* shadername : filenames) {
-			Shader* newshader = GraphicsEngine::get()->InitShader(shadername);
-			glAttachShader(newProgramID, newshader->getID());
+		std::unordered_map<std::string, unsigned int>::iterator it = this->programs.find(programName);
+		if (it == this->programs.end()) {
+			unsigned int newProgramID = glCreateProgram();
+			for (const char* shadername : filenames) {
+				Shader* newshader = GraphicsEngine::get()->InitShader(shadername);
+				glAttachShader(newProgramID, newshader->getID());
+			}
+			glLinkProgram(newProgramID);
+			this->programs.insert(std::make_pair(programName, newProgramID));
+			return newProgramID;
 		}
-		glLinkProgram(newProgramID);
-		return newProgramID;
+		else return it->second;
 	}
 
 	Shader* GraphicsEngine::InitShader(const char* filename) {
@@ -169,9 +174,9 @@ namespace vge {
 
 	unsigned int GraphicsEngine::getShaderLinked(unsigned int VAO)
 	{
-		std::unordered_map<unsigned int, unsigned int>::iterator it = this->shaders.find(VAO);
-		if (it != this->shaders.end()) return it->second;
-		return 0;
+		std::unordered_map<unsigned int, std::string>::iterator it = this->shaders.find(VAO);
+		if (it != this->shaders.end()) return this->programs[it->second];
+		return -1;
 	}
 
 	void GraphicsEngine::pushTexture(const char* filename, unsigned int VAO)
@@ -204,9 +209,13 @@ namespace vge {
 		while (it != this->VAOsToDraw.end()) {
 
 			unsigned int currentVAO = *it;
+			std::string programName;
 			unsigned int shader = this->programID();
 
-			if (this->shaders.find(currentVAO) != this->shaders.end()) shader = this->shaders.find(currentVAO)->second;
+			if (this->shaders.find(currentVAO) != this->shaders.end()) {
+				programName = this->shaders.find(currentVAO)->second;
+				shader = this->programs[programName];
+			}
 			
 			// ---------------------
 
@@ -238,9 +247,9 @@ namespace vge {
 		this->VAOsToDraw.insert(VAO);
 	}
 
-	void GraphicsEngine::LinkShader(unsigned int VAO, unsigned int ShaderProgramID)
+	void GraphicsEngine::LinkShader(unsigned int VAO, std::string programName)
 	{
-		this->shaders.insert(std::pair<unsigned int, unsigned int>(VAO, ShaderProgramID));
+		this->shaders.insert(std::pair<unsigned int, std::string>(VAO, programName));
 	}
 
 	void GraphicsEngine::passUniform(unsigned int programShader, std::vector<float> data, const char* uniformName)

@@ -25,13 +25,16 @@ namespace vge {
         this->model->load(cube);
         this->model->assignTexture("./imgs/knight.png");
 
-        this->ShaderProgramLinked = GraphicsEngineVGE.CreateProgram({
-            "./src/GraphicsEngine/Shaders/SpriteRendererVS.vert",
-            "./src/GraphicsEngine/Shaders/SpriteRendererFS.frag"
-        });
+        this->ShaderProgramLinked = GraphicsEngineVGE.CreateProgram(
+            "spriteRendererProgram", 
+            {
+                "./src/GraphicsEngine/Shaders/SpriteRendererVS.vert",
+                "./src/GraphicsEngine/Shaders/SpriteRendererFS.frag"
+            }
+        );
 
         unsigned int VAOassigned = GraphicsEngineVGE.pushModel(model, this->ShaderProgramLinked);
-        GraphicsEngineVGE.LinkShader(VAOassigned, this->ShaderProgramLinked);
+        GraphicsEngineVGE.LinkShader(VAOassigned, "spriteRendererProgram");
 
 	}
 
