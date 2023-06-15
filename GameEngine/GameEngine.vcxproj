@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Debug\ChessBoard.cpp" />
-    <ClCompile Include="src\Debug\blackSquare.cpp" />
-    <ClCompile Include="src\Debug\whiteSquare.cpp" />
+    <ClCompile Include="src\ChessEngine\ChessBoard.cpp" />
+    <ClCompile Include="src\ChessEngine\blackSquare.cpp" />
+    <ClCompile Include="src\ChessEngine\whiteSquare.cpp" />
     <ClCompile Include="src\GraphicsEngine\ObjLoader.cpp" />
     <ClCompile Include="src\Object\Camera.cpp" />
     <ClCompile Include="src\Debug\MyGameObject.cpp" />
@@ -49,9 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GraphicsEngine\DrawableObject.h" />
-    <ClInclude Include="src\Debug\ChessBoard.h" />
-    <ClInclude Include="src\Debug\blackSquare.h" />
-    <ClInclude Include="src\Debug\whiteSquare.h" />
+    <ClInclude Include="src\ChessEngine\ChessBoard.h" />
+    <ClInclude Include="src\ChessEngine\blackSquare.h" />
+    <ClInclude Include="src\ChessEngine\whiteSquare.h" />
     <ClInclude Include="src\GraphicsEngine\ObjLoader.h" />
     <ClInclude Include="src\Object\Camera.h" />
     <ClInclude Include="src\Debug\MyGameObject.h" />

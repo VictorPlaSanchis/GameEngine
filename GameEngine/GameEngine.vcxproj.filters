@@ -87,13 +87,13 @@
     <ClCompile Include="src\GraphicsEngine\ObjLoader.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\Debug\whiteSquare.cpp">
+    <ClCompile Include="src\ChessEngine\whiteSquare.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\Debug\blackSquare.cpp">
+    <ClCompile Include="src\ChessEngine\blackSquare.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\Debug\ChessBoard.cpp">
+    <ClCompile Include="src\ChessEngine\ChessBoard.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,13 +182,13 @@
     <ClInclude Include="src\Types\Quaternion.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\Debug\whiteSquare.h">
+    <ClInclude Include="src\ChessEngine\whiteSquare.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\Debug\blackSquare.h">
+    <ClInclude Include="src\ChessEngine\blackSquare.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\Debug\ChessBoard.h">
+    <ClInclude Include="src\ChessEngine\ChessBoard.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\GraphicsEngine\DrawableObject.h">

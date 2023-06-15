@@ -15,9 +15,9 @@
 #include "./Debug/MyGameObject.h"
 #include "./Object/Camera.h"
 #include "Debug/Instrumentor.h"
-#include "Debug/whiteSquare.h"
-#include "Debug/blackSquare.h"
-#include "Debug/ChessBoard.h"
+#include "ChessEngine/whiteSquare.h"
+#include "ChessEngine/blackSquare.h"
+#include "ChessEngine/ChessBoard.h"
 
 namespace vge {
 
