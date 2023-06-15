@@ -2,6 +2,9 @@
 #include "Component.h"
 #include <vector>
 #include "../Types/Vector.h"
+#include "../GLM/glm/glm.hpp"
+#include <functional>
+#include <list>
 
 namespace vge {
 
@@ -14,6 +17,11 @@ namespace vge {
 		Vector3F l_rotation;
 		Vector3F l_lookingTo;
 		Vector3F l_scale;
+
+		std::list <std::function<void(Vector3F)>* > callback_TRANSFORM_POSITION_MODIFIED;
+		std::list < std::function<void(float, Vector3F)>* > callback_TRANSFORM_ROTATION_MODIFIED;
+		std::list < std::function<void(Vector3F)>* > callback_TRANSFORM_SCALE_MODIFIED;
+		std::list < std::function<void(Vector3F)>* > callback_TRANSFORM_LOOKINGTO_MODIFIED;
 
 	public:
 
@@ -39,6 +47,28 @@ namespace vge {
 		std::vector<float> scaleArr() { return { l_scale[0], l_scale[1], l_scale[2] }; }
 		glm::vec3 scaleGLM() { return glm::vec3(l_scale[0], l_scale[1], l_scale[2]); }
 
+		glm::mat4 getModelMatrixTransform();
+
+		void setCallbacks(
+			std::list < std::function<void(Vector3F)>*> callback_TRANSFORM_POSITION_MODIFIED,
+			std::list < std::function<void(float, Vector3F)>*> callback_TRANSFORM_ROTATION_MODIFIED,
+			std::list < std::function<void(Vector3F)>*> callback_TRANSFORM_SCALE_MODIFIED,
+			std::list < std::function<void(Vector3F)>*> callback_TRANSFORM_LOOKINGTO_MODIFIED
+		);
+
+		void addCallback(
+			std::function<void(Vector3F)>* callback_TRANSFORM_POSITION_MODIFIED,
+			std::function<void(float, Vector3F)>* callback_TRANSFORM_ROTATION_MODIFIED,
+			std::function<void(Vector3F)>* callback_TRANSFORM_SCALE_MODIFIED,
+			std::function<void(Vector3F)>* callback_TRANSFORM_LOOKINGTO_MODIFIED
+		);
+
+		void removeCallback(
+			std::function<void(Vector3F)>* callback_TRANSFORM_POSITION_MODIFIED,
+			std::function<void(float, Vector3F)>* callback_TRANSFORM_ROTATION_MODIFIED,
+			std::function<void(Vector3F)>* callback_TRANSFORM_SCALE_MODIFIED,
+			std::function<void(Vector3F)>* callback_TRANSFORM_LOOKINGTO_MODIFIED
+		);
 	};
 
 

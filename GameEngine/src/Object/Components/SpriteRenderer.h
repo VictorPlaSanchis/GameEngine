@@ -1,6 +1,7 @@
 #pragma once
 #include "../Component.h"
 #include "Model.h"
+#include "../../GraphicsEngine/DrawableObject.h"
 
 namespace vge {
 
@@ -9,7 +10,8 @@ namespace vge {
 
 	private:
 
-		Model* spriteModel;
+		Transform* objectTransform;
+		DrawableObject* drawableObject;
 
 	public:
 
@@ -17,10 +19,9 @@ namespace vge {
 		SpriteRenderer(const char* filename);
 
 		void setSprite(const char* filename);
-		Model* getSpriteModel() { return this->spriteModel; }
+		void setTransform(Transform* objectTransform) { this->objectTransform = objectTransform; }
 
 		virtual void Behaviour();
-
 
 	};
 

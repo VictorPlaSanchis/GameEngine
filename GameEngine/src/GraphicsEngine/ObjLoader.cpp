@@ -12,8 +12,18 @@ namespace vge {
 	ObjLoader::~ObjLoader()
 	{
 	}
+	ObjLoader* ObjLoader::get()
+	{
+		static ObjLoader objLoader;
+		return &objLoader;
+	}
 	Model* ObjLoader::loadObj(const char* path)
 	{
+		std::map<const char*, Model*>::iterator it = ObjLoaderVGE.modelsLoaded.find(path);
+		if (it != ObjLoaderVGE.modelsLoaded.end()) return  ObjLoaderVGE.modelsLoaded[path];
+		
+		ConsoleDebugS("Loading new model " + (std::string)path, GREEN, GRAPHICS_ENGINE);
+
 		Model* modelToLoad = new Model();
 
 		FILE* file = fopen(path, "r");
@@ -72,9 +82,11 @@ namespace vge {
 			res = fscanf(file, "%s", lineHeader);
 		}
 
+		fclose(file);
+
 		// Parse MultiIndex .obj format to UniIndex draw opengl format
 
-		std::vector<float> vertexs, texCoords;
+		std::vector<float> vertexs, texCoords, normals;
 		std::vector<unsigned int> vertexsIndexs;
 
 		std::set<std::string> indexsVisited = std::set<std::string>();
@@ -96,6 +108,9 @@ namespace vge {
 				vertexs.push_back(data[(vI * 3) + 2]);
 				texCoords.push_back(dataTexCoord[(tI * 2)]);
 				texCoords.push_back(dataTexCoord[(tI * 2) + 1]);
+				normals.push_back(dataNormals[(nI * 3)]);
+				normals.push_back(dataNormals[(nI * 3) + 1]);
+				normals.push_back(dataNormals[(nI * 3) + 2]);
 				vertexsIndexs.push_back(i);
 			}
 			else
@@ -108,12 +123,13 @@ namespace vge {
 		modelToLoad->assignVertexs(vertexs);
 		modelToLoad->assignVertexsColor({});
 		modelToLoad->assignVertexsTexCoord(texCoords);
-		modelToLoad->assignVertexsNormals({});
+		modelToLoad->assignVertexsNormals(normals);
 		modelToLoad->assignVertexsIndexs(vertexsIndexs);
 		modelToLoad->assignVertexsColorIndexs({});
 		modelToLoad->assignVertexsTexCoordIndexs({});
 		modelToLoad->assignVertexsNormalsIndexs({});
 
+		ObjLoaderVGE.modelsLoaded.insert(std::make_pair(path, modelToLoad));
 		return modelToLoad;
 	}
 

@@ -54,6 +54,16 @@ namespace vge {
 				this->operator[](i) += direction.operator[](i);
 			}
 		}
+
+		void operator-=(Vector<T, D> direction)
+		{
+			static_assert(sizeof(direction) == sizeof(values), "Incompatible sum between two vectors of different dimensions.");
+			static_assert(sizeof(direction) == sizeof(values), "Incompatible sum between two vectors of different dimensions.");
+			for (int i = 0; i < D; i++) {
+				this->operator[](i) -= direction.operator[](i);
+			}
+		}
+
 		T& get(int index)
 		{
 			if (sizeof(values) <= index) throw("Index out of bounds.");
@@ -80,6 +90,20 @@ namespace vge {
 			}
 			return result;
 		}
+
+		Vector<T, D> operator-(Vector<T, D> vector)
+		{
+			Vector<T, D> result;
+			static_assert(sizeof(vector) == sizeof(values), "Incompatible sum between two vectors of different dimensions.");
+			int i = 0;
+			for (T value : vector.values) {
+				result.values[i] -= this->operator[](i);
+				result.values[i] -= vector.operator[](i);
+				i++;
+			}
+			return result;
+		}
+
 		void operator=(Vector<T, D> vector)
 		{
 			static_assert(sizeof(vector) == sizeof(values), "Incompatible assignation between two vectors of different dimensions.");
