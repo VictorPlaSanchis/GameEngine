@@ -17,7 +17,7 @@ namespace vge {
 			"./src/plane.obj",
 			texurePath,
 			"spriteRendererProgram"
-		);		
+		);
 	}
 
 	void SpriteRenderer::setSprite(const char* filename)

@@ -110,7 +110,10 @@ namespace vge {
 		unsigned int programShader = this->getShaderProgram(shaderProgramName);
 
 		DrawableObject* alreadyExist = existDrawableObject(modelPath, vao, programShader, textureId);
-		if (alreadyExist) return alreadyExist;
+		if (alreadyExist) {
+			ConsoleErrorS("Drawable object already exists.", GRAPHICS_ENGINE);
+			return alreadyExist;
+		}
 
 		DrawableObject* newDrawableObejct = new DrawableObject;
 		newDrawableObejct->modelPath = modelPath;
@@ -262,8 +265,10 @@ namespace vge {
 		return texture;
 	}
 
-	void GraphicsEngine::DrawData()
+	unsigned int GraphicsEngine::DrawData()
 	{
+		unsigned int numTriangles = 0;
+
 		Camera* currentCamera = SceneManagementVGE.getCurrentScene()->getCameraScene();
 		for(DrawableObject* drawableObject : drawableObjects) {
 
@@ -284,11 +289,14 @@ namespace vge {
 			glBindTexture(GL_TEXTURE_2D, texture);
 			glBindVertexArray(currentVAO);
 			Model* modelToDraw = this->modelContainer[drawableObject->modelPath];
+			numTriangles += modelToDraw->getNumVertexs() / 3;
 			glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(modelToDraw->getDataIndexs().size()), GL_UNSIGNED_INT, (void*)0);
 
 		}
 		this->Unbind();
 		glBindVertexArray(0);
+
+		return numTriangles;
 	}
 
 	void GraphicsEngine::CleanData()

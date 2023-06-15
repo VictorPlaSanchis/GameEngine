@@ -58,8 +58,8 @@ namespace vge {
 
 			Scene* scene1 = SceneManagementVGE.createScene();
 
-			for (int i = 0; i < 50; i++) {
-				ChessBoard* chessBoard = new ChessBoard();
+			for (int i = 0; i < 1; i++) {
+				ChessBoard* chessBoard = new ChessBoard(Vector2F(0.0f, 0.0f), 2.0f);
 				scene1->addObject(chessBoard);
 			}
 
@@ -90,7 +90,7 @@ namespace vge {
 			unsigned int frames = 0;
 			double second = 1.0, acc = 0.0, lastAcc = 0.0;
 			std::vector<unsigned int> framesPerSecond = std::vector<unsigned int>(0);
-
+			unsigned int NUM_TRIANGLES_DRAWN = 0;
 			while (!glfwWindowShouldClose(GameEngine::windowGame)) 
 			{
 				PROFILE_SCOPE("FRAME TIME GameEngine")
@@ -101,7 +101,7 @@ namespace vge {
 				// clearing last screen frame
 				glClearColor(0.0f, 0.1f, 0.2f, 0.0f);
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-				GraphicsEngineVGE.DrawData();
+				NUM_TRIANGLES_DRAWN += GraphicsEngineVGE.DrawData();
 				// ImGui
 				ImGuiControllerVGE.Run();
 
@@ -115,9 +115,10 @@ namespace vge {
 
 				if (acc > second) {
 					framesPerSecond.push_back(frames);
-					ConsoleWarningS("fps: " + std::to_string(frames), APPLICATION);
+					ConsoleWarningS("fps: " + std::to_string(frames) + " | num triangles = " + std::to_string(NUM_TRIANGLES_DRAWN), APPLICATION);
 					frames = 0;
 					acc = 0.0f;
+					NUM_TRIANGLES_DRAWN = 0;
 				}
 			}
 

@@ -60,7 +60,7 @@ namespace vge {
 		void passUniformMat4(unsigned int programShader, glm::mat4 mat, const char* uniformName);
 		unsigned int pushModel(Model* model, unsigned int programAssigned = -1);
 		unsigned int pushTexture(const char* filename);
-		void DrawData();
+		unsigned int DrawData();
 		void CleanData();
 		void setDrawableObject(DrawableObject* drawableObject);
 
