@@ -48,6 +48,7 @@
     <ClCompile Include="src\Object\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GraphicsEngine\DrawableObject.h" />
     <ClInclude Include="src\Debug\ChessBoard.h" />
     <ClInclude Include="src\Debug\blackSquare.h" />
     <ClInclude Include="src\Debug\whiteSquare.h" />

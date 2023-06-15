@@ -6,7 +6,6 @@ namespace vge {
 
 	Model::Model()
 	{
-		this->texturePath = nullptr;
 	}
 
 	Model::Model(std::vector<float> model)
@@ -15,7 +14,6 @@ namespace vge {
 		this->numVertex = static_cast<unsigned int>(model.size()/3.0);
 		this->dataColor = {};
 		this->dataTexCoord = {};
-		this->texturePath = nullptr;
 	}
 
 	Model::~Model()
@@ -63,11 +61,6 @@ namespace vge {
 		this->dataNormalsIndexs = normalsIndexs;
 	}
 
-	void Model::assignTexture(const char* filename)
-	{
-		this->texturePath = filename;
-	}
-
 	std::vector<float> Model::getData()
 	{
 		return this->data;
@@ -108,11 +101,6 @@ namespace vge {
 		return this->dataNormalsIndexs;
 	}
 
-	const char* Model::getTexturePath()
-	{
-		return this->texturePath;
-	}
-
 	unsigned int Model::getNumVertexs()
 	{
 		return this->numVertex;
@@ -129,33 +117,6 @@ namespace vge {
 		this->dataTexCoord = modelToLoad->dataTexCoord;
 		this->dataTexCoordIndexs = modelToLoad->dataTexCoordIndexs;
 		this->numVertex = static_cast<unsigned int>(this->data.size() / 3.0f);	
-	}
-
-	void Model::setTransform(Transform* modelTransform)
-	{
-		this->modelTransform = modelTransform;
-	}
-
-	void Model::setVAOassigned(unsigned int VAO) 
-	{
-		this->VAOassigned = VAO;
-	}
-
-	void Model::Behaviour()
-	{
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(this->modelTransform->positionGLM()));
-		float actualTime = static_cast<float>(glfwGetTime());
-		model = glm::scale(model, this->modelTransform->scaleGLM());
-
-		float anglesToRotate = this->modelTransform->rotation().angleOnEulerDegrees(this->modelTransform->lookingTo());
-		Vector3F axisRotation = this->modelTransform->rotation().cross(this->modelTransform->lookingTo()).normalize();
-		if (anglesToRotate != 0.0f) model = glm::rotate(model, anglesToRotate, (axisRotation).ToGLM());
-
-		//model = glm::rotate(model, actualTime, glm::vec3(1.0f, 1.0f, 0.0f));
-		GraphicsEngineVGE.passUniformMat4(GraphicsEngineVGE.getShaderLinked(this->VAOassigned), model, "model");
-
-		GraphicsEngine::get()->setDrawableObject(this->VAOassigned);
 	}
 
 };

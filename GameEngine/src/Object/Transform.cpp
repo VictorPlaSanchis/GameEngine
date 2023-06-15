@@ -1,4 +1,5 @@
 #include "Transform.h"
+#include "../GLM/glm/ext/matrix_transform.hpp"
 
 namespace vge {
 
@@ -45,6 +46,18 @@ namespace vge {
 		for(std::function<void(Vector3F)>* callback : callback_TRANSFORM_SCALE_MODIFIED) {
 			(*callback)(scalar);
 		}
+	}
+
+	glm::mat4 Transform::getModelMatrixTransform()
+	{
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(this->positionGLM()));
+		model = glm::scale(model, this->scaleGLM());
+
+		float anglesToRotate = this->rotation().angleOnEulerDegrees(this->lookingTo());
+		Vector3F axisRotation = this->rotation().cross(this->lookingTo()).normalize();
+		if (anglesToRotate != 0.0f) model = glm::rotate(model, anglesToRotate, (axisRotation).ToGLM());
+		return model;
 	}
 
 	void Transform::setCallbacks(

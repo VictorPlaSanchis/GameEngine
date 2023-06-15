@@ -29,11 +29,7 @@ namespace vge {
                 this->components.push_back(newComponent);
                 if(std::is_base_of<SpriteRenderer, C>::value)
                 {
-                    ((SpriteRenderer*)newComponent)->getSpriteModel()->setTransform(this->transform);
-                }
-                else if (std::is_base_of<Model, C>::value)
-                {
-                    ((Model*)newComponent)->setTransform(this->transform);
+                    ((SpriteRenderer*)newComponent)->setTransform(this->transform);
                 }
                 return newComponent;
             }

@@ -58,10 +58,10 @@ namespace vge {
 
 			Scene* scene1 = SceneManagementVGE.createScene();
 
-			ChessBoard* chessBoard = new ChessBoard();
-			chessBoard->transform->move(Vector3F(1.0f, 1.0f, 0.0f));
-
-			scene1->addObject(chessBoard);
+			for (int i = 0; i < 50; i++) {
+				ChessBoard* chessBoard = new ChessBoard();
+				scene1->addObject(chessBoard);
+			}
 
 		}
 	}

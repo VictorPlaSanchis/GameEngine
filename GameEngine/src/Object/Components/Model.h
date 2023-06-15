@@ -5,12 +5,10 @@
 
 namespace vge {
 
-	class Model : public Component
+	class Model
 	{
 	
 	private:
-
-		const char* texturePath;
 		
 		std::vector<float> data;
 		std::vector<float> dataColor;
@@ -37,8 +35,6 @@ namespace vge {
 		void assignVertexsColorIndexs(std::vector<unsigned int> colorIndexs);
 		void assignVertexsTexCoordIndexs(std::vector<unsigned int> texCoordIndexs);
 		void assignVertexsNormalsIndexs(std::vector<unsigned int> normalsIndexs);
-		void assignTexture(const char* filename);
-		void setVAOassigned(unsigned int VAO);
 
 		std::vector<float> getData();
 		std::vector<float> getDataColor();
@@ -48,16 +44,9 @@ namespace vge {
 		std::vector<unsigned int> getDataColorIndexs();
 		std::vector<unsigned int> getDataTexCoordIndexs();
 		std::vector<unsigned int> getDataNormalsIndexs(); 
-		const char* getTexturePath();
 		unsigned int getNumVertexs();
 
-		unsigned int VAOassigned;
-		Transform* modelTransform;
-
 		void load(Model* modelToLoad);
-		void setTransform(Transform* modelTransform);
-
-		void Behaviour() override;
 
 	};
 

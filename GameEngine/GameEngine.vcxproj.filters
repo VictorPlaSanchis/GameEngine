@@ -191,6 +191,9 @@
     <ClInclude Include="src\Debug\ChessBoard.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\GraphicsEngine\DrawableObject.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\GraphicsEngine\Shaders\vs.vert" />

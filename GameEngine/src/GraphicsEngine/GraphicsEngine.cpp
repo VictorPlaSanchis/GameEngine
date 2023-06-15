@@ -7,6 +7,8 @@
 
 #include "../GLM/glm/gtc/matrix_transform.hpp"
 #include "../GLM/glm/gtc/type_ptr.hpp"
+#include "../GLM/glm/glm.hpp"
+#include "ObjLoader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -32,9 +34,19 @@ namespace vge {
 		glewInit();
 		InitShaders();
 		InitShaderProgram();
+
+		// Creation of basic shader programs
+		this->CreateProgram(
+			"spriteRendererProgram",
+			{
+				"./src/GraphicsEngine/Shaders/SpriteRendererVS.vert",
+				"./src/GraphicsEngine/Shaders/SpriteRendererFS.frag"
+			}
+		);
+
 	}
 
-	unsigned int GraphicsEngine::CreateProgram(std::vector<const char*> filenames)
+	unsigned int GraphicsEngine::CreateProgram(std::string nameProgram, std::vector<const char*> filenames)
 	{
 		unsigned int newProgramID = glCreateProgram();
 		for (const char* shadername : filenames) {
@@ -42,7 +54,70 @@ namespace vge {
 			glAttachShader(newProgramID, newshader->getID());
 		}
 		glLinkProgram(newProgramID);
+		this->programShaderContainer.insert(std::make_pair(nameProgram, newProgramID));
 		return newProgramID;
+	}
+
+	Model* GraphicsEngine::getModel(std::string modelPath) {
+		std::unordered_map<std::string, Model*>::iterator it = this->modelContainer.find(modelPath);
+		if (it != this->modelContainer.end()) return this->modelContainer[modelPath];
+		else {
+			Model* newModel = ObjLoader::loadObj(&modelPath[0]);
+			this->modelContainer.insert(std::make_pair(modelPath, newModel));
+			return newModel;
+		}
+	}
+
+	unsigned int GraphicsEngine::getTexture(std::string texturePath) {
+		std::unordered_map<std::string, unsigned int>::iterator it = this->textureContainer.find(texturePath);
+		if (it != this->textureContainer.end()) return this->textureContainer[texturePath];
+		else {
+			unsigned int newTexture = pushTexture(&texturePath[0]);
+			this->textureContainer.insert(std::make_pair(texturePath, newTexture));
+			return newTexture;
+		}
+	}
+
+	unsigned int GraphicsEngine::getShaderProgram(std::string shaderProgramName) {
+		std::unordered_map<std::string, unsigned int>::iterator it = this->programShaderContainer.find(shaderProgramName);
+		if (it != this->programShaderContainer.end()) return this->programShaderContainer[shaderProgramName];
+		else return 0; // default shader program
+	}
+
+	unsigned int GraphicsEngine::createVAO(std::string modelPath, std::string texturePath, unsigned int* texture) {
+		Model* model = this->getModel(modelPath);
+		*texture = this->getTexture(texturePath);
+		return this->pushModel(model);
+	}
+
+	DrawableObject* GraphicsEngine::existDrawableObject(std::string modelPath, unsigned int VAO, unsigned int shaderProgram, unsigned int textureId) {
+		for (DrawableObject* dO : this->drawableObjects) {
+			if (
+				dO->modelPath == modelPath and
+				dO->VAO == VAO and
+				dO->ShaderProgram == shaderProgram and
+				dO->TextureId == textureId
+			) return dO;
+		}
+		return nullptr;
+	}
+
+	DrawableObject* GraphicsEngine::createDrawableObject(std::string modelPath, std::string texturePath, std::string shaderProgramName)
+	{
+
+		unsigned int textureId;
+		unsigned int vao = this->createVAO(modelPath, texturePath, &textureId);
+		unsigned int programShader = this->getShaderProgram(shaderProgramName);
+
+		DrawableObject* alreadyExist = existDrawableObject(modelPath, vao, programShader, textureId);
+		if (alreadyExist) return alreadyExist;
+
+		DrawableObject* newDrawableObejct = new DrawableObject;
+		newDrawableObejct->modelPath = modelPath;
+		newDrawableObejct->VAO = vao;
+		newDrawableObejct->ShaderProgram = programShader;
+		newDrawableObejct->TextureId = textureId;
+		return newDrawableObejct;
 	}
 
 	Shader* GraphicsEngine::InitShader(const char* filename) {
@@ -136,14 +211,13 @@ namespace vge {
 		}
 
 		// Vertex texCoord
-		if (model->getDataTexCoord().size() > 0 && model->getTexturePath() != nullptr) {
+		if (model->getDataTexCoord().size() > 0) {
 			unsigned int texCoordVBO;
 			glGenBuffers(1, &texCoordVBO);
 			glBindBuffer(GL_ARRAY_BUFFER, texCoordVBO);
 			glBufferData(GL_ARRAY_BUFFER, (sizeof(float) * 2) * model->getNumVertexs(), &model->getDataTexCoord()[0], GL_STATIC_DRAW);
 			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 			glEnableVertexAttribArray(2);
-			this->pushTexture(model->getTexturePath(), VAO);
 		}
 
 		// Vertex normals
@@ -162,19 +236,10 @@ namespace vge {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->getDataIndexs().size() * sizeof(unsigned int), &model->getDataIndexs()[0], GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		this->models.insert(std::pair<unsigned int, Model*>(VAO, model));
-		model->setVAOassigned(VAO);
 		return VAO;
 	}
 
-	unsigned int GraphicsEngine::getShaderLinked(unsigned int VAO)
-	{
-		std::unordered_map<unsigned int, unsigned int>::iterator it = this->shaders.find(VAO);
-		if (it != this->shaders.end()) return it->second;
-		return 0;
-	}
-
-	void GraphicsEngine::pushTexture(const char* filename, unsigned int VAO)
+	unsigned int GraphicsEngine::pushTexture(const char* filename)
 	{
 		unsigned int texture;
 		glGenTextures(1, &texture);
@@ -188,40 +253,38 @@ namespace vge {
 		
 		if (!data) {
 			ConsoleErrorS("Failed to load texture.", GRAPHICS_ENGINE);
-			return;
+			return 0;
 		}
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
-		textures.insert(std::pair<unsigned int, unsigned int>(VAO, texture));
 		stbi_image_free(data);
+		return texture;
 	}
 
 	void GraphicsEngine::DrawData()
 	{
 		Camera* currentCamera = SceneManagementVGE.getCurrentScene()->getCameraScene();
-		std::set<unsigned int>::iterator it = this->VAOsToDraw.begin();
-		while (it != this->VAOsToDraw.end()) {
+		for(DrawableObject* drawableObject : drawableObjects) {
 
-			unsigned int currentVAO = *it;
-			unsigned int shader = this->programID();
+			unsigned int currentVAO = drawableObject->VAO;
+			unsigned int shader = drawableObject->ShaderProgram;
+			unsigned int texture = drawableObject->TextureId;
+			glm::mat4 modelMatrix = drawableObject->transformMatrix;
 
-			if (this->shaders.find(currentVAO) != this->shaders.end()) shader = this->shaders.find(currentVAO)->second;
-			
 			// ---------------------
 
 			GraphicsEngineVGE.passUniformMat4(shader, currentCamera->getViewMatrix(), "view");
 			GraphicsEngineVGE.passUniformMat4(shader, currentCamera->getProjectionMatrix(), "projection");
+			GraphicsEngineVGE.passUniformMat4(shader, modelMatrix, "model");
 
 			// ---------------------
 			
 			this->Bind(shader);
-			if (this->textures.find(currentVAO) != this->textures.end()) glBindTexture(GL_TEXTURE_2D, textures[currentVAO]);
-
-			Model* modelToDraw = (this->models.find(currentVAO))->second;
+			glBindTexture(GL_TEXTURE_2D, texture);
 			glBindVertexArray(currentVAO);
+			Model* modelToDraw = this->modelContainer[drawableObject->modelPath];
 			glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(modelToDraw->getDataIndexs().size()), GL_UNSIGNED_INT, (void*)0);
-			it++;
 
 		}
 		this->Unbind();
@@ -230,17 +293,12 @@ namespace vge {
 
 	void GraphicsEngine::CleanData()
 	{
-		this->VAOsToDraw = std::set<unsigned int>();
+		this->drawableObjects = std::vector<DrawableObject*>();
 	}
 
-	void GraphicsEngine::setDrawableObject(unsigned int VAO)
+	void GraphicsEngine::setDrawableObject(DrawableObject* drawableObject)
 	{
-		this->VAOsToDraw.insert(VAO);
-	}
-
-	void GraphicsEngine::LinkShader(unsigned int VAO, unsigned int ShaderProgramID)
-	{
-		this->shaders.insert(std::pair<unsigned int, unsigned int>(VAO, ShaderProgramID));
+		this->drawableObjects.push_back(drawableObject);
 	}
 
 	void GraphicsEngine::passUniform(unsigned int programShader, std::vector<float> data, const char* uniformName)

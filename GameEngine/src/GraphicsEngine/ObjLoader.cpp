@@ -12,8 +12,18 @@ namespace vge {
 	ObjLoader::~ObjLoader()
 	{
 	}
+	ObjLoader* ObjLoader::get()
+	{
+		static ObjLoader objLoader;
+		return &objLoader;
+	}
 	Model* ObjLoader::loadObj(const char* path)
 	{
+		std::map<const char*, Model*>::iterator it = ObjLoaderVGE.modelsLoaded.find(path);
+		if (it != ObjLoaderVGE.modelsLoaded.end()) return  ObjLoaderVGE.modelsLoaded[path];
+		
+		ConsoleDebugS("Loading new model " + (std::string)path, GREEN, GRAPHICS_ENGINE);
+
 		Model* modelToLoad = new Model();
 
 		FILE* file = fopen(path, "r");
@@ -72,6 +82,8 @@ namespace vge {
 			res = fscanf(file, "%s", lineHeader);
 		}
 
+		fclose(file);
+
 		// Parse MultiIndex .obj format to UniIndex draw opengl format
 
 		std::vector<float> vertexs, texCoords, normals;
@@ -117,6 +129,7 @@ namespace vge {
 		modelToLoad->assignVertexsTexCoordIndexs({});
 		modelToLoad->assignVertexsNormalsIndexs({});
 
+		ObjLoaderVGE.modelsLoaded.insert(std::make_pair(path, modelToLoad));
 		return modelToLoad;
 	}
 
